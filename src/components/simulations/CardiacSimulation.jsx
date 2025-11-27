@@ -3,16 +3,21 @@ import React from 'react'
 const CardiacSimulation = ({ onNavigate }) => {
   return (
     <div className="simulation-page">
-      <header className="simulation-header">
-        <button 
-          className="btn btn-outline"
-          onClick={() => onNavigate('home')}
-        >
-          ← Back to Home
-        </button>
-        <h1>Code Blue: Room 3</h1>
-        <p>Cardiac Arrest Simulation</p>
-      </header>
+      // In both simulation files, update the header section to:
+<header className="simulation-header">
+  <div className="simulation-header-content">
+    <button 
+      className="back-sim-btn"
+      onClick={() => onNavigate('home')}
+    >
+      ← Back to Dashboard
+    </button>
+    <div className="simulation-header-info">
+      <h1>Code Blue: Room 3</h1>
+      <p>Cardiac Arrest Simulation</p>
+    </div>
+  </div>
+</header>
 
       <div className="simulation-content">
         <div className="scenario-intro">
