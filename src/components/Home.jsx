@@ -37,104 +37,99 @@ const Home = ({ onNavigate, user }) => {
         onCancel={handleCancelHome}
       />
 
-      {/* New Beautiful Header */}
-      <header className="home-header-new">
-        <div className="header-top">
-          <div className="logo-container" onClick={handleLogoClick}>
-            <span className="header-logo-icon">⚕️</span>
-            <div className="header-logo-text">
-              <h1>MediNova</h1>
-              <span className="logo-subtitle">Medical Innovations</span>
+      {/* New Compact Header */}
+      <header className="home-header-compact">
+        <div className="header-main">
+          <div className="logo-section" onClick={handleLogoClick}>
+            <div className="logo-icon-compact">⚕️</div>
+            <div className="logo-text-compact">
+              <h1 className="medinova-logo">MediNova</h1>
+              <span className="logo-full-meaning">Medical Innovations</span>
             </div>
           </div>
           
-          <div className="header-user">
-            <span className="welcome-text">
-              Welcome, {user?.displayName?.split(' ')[0] || 'Medic'}!
-            </span>
+          <div className="user-section">
+            <div className="user-welcome">
+              <span className="welcome-name">Welcome, {user?.displayName?.split(' ')[0] || 'Medic'}!</span>
+            </div>
             <button 
-              className="btn btn-outline logout-btn"
+              className="logout-btn-compact"
               onClick={handleLogout}
             >
               Logout
             </button>
           </div>
         </div>
-        
-        <div className="header-hero">
+      </header>
+
+      {/* Hero Section */}
+      <section className="home-hero">
+        <div className="hero-content-compact">
           <h2>Emergency Medicine Training Center</h2>
           <p>Practice real medical scenarios in a safe, interactive environment</p>
         </div>
-      </header>
+      </section>
 
-      {/* Emergency Scenarios with Warm Accents */}
-      <section className="scenarios-section-new">
-        <div className="scenarios-header">
+      {/* Emergency Scenarios */}
+      <section className="scenarios-section-compact">
+        <div className="scenarios-header-compact">
           <h2>Choose Your Training Scenario</h2>
           <p>Select an emergency scenario to test your medical response skills</p>
         </div>
-        
-        <div className="emergency-cards-new">
+
+        <div className="emergency-cards-compact">
           {/* Cardiac Emergency */}
           <div 
-            className="emergency-card-new cardiac-card"
+            className="scenario-card-compact cardiac-scenario"
             onClick={() => onNavigate('cardiac-simulation')}
           >
-            <div className="card-badge-new urgent">URGENT CARE</div>
-            <div className="card-content">
-              <div className="card-icon-new">🫀</div>
+            <div className="card-badge-compact urgent-badge">URGENT CARE</div>
+            <div className="card-icon-compact">🫀</div>
+            <div className="card-content-compact">
               <h3>Code Blue: Cardiac Arrest</h3>
-              <p className="card-description">
-                Manage a patient through VF/Pulseless VT following ACLS protocols. 
-                Practice defibrillation, CPR, and medication administration.
+              <p className="card-desc-compact">
+                Manage VF/Pulseless VT following ACLS protocols
               </p>
-              <ul className="scenario-features-new">
-                <li>Real-time rhythm recognition</li>
-                <li>CPR quality monitoring</li>
-                <li>Defibrillation timing</li>
-                <li>Medication administration</li>
-              </ul>
-              <div className="card-footer-new">
-                <div className="card-meta">
-                  <span className="duration">⏱️ 15-20 min</span>
-                  <span className="difficulty">🎯 Advanced</span>
-                </div>
-                <button className="btn btn-primary card-action-btn">
-                  Start Simulation
-                </button>
+              <div className="card-features-compact">
+                <span>Rhythm Recognition</span>
+                <span>CPR Monitoring</span>
+                <span>Defibrillation</span>
+              </div>
+              <div className="card-meta-compact">
+                <span className="meta-item">⏱️ 15-20 min</span>
+                <span className="meta-item">🎯 Advanced</span>
               </div>
             </div>
+            <button className="start-btn-compact">
+              Start Simulation
+            </button>
           </div>
 
           {/* Respiratory Emergency */}
           <div 
-            className="emergency-card-new respiratory-card"
+            className="scenario-card-compact respiratory-scenario"
             onClick={() => onNavigate('respiratory-simulation')}
           >
-            <div className="card-badge-new critical">CRITICAL CARE</div>
-            <div className="card-content">
-              <div className="card-icon-new">💨</div>
+            <div className="card-badge-compact critical-badge">CRITICAL CARE</div>
+            <div className="card-icon-compact">💨</div>
+            <div className="card-content-compact">
               <h3>Pediatric Respiratory Crisis</h3>
-              <p className="card-description">
-                Manage a 4-year-old with severe respiratory distress. 
-                Practice airway assessment, oxygen therapy, and family communication.
+              <p className="card-desc-compact">
+                Manage severe respiratory distress in a 4-year-old
               </p>
-              <ul className="scenario-features-new">
-                <li>Airway assessment techniques</li>
-                <li>Oxygen delivery systems</li>
-                <li>Pediatric medication dosing</li>
-                <li>Family communication skills</li>
-              </ul>
-              <div className="card-footer-new">
-                <div className="card-meta">
-                  <span className="duration">⏱️ 10-15 min</span>
-                  <span className="difficulty">🎯 Intermediate</span>
-                </div>
-                <button className="btn btn-primary card-action-btn">
-                  Start Simulation
-                </button>
+              <div className="card-features-compact">
+                <span>Airway Assessment</span>
+                <span>Oxygen Therapy</span>
+                <span>Family Communication</span>
+              </div>
+              <div className="card-meta-compact">
+                <span className="meta-item">⏱️ 10-15 min</span>
+                <span className="meta-item">🎯 Intermediate</span>
               </div>
             </div>
+            <button className="start-btn-compact">
+              Start Simulation
+            </button>
           </div>
         </div>
       </section>
