@@ -17,7 +17,7 @@ const ConfirmPopup = ({ show, title, message, onConfirm, onCancel }) => {
         <div className="popup-actions"> {/* Replaced Tailwind */}
           <button 
             onClick={onCancel}
-            className="popup-cancel-btn" {/* Replaced Tailwind */}
+            className="popup-cancel-btn" 
           >
             Cancel
           </button>
