@@ -18,13 +18,13 @@ const CardiacDocumentation = ({ onNavigate }) => {
         <section className="pathophysiology-review">
           <h2>🧠 Pathophysiology and Distinction</h2>
           <p>
-            <span style={{color: 'blue', fontWeight: 'bold'}}>Cardiac arrest (CA)</span> is the sudden, unexpected loss of heart function, breathing, and consciousness. It is a state of **cessation of cardiac mechanical activity**.
+            <span style={{fontWeight: 'bold'}}>Cardiac arrest (CA)</span> is the sudden, unexpected loss of heart function, breathing, and consciousness. It is a state of <span style={{fontWeight: 'bold'}}>cessation of cardiac mechanical activity</span>.
           </p>
           <p>
             The critical skill in Simulation 1 was differentiation:
             <ul>
-              <li>**Cardiac Arrest (CA):** An electrical failure leading to absent pulse. Priority: C-A-B (Compressions, Airway, Breathing) and Defibrillation.</li>
-              <li>**Myocardial Infarction (MI):** A circulation problem (clot) that may or may not lead to CA. Priority: MONA (Morphine, Oxygen, Nitroglycerin, Aspirin).</li>
+              <li> <span style={{fontWeight: 'bold'}}>Cardiac Arrest (CA):</span> An electrical failure leading to absent pulse. Priority: C-A-B (Compressions, Airway, Breathing) and Defibrillation.</li>
+              <li> <span style={{fontWeight: 'bold'}}>Myocardial Infarction (MI):</span> A circulation problem (clot) that may or may not lead to CA. Priority: MONA (Morphine, Oxygen, Nitroglycerin, Aspirin).</li>
             </ul>
           </p>
           <div className="key-terms-box">
@@ -32,9 +32,9 @@ const CardiacDocumentation = ({ onNavigate }) => {
             <p>
               The advanced life support (ACLS) protocol hinges on the initial rhythm identification. 
               <br/>
-              **Shockable:** Ventricular Fibrillation ($VF$) and Pulseless Ventricular Tachycardia ($pVT$). Requires immediate counter-shock (defibrillation) to reset the electrical system.
+              <span style={{fontWeight: 'bold'}}>Shockable:</span> Ventricular Fibrillation ($VF$) and Pulseless Ventricular Tachycardia ($pVT$). Requires immediate counter-shock (defibrillation) to reset the electrical system.
               <br/>
-              **Non-Shockable:** Asystole (flatline) and Pulseless Electrical Activity ($PEA$). Requires high-quality CPR and pharmacological intervention (e.g., Epinephrine).
+              <span style={{fontWeight: 'bold'}}>Non-Shockable:</span> Asystole (flatline) and Pulseless Electrical Activity ($PEA$). Requires high-quality CPR and pharmacological intervention (e.g., Epinephrine).
             </p>
           </div>
         </section>
@@ -45,11 +45,11 @@ const CardiacDocumentation = ({ onNavigate }) => {
             For appropriate documentation, the nurse must quickly confirm the following absence of signs, indicating catastrophic failure.
           </p>
           <ul className="clinical-list">
-            <li>**Pulse:** **Absent** (Checked at the carotid site for 5-10 seconds). Document the exact time the pulse was confirmed absent.</li>
-            <li>**Pressure (BP):** **Unobtainable** (Automated cuffs will often read 'Error' or 0/0).</li>
-            <li>**Pain/Response:** Patient is completely **Unresponsive** (GCS $\le 3$).</li>
-            <li>**Perfusion/Skin:** Skin color is often **Cyanotic** (dusky/blue) due to deoxygenated blood pooling, or extremely **Pale/Mottled** due to lack of circulation.</li>
-            <li>**Pupils:** Often **Fixed** and **Dilated** (A late, ominous sign).</li>
+            <li><span style={{fontWeight: 'bold'}}>Pulse: Absent</span> (Checked at the carotid site for 5-10 seconds). Document the exact time the pulse was confirmed absent.</li>
+            <li><span style={{fontWeight: 'bold'}}>Pressure (BP): Unobtainable</span> (Automated cuffs will often read 'Error' or 0/0).</li>
+            <li><span style={{fontWeight: 'bold'}}>Pain/Response:</span> Patient is completely <span style={{fontWeight: 'bold'}}>Unresponsive</span> (GCS $\le 3$).</li>
+            <li><span style={{fontWeight: 'bold'}}>Perfusion/Skin:</span> Skin color is often <span style={{fontWeight: 'bold'}}>Cyanotic</span> (dusky/blue) due to deoxygenated blood pooling, or extremely <span style={{fontWeight: 'bold'}}>Pale/Mottled</span> due to lack of circulation.</li>
+            <li><span style={{fontWeight: 'bold'}}>Pupils:</span> Often <span style={{fontWeight: 'bold'}}>Fixed</span> and <span style={{fontWeight: 'bold'}}>Dilated</span> (A late, ominous sign).</li>
           </ul>
         </section>
 

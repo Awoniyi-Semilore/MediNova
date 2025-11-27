@@ -32,34 +32,46 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
     },
     'initial-assessment': {
       title: `Patient Check: ${scenarioPatient}`,
-      message: "You enter the room at 09:30 for a routine check. You see Mr. Chen slumped slightly in bed, and his **breathing is shallow and slow** ($\text{RR} \approx 6 \text{ bpm}$). What is your immediate priority?",
+      message: (
+        <span>
+          You enter the room at 09:30 for a routine check. You see Mr. Chen slumped slightly in bed, and his <span style={{fontWeight: 'bold'}}>breathing is shallow and slow</span> ($\text{RR} \approx 6 \text{ bpm}$). What is your immediate priority?
+        </span>
+      ),
       type: 'blue',
       isDecision: true,
       options: [
         { text: 'A) Check pedal pulses for signs of DVT.', isCorrect: false, nextStep: 'fail' },
-        { text: 'B) **Assess Responsiveness & Airway (Shake & Shout).**', isCorrect: true, nextStep: 'loss-of-consciousness' },
+        { text: <span>B) <span style={{fontWeight: 'bold'}}>Assess Responsiveness & Airway (Shake & Shout).</span></span>, isCorrect: true, nextStep: 'loss-of-consciousness' },
         { text: 'C) Check IV fluids and assess the Foley catheter output.', isCorrect: false, nextStep: 'fail' }
       ]
     },
     'loss-of-consciousness': {
       title: '🚨 Critical Deterioration!',
-      message: `Mr. Chen is **unresponsive** to your verbal and physical stimuli. His skin is rapidly becoming **dusky/cyanotic** (a blue-gray pallor). Based on this presentation, your suspicion for a Code Blue must rise.`,
+      message: (
+        <span>
+          Mr. Chen is <span style={{fontWeight: 'bold'}}>unresponsive</span> to your verbal and physical stimuli. His skin is rapidly becoming <span style={{fontWeight: 'bold'}}>dusky/cyanotic</span> (a blue-gray pallor). Based on this presentation, your suspicion for a Code Blue must rise.
+        </span>
+      ),
       type: 'pink',
       isDecision: true,
       options: [
         { text: 'A) Administer prescribed PRN pain medication for potential over-sedation.', isCorrect: false, nextStep: 'fail' },
-        { text: 'B) **Check Carotid Pulse & Breathing for $\\le 10$ seconds.**', isCorrect: true, nextStep: 'arrest-confirm' },
+        { text: <span>B) <span style={{fontWeight: 'bold'}}>Check Carotid Pulse & Breathing for $\le 10$ seconds.</span></span>, isCorrect: true, nextStep: 'arrest-confirm' },
         { text: 'C) Call the primary physician for STAT orders.', isCorrect: false, nextStep: 'fail' }
       ]
     },
     'arrest-confirm': {
       title: '💔 Cardiac Arrest Confirmed!',
-      message: "No pulse is felt, and the patient is apneic. Cardiac Arrest is confirmed. You must initiate the **Chain of Survival** immediately to maximize the chance of neurologically intact survival.",
+      message: (
+        <span>
+          No pulse is felt, and the patient is apneic. Cardiac Arrest is confirmed. You must initiate the <span style={{fontWeight: 'bold'}}>Chain of Survival</span> immediately to maximize the chance of neurologically intact survival.
+        </span>
+      ),
       type: 'red',
       isDecision: true,
       options: [
         { text: 'A) Start chest compressions immediately before calling for help.', isCorrect: false, nextStep: 'fail' },
-        { text: 'B) **Activate the Emergency Response System/Call a Code Blue.**', isCorrect: true, nextStep: 'pass' },
+        { text: <span>B) <span style={{fontWeight: 'bold'}}>Activate the Emergency Response System/Call a Code Blue.</span></span>, isCorrect: true, nextStep: 'pass' },
         { text: 'C) Prepare to administer $\text{IV}$ fluids to increase blood pressure.', isCorrect: false, nextStep: 'fail' }
       ]
     },
@@ -122,9 +134,9 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
       <div className="simulation-header">
         <h2>Emergency Scenario 1: Cardiac Arrest Recognition</h2>
         <div className="patient-status">
-          <p><strong>Patient:</strong> {scenarioPatient}</p>
+          <p><span style={{fontWeight: 'bold'}}>Patient:</span> {scenarioPatient}</p>
           <p className={`status-alert status-${modalContent.type}`}>Status: {modalContent.title}</p>
-          <p className="attempts-count">Attempts: <strong>{attempts}</strong></p>
+          <p className="attempts-count">Attempts: <span style={{fontWeight: 'bold'}}>{attempts}</span></p>
         </div>
       </div>
       
@@ -145,9 +157,9 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
         {/* Current Scenario Text */}
         <div className="story-log">
           <h3>Incident Log</h3>
-          <p><strong>09:30:</strong> Entered room for vital signs check. Noted shallow respirations.</p>
-          {step !== 'initial-assessment' && <p><strong>09:31:</strong> Patient unresponsive to verbal stimuli.</p>}
-          {step === 'arrest-confirm' || step === 'pass' && <p className="code-called-log"><strong>09:32:</strong> CODE BLUE ACTIVATED.</p>}
+          <p><span style={{fontWeight: 'bold'}}>09:30:</span> Entered room for vital signs check. Noted shallow respirations.</p>
+          {step !== 'initial-assessment' && <p><span style={{fontWeight: 'bold'}}>09:31:</span> Patient unresponsive to verbal stimuli.</p>}
+          {step === 'arrest-confirm' || step === 'pass' && <p className="code-called-log"><span style={{fontWeight: 'bold'}}>09:32:</span> CODE BLUE ACTIVATED.</p>}
         </div>
       </div>
       
