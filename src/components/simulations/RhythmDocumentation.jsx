@@ -58,7 +58,7 @@ const RhythmDocumentation = ({ onNavigate }) => {
             <ul style={{flex: 1}}>
               <span style={{fontWeight: 'bold', fontSize: '1.1rem'}}>H's (Hypovolemia, Hypoxia, etc.)</span>
               <li><span style={{fontWeight: 'bold'}}>Hypovolemia:</span> Look for blood loss, administer fluids/blood.</li>
-              <li><span style={{fontWeight: 'bold')}>Hypoxia:</span> Ensure patent airway, check oxygen saturation.</li>
+              <li><span style={{fontWeight: 'bold'}}>Hypoxia:</span> Ensure patent airway, check oxygen saturation.</li>
               <li><span style={{fontWeight: 'bold'}}>Hydrogen Ion (Acidosis):</span> Hyperventilation, Bicarb administration.</li>
               <li><span style={{fontWeight: 'bold'}}>Hypo/Hyperkalemia:</span> Check electrolytes, administer D50/Insulin or Calcium.</li>
               <li><span style={{fontWeight: 'bold'}}>Hypothermia:</span> Warming measures.</li>
