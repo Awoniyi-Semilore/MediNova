@@ -2,7 +2,7 @@ import React from 'react';
 import './Css files/ActionModal.css';
 
 /**
- * ActionModal is used for presenting scenario context and multiple-choice options.
+ * ActionModal is used for presenting. scenario context and multiple-choice options.
  * It replaces the simple, timed Popup for interactive decision points.
  * * @param {boolean} show - Whether the modal is visible.
  * @param {string} title - Title of the prompt (e.g., 'Initial Assessment').
