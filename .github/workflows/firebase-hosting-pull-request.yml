@@ -17,7 +17,7 @@ jobs:
       - run: npm ci # 'npm ci' is faster and more reliable than 'npm install' in CI
       
       - run: npm run build
-      - uses: firebase/hosting-github-action@v1
+      - uses: 'firebase/deploy-action@v4'
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEDINOVA_SIMULATIONS }}
