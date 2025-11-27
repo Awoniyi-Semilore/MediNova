@@ -1,4 +1,20 @@
 import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'Expand commentComment on line R1Code has comments. Press enter to view.
+import { auth } from './firebase-config'
+import { onAuthStateChanged } from 'firebase/auth'
+import Landing from './components/Landing'
+import Login from './components/Login'
+import SignUp from './components/SignUp'
+import Home from './components/Home'
+import RespiratorySimulation from './components/simulations/RespiratorySimulation'
+import CardiacSimulation from './components/simulations/CardiacSimulation'
+import CardiacRhythmSimulation from './components/simulations/CardiacRhythmSimulation'
+import CardiacAsystoleSimulation from './components/simulations/CardiacAsystoleSimulation'
+import CardiacDocumentation from './components/simulations/CardiacDocumentation' // <-- NOW EXPLICITLY DEFINED
+import RhythmDocumentation from './components/simulations/RhythmDocumentation'
+import PostArrestDocumentation from './components/simulations/PostArrestDocumentation'
+import './App.css'
+
 // 1. IMPORT YOUR NEW COMPONENT
 // Reverting to the most common structure and adding the explicit extension 
 // for strict compilers. If this fails, the paths are definitely different 
