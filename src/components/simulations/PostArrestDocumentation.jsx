@@ -1,0 +1,69 @@
+import React from 'react';
+import '../Css files/CardiacDocumentation.css'; 
+
+const PostArrestDocumentation = ({ onNavigate }) => {
+  return (
+    <div className="documentation-page">
+      <header className="doc-header">
+        <h1>Post-Simulation Review: Post-Cardiac Arrest Care ($P\text{-}CACC$)</h1>
+        <button 
+            className="skip-btn" 
+            onClick={() => onNavigate('home')}
+        >
+            Return to Home &rarr;
+        </button>
+      </header>
+      
+      <div className="doc-content">
+        <section className="p-cacc-review">
+          <h2>🧠 $P\text{-}CACC$: The $A\text{, }B\text{, }C$ Priorities After $ROSC$</h2>
+          <p>
+            Achieving $ROSC$ is only the first step. Post-cardiac arrest care determines neurological outcome. Care is focused on three main areas: Airway/Breathing, Circulation, and Targeted Temperature Management ($TTM$).
+          </p>
+          
+          
+          <div className="key-terms-box">
+            <h3>A & B: Airway and Breathing Management</h3>
+            <ul className="clinical-list">
+                <li><span style={{fontWeight: 'bold'}}>Oxygenation:</span> Maintain $O_2$ saturation $\ge 94\%$. Avoid hyperoxia ($O_2\text{ sat} > 98\%$).</li>
+                <li><span style={{fontWeight: 'bold'}}>Ventilation/$\text{CO}_2$:</span> Maintain $\text{ETCO}_2$ (End-Tidal $\text{CO}_2$) in the range of $35\text{–}45\text{ mmHg}$ to prevent cerebral vasoconstriction/vasodilation.</li>
+            </ul>
+          </div>
+
+          <div className="key-terms-box">
+            <h3>C: Circulation Management (Perfusion)</h3>
+            <ul className="clinical-list">
+                <li><span style={{fontWeight: 'bold'}}>Hypotension Target:</span> Maintain $SBP \ge 90\text{ mmHg}$ or $MAP \ge 65\text{ mmHg}$.</li>
+                <li><span style={{fontWeight: 'bold'}}>Fluid/Vasoactive Drugs:</span> Initiate $IV$ fluid bolus (1\text{--}2 \text{L} normal saline) followed by vasopressors (Norepinephrine or Dopamine) to meet $BP$ goals.</li>
+                <li><span style={{fontWeight: 'bold'}}>$PCI$ Indication:</span> Perform immediate coronary angiography/percutaneous coronary intervention ($PCI$) for suspected $STEMI$ or unstable non-$STEMI$.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="ttm-review">
+          <h2>🌡️ Targeted Temperature Management ($TTM$)</h2>
+          <p>
+            $TTM$ is initiated for comatose patients ($GCS < 8$) after $ROSC$ to improve neurological recovery.
+          </p>
+          <ul className="clinical-list">
+            <li><span style={{fontWeight: 'bold'}}>Target Temperature:</span> Maintain a target temperature of $32\text{–}36^\circ \text{C}$ for at least 24 hours.</li>
+            <li><span style={{fontWeight: 'bold'}}>Method:</span> Use external cooling blankets or intravenous cold fluids.</li>
+            <li><span style={{fontWeight: 'bold'}}>Monitoring:</span> Continuous core temperature monitoring (e.g., esophageal or bladder probe) is required.</li>
+          </ul>
+        </section>
+      </div>
+
+      <footer className="doc-footer">
+        <p>You have successfully completed the core Cardiac Arrest Simulations (Recognition, $VF$ Management, and $P\text{-}CACC$).</p>
+        <button 
+            className="next-sim-btn" 
+            onClick={() => onNavigate('home')}
+        >
+            Return to Home &rarr;
+        </button>
+      </footer>
+    </div>
+  );
+};
+
+export default PostArrestDocumentation;
