@@ -1,114 +1,59 @@
 import React from 'react';
-import '../Css files/CardiacDocumentation.css';
+import '../Css files/CardiacDocumentation.css'; // Assuming this CSS file exists
 
-const CardiacDocumentation = ({ onNavigate }) => {
+const CardiacDocumentation = ({ onNavigate, onPass }) => {
   return (
     <div className="documentation-page">
       <header className="doc-header">
-        <h1>Post-Simulation Review: Cardiac Arrest Documentation</h1>
+        <h1>Post-Simulation Review: Cardiac Arrest Recognition (Sim 1)</h1>
         <button 
             className="skip-btn" 
-            onClick={() => onNavigate('simulation2-intro')}
+            onClick={() => onNavigate('home')}
         >
-            Skip to Simulation 2 &rarr;
+            Return to Home &rarr;
         </button>
       </header>
       
       <div className="doc-content">
-        <section className="pathophysiology-review">
-          <h2>🧠 Pathophysiology and Distinction</h2>
+        <section className="recognition-review">
+          <h2>🔍 Recognition and Activation</h2>
           <p>
-            <span style={{fontWeight: 'bold'}}>Cardiac arrest (CA)</span> is the sudden, unexpected loss of heart function, breathing, and consciousness. It is a state of <span style={{fontWeight: 'bold'}}>cessation of cardiac mechanical activity</span>.
-          </p>
-          <p>
-            The critical skill in Simulation 1 was differentiation:
-            <ul>
-              <li> <span style={{fontWeight: 'bold'}}>Cardiac Arrest (CA):</span> An electrical failure leading to absent pulse. Priority: C-A-B (Compressions, Airway, Breathing) and Defibrillation.</li>
-              <li> <span style={{fontWeight: 'bold'}}>Myocardial Infarction (MI):</span> A circulation problem (clot) that may or may not lead to CA. Priority: MONA (Morphine, Oxygen, Nitroglycerin, Aspirin).</li>
-            </ul>
+            The initial steps of the Chain of Survival focus on rapid assessment and activating professional help. Every second counts in achieving neurological recovery.
           </p>
           <div className="key-terms-box">
-            <h3>Rhythm Review</h3>
-            <p>
-              The advanced life support (ACLS) protocol hinges on the initial rhythm identification. 
-              <br/>
-              <span style={{fontWeight: 'bold'}}>Shockable:</span> Ventricular Fibrillation ($VF$) and Pulseless Ventricular Tachycardia ($pVT$). Requires immediate counter-shock (defibrillation) to reset the electrical system.
-              <br/>
-              <span style={{fontWeight: 'bold'}}>Non-Shockable:</span> Asystole (flatline) and Pulseless Electrical Activity ($PEA$). Requires high-quality CPR and pharmacological intervention (e.g., Epinephrine).
-            </p>
+            <h3>Key Takeaways from Simulation 1</h3>
+            <ul className="clinical-list">
+                <li><span style={{fontWeight: 'bold'}}>Priority 1:</span> Assess responsiveness immediately (Shake & Shout).</li>
+                <li><span style={{fontWeight: 'bold'}}>Priority 2:</span> If unresponsive, check for pulse and breathing simultaneously for no more than $\le 10$ seconds.</li>
+                <li><span style={{fontWeight: 'bold'}}>Priority 3:</span> If no pulse/apneic, **immediately call a Code Blue** (Activate the Emergency Response System). Do not delay activation to start $CPR$ alone.</li>
+                <li><span style={{fontWeight: 'bold'}}>Priority 4:</span> Start high-quality chest compressions ($CAB$) at a rate of $100\text{–}120\text{ per minute}$, $5\text{–}6\text{ cm}$ deep.</li>
+            </ul>
           </div>
         </section>
 
-        <section className="assessment-findings">
-          <h2>📋 Clinical Assessment & The 5 P's of Cardiopulmonary Failure</h2>
+        <section className="chain-of-survival">
+          <h2>🔗 The Adult Chain of Survival</h2>
           <p>
-            For appropriate documentation, the nurse must quickly confirm the following absence of signs, indicating catastrophic failure.
+            The Chain of Survival dictates the sequence of interventions. Simulation 1 focused on links 1 and 2.
+            
           </p>
-          <ul className="clinical-list">
-            <li><span style={{fontWeight: 'bold'}}>Pulse: Absent</span> (Checked at the carotid site for 5-10 seconds). Document the exact time the pulse was confirmed absent.</li>
-            <li><span style={{fontWeight: 'bold'}}>Pressure (BP): Unobtainable</span> (Automated cuffs will often read 'Error' or 0/0).</li>
-            <li><span style={{fontWeight: 'bold'}}>Pain/Response:</span> Patient is completely <span style={{fontWeight: 'bold'}}>Unresponsive</span> (GCS $\le 3$).</li>
-            <li><span style={{fontWeight: 'bold'}}>Perfusion/Skin:</span> Skin color is often <span style={{fontWeight: 'bold'}}>Cyanotic</span> (dusky/blue) due to deoxygenated blood pooling, or extremely <span style={{fontWeight: 'bold'}}>Pale/Mottled</span> due to lack of circulation.</li>
-            <li><span style={{fontWeight: 'bold'}}>Pupils:</span> Often <span style={{fontWeight: 'bold'}}>Fixed</span> and <span style={{fontWeight: 'bold'}}>Dilated</span> (A late, ominous sign).</li>
-          </ul>
-        </section>
-
-        <section className="documentation-checklist">
-          <h2>✍️ Nursing Documentation Checklist (The "Code Log")</h2>
-          <p>The code documentation must be a chronological and precise record of the event, ensuring legal defensibility and quality review:</p>
-          <div className="log-table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Event</th>
-                  <th>Documentation Required</th>
-                  <th>Clinical Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Arrest Confirmed</td>
-                  <td>Date and Time (e.g., 10:02 AM)</td>
-                  <td>"Patient unresponsive, apneic, no palpable carotid pulse."</td>
-                </tr>
-                <tr>
-                  <td>Code Activated</td>
-                  <td>Time (e.g., 10:03 AM)</td>
-                  <td>The moment the Code Blue alert was initiated.</td>
-                </tr>
-                <tr>
-                  <td>CPR Start</td>
-                  <td>Time (10:03 AM) & Quality</td>
-                  <td>Depth/Rate adherence (e.g., "High-quality CPR initiated at 10:03 AM by RN Smith.")</td>
-                </tr>
-                <tr>
-                  <td>Defibrillation</td>
-                  <td>Time, Energy Level (J or kJ), Rhythm</td>
-                  <td>Example: "Defibrillation delivered at 200 J for $VF$."</td>
-                </tr>
-                <tr>
-                  <td>Medications</td>
-                  <td>Time, Drug, Dose (mg or mcg), Route (IV or IO)</td>
-                  <td>Example: "Epinephrine 1 mg IV push given at 10:05 AM."</td>
-                </tr>
-                <tr>
-                  <td>ROSC</td>
-                  <td>Time, Post-ROSC BP and HR</td>
-                  <td>Time of Return of Spontaneous Circulation.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <ol className="clinical-list">
+            <li>Immediate Recognition of Cardiac Arrest and Activation of the Emergency Response System.</li>
+            <li>Early Cardiopulmonary Resuscitation ($CPR$) with emphasis on chest compressions.</li>
+            <li>Rapid Defibrillation (for shockable rhythms like $VF$/$pVT$).</li>
+            <li>Effective Advanced Life Support ($ALS$) (Simulations 2 & 3).</li>
+            <li>Integrated Post-Cardiac Arrest Care ($P\text{-}CACC$) (Simulation 3).</li>
+          </ol>
         </section>
       </div>
 
       <footer className="doc-footer">
-        <p>You have successfully reviewed the core documentation principles. Ready for the next challenge?</p>
+        <p>You have successfully mastered the initial recognition phase. Continue to Simulation 2 to learn ACLS rhythm management.</p>
         <button 
             className="next-sim-btn" 
-            onClick={() => onNavigate('simulation2-intro')}
+            onClick={onPass} // This navigates to the next simulation
         >
-            Proceed to Simulation 2: Rhythm Management &rarr;
+            Continue to Simulation 2: Rhythm Management &rarr;
         </button>
       </footer>
     </div>
