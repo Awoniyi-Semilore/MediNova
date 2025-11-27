@@ -1,17 +1,23 @@
 import React from 'react'
+import '../../App.css' // Add this import
 
 const RespiratorySimulation = ({ onNavigate }) => {
   return (
     <div className="simulation-page">
+      {/* Fixed header structure */}
       <header className="simulation-header">
-        <button 
-          className="btn btn-outline"
-          onClick={() => onNavigate('home')}
-        >
-          ← Back to Home
-        </button>
-        <h1>Pediatric Respiratory Distress</h1>
-        <p>Respiratory Emergency Simulation</p>
+        <div className="simulation-header-content">
+          <button 
+            className="back-sim-btn"
+            onClick={() => onNavigate('home')}
+          >
+            ← Back to Dashboard
+          </button>
+          <div className="simulation-header-info">
+            <h1>Pediatric Respiratory Distress</h1>
+            <p>Respiratory Emergency Simulation</p>
+          </div>
+        </div>
       </header>
 
       <div className="simulation-content">
