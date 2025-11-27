@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from ''./config/firebase.js'
 import { auth } from '../firebase-config'
 import Popup from './Popup'
 
