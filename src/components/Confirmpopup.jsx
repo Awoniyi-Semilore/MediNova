@@ -1,5 +1,5 @@
 import React from 'react'
-import './ConfirmPopup.css'
+import './Confirmpopup.css'
 
 const ConfirmPopup = ({ show, title, message, onConfirm, onCancel }) => {
   if (!show) return null
