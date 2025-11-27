@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase-config'
-import ConfirmPopup from './Confirmpopup'
+import ConfirmPopup from './Confirmpopup.jsx'
 
 const Home = ({ onNavigate, user }) => {
   const [showConfirm, setShowConfirm] = useState(false)
