@@ -24,7 +24,6 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
         confirmText: 'Skip Video & Start Simulation',
         cancel: () => { 
           // Logic for showing the video or just proceeding after a timer 
-          // NOTE: Changed alert() to a temporary console message for compliance
           console.log("Placeholder: Video playing... Click 'Start' when ready.");
           setStep('initial-assessment');
         },
@@ -33,11 +32,7 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
     },
     'initial-assessment': {
       title: `Patient Check: ${scenarioPatient}`,
-      message: (
-        <span>
-          You enter the room at 09:30 for a routine check. You see Mr. Chen slumped slightly in bed, and his <span style={{fontWeight: 'bold'}}>breathing is shallow and slow</span> (RR ≈ 6 bpm). What is your immediate priority?
-        </span>
-      ),
+      message: `You enter the room at 09:30 for a routine check. You see Mr. Chen slumped slightly in bed, and his <b>breathing is shallow and slow</b> (RR ≈ 6 bpm). What is your immediate priority?`,
       type: 'blue',
       isDecision: true,
       options: [
@@ -48,11 +43,7 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
     },
     'loss-of-consciousness': {
       title: '🚨 Critical Deterioration!',
-      message: (
-        <span>
-          Mr. Chen is <span style={{fontWeight: 'bold'}}>unresponsive</span> to your verbal and physical stimuli. His skin is rapidly becoming <span style={{fontWeight: 'bold'}}>dusky/cyanotic</span> (a blue-gray pallor). Based on this presentation, your suspicion for a Code Blue must rise.
-        </span>
-      ),
+      message: `Mr. Chen is <b>unresponsive</b> to your verbal and physical stimuli. His skin is rapidly becoming <b>dusky/cyanotic</b> (a blue-gray pallor). Based on this presentation, your suspicion for a Code Blue must rise.`,
       type: 'pink',
       isDecision: true,
       options: [
@@ -63,11 +54,7 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
     },
     'arrest-confirm': {
       title: '💔 Cardiac Arrest Confirmed!',
-      message: (
-        <span>
-          No pulse is felt, and the patient is apneic. Cardiac Arrest is confirmed. You must initiate the <span style={{fontWeight: 'bold'}}>Chain of Survival</span> immediately to maximize the chance of neurologically intact survival.
-        </span>
-      ),
+      message: `No pulse is felt, and the patient is apneic. Cardiac Arrest is confirmed. You must initiate the <b>Chain of Survival</b> immediately to maximize the chance of neurologically intact survival.`,
       type: 'red',
       isDecision: true,
       options: [
