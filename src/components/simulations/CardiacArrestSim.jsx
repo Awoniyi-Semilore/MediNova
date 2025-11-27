@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-
-
 // === FINAL VIDEO URL ===
 // The Vimeo embed URL based on the ID provided by the user.
 const SIM_VIDEO_URL = "https://player.vimeo.com/video/1141231294"; 
@@ -9,7 +7,7 @@ const SIM_VIDEO_URL = "https://player.vimeo.com/video/1141231294";
 const CardiacArrestSim = ({ onNavigate }) => {
     const [showVideo, setShowVideo] = useState(true);
     const [videoError, setVideoError] = useState(false);
-    
+
     // State to manage when the video is presumed finished
     const [videoFinished, setVideoFinished] = useState(false);
 
@@ -20,19 +18,20 @@ const CardiacArrestSim = ({ onNavigate }) => {
     // Note: Iframes don't directly report errors like a <video> tag does, 
     // but the error message helps the user know if the URL is bad.
     const handleVideoError = () => {
-        setVideoError(true);
+        // This is a weak error check, mainly to allow the user to proceed if the iframe fails to load.
+        setVideoError(true); 
     };
 
     // Use a timer to suggest the video is finished (Vimeo doesn't give a simple 'onEnded' event to React)
-    // IMPORTANT: You might need to adjust the duration here (in seconds) to match your video's actual length.
     useEffect(() => {
-        const videoDurationGuessSeconds = 60; // Assumed duration (e.g., 60 seconds)
-        
+        // IMPORTANT: Adjust this duration (in seconds) to match your video's actual length!
+        const videoDurationGuessSeconds = 60; 
+
         if (showVideo && !videoError) {
             const timer = setTimeout(() => {
                 setVideoFinished(true);
             }, videoDurationGuessSeconds * 1000); 
-            
+
             return () => clearTimeout(timer);
         }
     }, [showVideo, videoError]);
@@ -45,7 +44,7 @@ const CardiacArrestSim = ({ onNavigate }) => {
                     <h1 className="text-3xl font-bold text-indigo-700 text-center">
                         Simulation 1: Cardiac Arrest Recognition - Video Brief
                     </h1>
-                    
+
                     {videoError && (
                         <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center">
                             <strong>Embed Error!</strong> The video link is broken or restricted. Please ensure the 
@@ -53,7 +52,7 @@ const CardiacArrestSim = ({ onNavigate }) => {
                             is set to the correct public Vimeo embed URL and that your Vimeo privacy settings allow embedding.
                         </div>
                     )}
-                    
+
                     {/* Responsive Iframe Container (for Vimeo/YouTube) */}
                     <div className="relative w-full overflow-hidden rounded-lg shadow-xl" style={{ paddingTop: '56.25%' }}> {/* 16:9 Aspect Ratio */}
                         <iframe
@@ -79,7 +78,7 @@ const CardiacArrestSim = ({ onNavigate }) => {
                             {videoError ? 'Start Simulation Anyway' : 'Skip/Continue to Simulation'} &rarr;
                         </button>
                     </div>
-                    
+
                     {!videoFinished && !videoError && (
                         <p className="text-center text-sm text-gray-500">
                             (Button will activate after the estimated video duration or if you manually click skip.)
@@ -102,7 +101,7 @@ const CardiacArrestSim = ({ onNavigate }) => {
                     End Simulation
                 </button>
             </header>
-            
+
             <main className="mt-6">
                 <p className="text-lg">
                     **SCENARIO:** You are the primary nurse responding to a collapse in the waiting room.
