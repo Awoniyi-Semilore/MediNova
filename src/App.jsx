@@ -7,9 +7,11 @@ import SignUp from './components/SignUp'
 import Home from './components/Home'
 import RespiratorySimulation from './components/simulations/RespiratorySimulation'
 import CardiacSimulation from './components/simulations/CardiacSimulation'
-import CardiacRhythmSimulation from './components/simulations/CardiacRhythmSimulation' // <-- NEW IMPORT
-import CardiacDocumentation from './components/simulations/CardiacDocumentation'
-import RhythmDocumentation from './components/simulations/RhythmDocumentation' // <-- NEW IMPORT
+import CardiacRhythmSimulation from './components/simulations/CardiacRhythmSimulation'
+import CardiacAsystoleSimulation from './components/simulations/CardiacAsystoleSimulation'
+import CardiacDocumentation from './components/simulations/CardiacDocumentation' // <-- NOW EXPLICITLY DEFINED
+import RhythmDocumentation from './components/simulations/RhythmDocumentation'
+import PostArrestDocumentation from './components/simulations/PostArrestDocumentation'
 import './App.css'
 
 function App() {
@@ -54,16 +56,28 @@ function App() {
           onPass: () => setCurrentView('cardiac-documentation')
         })
       case 'cardiac-documentation':
-        return authenticatedView(CardiacDocumentation)
+        // FIX: The onPass prop is passed here, linking to Sim 2
+        return authenticatedView(CardiacDocumentation, {
+          onPass: () => setCurrentView('cardiac-rhythm-simulation')
+        })
 
       // --- Simulation 2 Flow (Rhythm Management) ---
-      case 'simulation2-intro': // Entry point from Sim 1 documentation
       case 'cardiac-rhythm-simulation':
         return authenticatedView(CardiacRhythmSimulation, {
           onPass: () => setCurrentView('rhythm-documentation')
         })
       case 'rhythm-documentation':
-        return authenticatedView(RhythmDocumentation)
+        return authenticatedView(RhythmDocumentation, {
+          onPass: () => setCurrentView('cardiac-asystole-simulation')
+        })
+        
+      // --- Simulation 3 Flow (Asystole & Post-Arrest) ---
+      case 'cardiac-asystole-simulation':
+        return authenticatedView(CardiacAsystoleSimulation, {
+          onPass: () => setCurrentView('post-arrest-documentation')
+        })
+      case 'post-arrest-documentation':
+        return authenticatedView(PostArrestDocumentation)
 
       // --- Other Simulations ---
       case 'respiratory-simulation':
