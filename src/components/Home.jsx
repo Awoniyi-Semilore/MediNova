@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-// Removing imports that caused "Could not resolve" errors. 
-// We must assume the 'auth' object and signOut function are passed as props 
-// or are available from a higher-level context, or we must use placeholders 
-// if they are not explicitly defined in the surrounding context.
 
-// For the purpose of getting this component running, we will use mock/placeholder logic
-// for external dependencies like Firebase and the ConfirmPopup.
-// Assuming 'auth' and 'signOut' are available if the user had them previously.
-// const auth = { /* placeholder */ }; 
-// const signOut = async () => console.log("Mock sign out successful.");
+// NOTE: Since you are using Tailwind CSS classes directly in the component,
+// this file is the only file needed for the styling. 
+// You must ensure that Tailwind CSS is correctly set up in your project
+// for the classes (e.g., 'bg-gray-100', 'shadow-2xl') to work.
 
-// --- Inline ConfirmPopup Component ---
+// --- Inline Utility Component: ConfirmPopup ---
+/**
+ * A basic modal component for confirming actions.
+ * @param {boolean} show - Toggles the visibility of the popup.
+ * @param {string} title - The title of the popup.
+ * @param {string} message - The main message content.
+ * @param {function} onConfirm - Handler for the 'Confirm' button.
+ * @param {function} onCancel - Handler for the 'Cancel' button.
+ */
 const ConfirmPopup = ({ show, title, message, onConfirm, onCancel }) => {
   if (!show) return null;
 
@@ -37,82 +40,88 @@ const ConfirmPopup = ({ show, title, message, onConfirm, onCancel }) => {
     </div>
   );
 };
-// -------------------------------------
+// ---------------------------------------------
 
 
-const Home = ({ onNavigate, user, auth, signOut }) => { // Including auth and signOut in props for robustness
-  const [showConfirm, setShowConfirm] = useState(false)
+/**
+ * The main Home component, displaying scenario cards and handling navigation/logout.
+ * @param {function} onNavigate - Function to change the current view (e.g., 'landing', 'simulation1').
+ * @param {object} user - The authenticated user object (e.g., from Firebase).
+ * @param {object} auth - The Firebase auth instance.
+ * @param {function} signOut - The Firebase signOut function.
+ */
+const Home = ({ onNavigate, user, auth, signOut }) => { 
+  const [showConfirm, setShowConfirm] = useState(false);
+  
+  // --- Navigation Handlers ---
 
-  // Use the provided sign out function (must be passed from parent)
   const handleLogout = async () => {
     try {
-      // Check if the signOut function is available
-      if (typeof signOut === 'function') {
-        await signOut(auth); // Assuming auth is also passed
+      // Check if the signOut function is available and call it
+      if (typeof signOut === 'function' && auth) {
+        await signOut(auth); 
       } else {
-        console.warn('Firebase signOut function is not available. Using mock logout.');
+        // Mock/Placeholder for environments where Firebase is not fully mocked
+        console.warn('signOut function not available or auth not passed. Proceeding with mock logout.');
       }
       
-      // Navigate to the login/landing page regardless of Firebase status
+      // Navigate to the landing page after successful (or mock) logout
       if (onNavigate) {
           onNavigate('landing');
       }
     } catch (error) {
       console.error('Logout failed:', error);
-      // Fallback navigation
+      // Fallback navigation even if logout fails technically
       if (onNavigate) {
           onNavigate('landing');
       }
     }
   }
 
-  // Logic for the Logo Click confirmation
-  const handleLogoClick = () => {
-    // Navigate straight to home view, removing the redundant confirmation step
-    if (onNavigate) {
-        onNavigate('home');
-    }
-  }
-
-  // Handlers for the now inlined ConfirmPopup (used for leaving a simulation)
+  // Handlers for the ConfirmPopup (e.g., used when leaving a simulation)
   const handleConfirmHome = () => {
-    setShowConfirm(false)
-    if (onNavigate) onNavigate('home')
+    setShowConfirm(false);
+    if (onNavigate) onNavigate('home'); // Navigate to home after confirmation
   }
 
   const handleCancelHome = () => {
-    setShowConfirm(false)
+    setShowConfirm(false); // Just close the popup
   }
 
-  // Function to navigate to simulations (e.g., 'cardiac-simulation' or 'respiratory-simulation')
-  const navigateToSimulation = (viewName) => {
-    if (onNavigate) {
-      // For Cardiac, we want to go to the video first (which is 'simulation1')
-      if (viewName === 'cardiac-simulation') {
-          onNavigate('simulation1'); 
-      } else {
-          onNavigate(viewName);
-      }
+  // Function to navigate to the start of a simulation sequence
+  const navigateToSimulation = (scenarioKey) => {
+    if (!onNavigate) return;
+    
+    // As per logic: Cardiac Arrest sequence starts with the video, which is 'simulation1'
+    if (scenarioKey === 'cardiac-arrest') {
+        onNavigate('simulation1'); // This should be the video view
+    } else {
+        // Other scenarios would go to their specific start view (e.g., 'respiratory-simulation')
+        onNavigate(scenarioKey);
     }
   }
+
+  // --- Render ---
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 sm:p-8 flex flex-col items-center">
       
-      {/* ConfirmPopup is now INLINE for robustness, waiting for the user to implement the logic for showing it. */}
-      {/* Current logic for ConfirmPopup: when the user is in a simulation and clicks the logo, they are asked to confirm exit. */}
+      {/* ConfirmPopup: Can be used to prompt user before exiting a simulation/document view */}
       <ConfirmPopup 
         show={showConfirm}
-        title="Leave Simulation?"
-        message="Are you sure you want to go back to home? Your progress in the current simulation will be saved."
+        title="Leave Page?"
+        message="Are you sure you want to go back to home? Your progress will be saved."
         onConfirm={handleConfirmHome}
         onCancel={handleCancelHome}
       />
       
-      {/* Header (Styled with Tailwind for professionalism) */}
+      {/* Header */}
       <header className="w-full max-w-5xl py-4 sm:py-6 bg-white shadow-md rounded-b-xl border-b-4 border-indigo-500 mb-8">
         <div className="flex justify-between items-center px-4 sm:px-6">
-          <div className="flex items-center space-x-2 cursor-pointer" onClick={() => onNavigate('home')}>
+          <div 
+            className="flex items-center space-x-2 cursor-pointer" 
+            onClick={() => onNavigate('home')} // Logo clicks navigate home
+          >
             <div className="text-3xl font-extrabold text-indigo-700">⚕️</div>
             <h1 className="text-2xl font-extrabold text-gray-800 hidden sm:block">MediNova</h1>
           </div>
@@ -146,10 +155,11 @@ const Home = ({ onNavigate, user, auth, signOut }) => { // Including auth and si
 
         {/* Emergency Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Cardiac Emergency (Now linked to 'simulation1' view for the video) */}
+          
+          {/* 🫀 Card: Cardiac Emergency -> Navigates to 'simulation1' (the video page) */}
           <div 
             className="p-6 rounded-xl shadow-lg border-t-8 border-red-600 bg-red-50 hover:shadow-xl transition transform hover:scale-[1.01] cursor-pointer"
-            onClick={() => navigateToSimulation('cardiac-simulation')}
+            onClick={() => navigateToSimulation('cardiac-arrest')}
           >
             <div className="flex justify-between items-center mb-3">
                 <span className="text-sm font-semibold text-red-700 bg-red-200 px-3 py-1 rounded-full">URGENT CARE</span>
@@ -168,7 +178,7 @@ const Home = ({ onNavigate, user, auth, signOut }) => { // Including auth and si
             </button>
           </div>
 
-          {/* Respiratory Emergency */}
+          {/* 💨 Card: Respiratory Emergency */}
           <div 
             className="p-6 rounded-xl shadow-lg border-t-8 border-sky-600 bg-sky-50 hover:shadow-xl transition transform hover:scale-[1.01] cursor-pointer"
             onClick={() => navigateToSimulation('respiratory-simulation')}
