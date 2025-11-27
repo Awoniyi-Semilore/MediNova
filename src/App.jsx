@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import React, { useState, useEffect } from 'react'Expand commentComment on line R1Code has comments. Press enter to view.
+import React, { useState, useEffect } from 'react'
 import { auth } from './firebase-config'
 import { onAuthStateChanged } from 'firebase/auth'
 import Landing from './components/Landing'
