@@ -10,10 +10,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Setup Node.js
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'  # Changed from 18 to 20
           cache: 'npm'
           
       - name: Install dependencies
@@ -21,9 +21,6 @@ jobs:
         
       - name: Build project
         run: npm run build
-        
-      - name: List build files (debug)
-        run: ls -la dist/
         
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
