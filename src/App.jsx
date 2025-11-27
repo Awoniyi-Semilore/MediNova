@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { auth } from './firebase-config';
 import { onAuthStateChanged } from 'firebase/auth';
 // Path fix: Assuming directory is 'Components' (uppercase C) and adding explicit '.jsx' extension
-import Landing from './Components/Landing.jsx'; 
-import Login from './Components/Login.jsx';
-import SignUp from './Components/SignUp.jsx';
-import Home from './Components/Home.jsx';
-import RespiratorySimulation from './Components/simulations/RespiratorySimulation.jsx';
-import CardiacSimulation from './Components/simulations/CardiacSimulation.jsx';
-import CardiacRhythmSimulation from './Components/simulations/CardiacRhythmSimulation.jsx';
-import CardiacAsystoleSimulation from './Components/simulations/CardiacAsystoleSimulation.jsx';
-import CardiacDocumentation from './Components/simulations/CardiacDocumentation.jsx';
-import RhythmDocumentation from './Components/simulations/RhythmDocumentation.jsx';
-import PostArrestDocumentation from './Components/simulations/PostArrestDocumentation.jsx';
-import CardiacArrestSim from './Components/simulations/CardiacArrestSim.jsx'; 
+import Landing from './components/Landing.jsx'; 
+import Login from './components/Login.jsx';
+import SignUp from './components/SignUp.jsx';
+import Home from './components/Home.jsx';
+import RespiratorySimulation from './components/simulations/RespiratorySimulation.jsx';
+import CardiacSimulation from './components/simulations/CardiacSimulation.jsx';
+import CardiacRhythmSimulation from './components/simulations/CardiacRhythmSimulation.jsx';
+import CardiacAsystoleSimulation from './components/simulations/CardiacAsystoleSimulation.jsx';
+import CardiacDocumentation from './components/simulations/CardiacDocumentation.jsx';
+import RhythmDocumentation from './components/simulations/RhythmDocumentation.jsx';
+import PostArrestDocumentation from './components/simulations/PostArrestDocumentation.jsx';
+import CardiacArrestSim from './components/simulations/CardiacArrestSim.jsx'; 
 import './App.css';
 
 const App = () => {
