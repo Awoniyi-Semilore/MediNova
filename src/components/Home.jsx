@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 // IMPORT THE CSS FILE
-import './CSS file/Home.css'; 
+import './Css files/Home.css'; 
 // (assuming you save the CSS as Home.css in the same directory)
 
 // --- Inline ConfirmPopup Component (Modified with new classes) ---
