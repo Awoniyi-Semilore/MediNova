@@ -1,0 +1,111 @@
+/* --- Overlay and Core Structure --- */
+.action-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.action-modal-content {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  animation: fadeIn 0.3s ease-out;
+  border: 4px solid; /* Defined by color classes */
+}
+
+/* --- Color Coding --- */
+.action-modal-blue { 
+  border-color: #007bff; /* Blue for general prompt/instruction */
+}
+.action-modal-pink { 
+  border-color: #ff69b4; /* Pink for critical observation/urgent finding */
+}
+.action-modal-red { 
+  border-color: #dc3545; /* Red for failure/severe warning */
+}
+.action-modal-green { 
+  border-color: #28a745; /* Green for success/pass */
+}
+
+/* --- Header and Body --- */
+.action-modal-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.action-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.action-modal-message {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+/* Make key words stand out */
+.action-modal-message strong {
+  color: #dc3545;
+  font-weight: 800;
+}
+
+/* --- Action Buttons (Multiple Choice) --- */
+.action-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-option-btn, .action-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.action-option-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the single confirm button in pass/fail */
+.action-btn-green { background-color: #28a745; }
+.action-btn-red { background-color: #dc3545; }
+
+.action-btn-green:hover { background-color: #1e7e34; }
+.action-btn-red:hover { background-color: #bd2130; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .action-modal-content {
+    max-width: 95%;
+    padding: 20px;
+  }
+}

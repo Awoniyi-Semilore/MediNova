@@ -1,0 +1,169 @@
+.cardiac-simulation-page {
+  padding: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: #f8f9fa; /* Light grey/white main background */
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  min-height: 80vh;
+}
+
+.simulation-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.simulation-header h2 {
+  font-size: 2rem;
+  color: #dc3545; /* Red/Pink contrast */
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.patient-status {
+  display: flex;
+  justify-content: space-around;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 15px;
+}
+
+.patient-status p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.status-alert {
+  font-weight: 800 !important;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.status-alert.status-blue {
+  color: #007bff;
+  background-color: #eaf3ff;
+}
+.status-alert.status-pink, .status-alert.status-red {
+  color: #dc3545;
+  background-color: #fddde0;
+}
+.status-alert.status-green {
+  color: #28a745;
+  background-color: #e6f5e9;
+}
+
+/* --- Scenario Container (Patient View & Log) --- */
+.scenario-container {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.patient-bedside-view {
+  flex: 2;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.patient-visual {
+  height: 150px;
+  line-height: 150px;
+  background-color: #e0f7fa; /* Light blue/white hospital sheet color */
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  transition: background-color 0.5s;
+}
+
+.patient-visual.critical-color {
+  background-color: #ffe0e6; /* Light pink/red tint */
+  color: #dc3545;
+}
+
+.monitor-display {
+  background-color: #212529; /* Black for monitor */
+  color: #28a745; /* Green for text */
+  padding: 15px;
+  border-radius: 4px;
+  text-align: left;
+  font-family: monospace;
+  font-size: 1.1rem;
+}
+
+.monitor-line {
+  margin: 5px 0;
+}
+
+.red-text { color: #dc3545; font-weight: bold; } /* HR 0 in red */
+.pink-text { color: #ff69b4; font-weight: bold; } /* RR 6 in pink */
+
+
+.story-log {
+  flex: 1;
+  background-color: #f0f2f5;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 5px solid #007bff;
+}
+
+.story-log h3 {
+  margin-top: 0;
+  color: #007bff;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.story-log p {
+  margin-bottom: 10px;
+  line-height: 1.4;
+  font-size: 0.95rem;
+}
+
+.code-called-log {
+  font-weight: bold;
+  color: #dc3545;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 1; }
+  to { opacity: 0.7; }
+}
+
+.back-to-home-btn {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: block;
+  margin: 30px auto 0;
+}
+
+.back-to-home-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .scenario-container {
+    flex-direction: column;
+  }
+  .patient-status {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

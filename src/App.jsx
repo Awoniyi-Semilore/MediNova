@@ -6,8 +6,9 @@ import Login from './components/Login'
 import SignUp from './components/SignUp'
 import Home from './components/Home'
 import RespiratorySimulation from './components/simulations/RespiratorySimulation'
-import './App.css'
+import CardiacSimulation from './components/simulations/CardiacSimulation' // <-- ADDED IMPORT
 import CardiacDocumentation from './components/simulations/CardiacDocumentation'
+import './App.css'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -28,7 +29,8 @@ function App() {
   const renderView = () => {
     switch (currentView) {
       case 'cardiac-documentation':
-  return <CardiacDocumentation onNavigate={setCurrentView} user={user} />
+        // Navigation from documentation goes back to home or the next simulation (simulation2-intro)
+        return <CardiacDocumentation onNavigate={setCurrentView} /> 
       case 'landing':
         return <Landing onNavigate={setCurrentView} />
       case 'login':
@@ -46,7 +48,14 @@ function App() {
           setCurrentView('landing')
           return <Landing onNavigate={setCurrentView} />
         }
-        return <CardiacSimulation onNavigate={setCurrentView} />
+        // Pass the general navigation function AND a specific onPass function
+        // to move to documentation upon successful completion.
+        return (
+          <CardiacSimulation 
+            onNavigate={setCurrentView} 
+            onPass={() => setCurrentView('cardiac-documentation')} 
+          />
+        )
       case 'respiratory-simulation':
         if (!user) {
           setCurrentView('landing')
