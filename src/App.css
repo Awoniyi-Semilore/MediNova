@@ -2019,3 +2019,389 @@
     align-self: flex-start;
   }
 }
+
+/* Simulation Game Styles */
+.simulation-game-area {
+  position: relative;
+  min-height: 60vh;
+}
+
+/* Urgent Status Bar */
+.urgent-status-bar {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.9; }
+}
+
+.lifeline-display {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lifeline-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.lifeline-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lifeline-bar {
+  width: 200px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.lifeline-bar.good .lifeline-fill {
+  background: linear-gradient(135deg, #10b981, #34d399);
+}
+
+.lifeline-bar.warning .lifeline-fill {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  animation: pulse-warning 1s infinite;
+}
+
+.lifeline-bar.critical .lifeline-fill {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+  animation: pulse-critical 0.5s infinite;
+}
+
+@keyframes pulse-warning {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes pulse-critical {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.lifeline-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.lifeline-percent {
+  font-weight: 700;
+  font-size: 0.9rem;
+  min-width: 40px;
+}
+
+.time-pressure {
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+/* Game State */
+.game-state {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.scenario-preview h3 {
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.scenario-preview p {
+  color: #64748b;
+  margin: 0;
+}
+
+/* Action Popup - This is the MAIN GAME INTERFACE */
+.action-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  backdrop-filter: blur(5px);
+}
+
+.action-popup {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  animation: popup-appear 0.3s ease-out;
+}
+
+@keyframes popup-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.popup-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8rem;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.popup-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.urgency-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  color: white;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.popup-header h2 {
+  color: white;
+  margin: 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.popup-header p {
+  color: #cbd5e1;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.popup-choices {
+  position: relative;
+  z-index: 2;
+}
+
+.popup-choices h4 {
+  color: white;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.emergency-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.emergency-choice-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  font-size: 0.95rem;
+}
+
+.emergency-choice-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.emergency-choice-btn:active {
+  transform: translateY(0);
+}
+
+.popup-footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.time-warning {
+  color: #fbbf24;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Game History */
+.game-history {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.game-history h4 {
+  color: #1e293b;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.history-item.correct {
+  background: #f0fdf4;
+  border-left: 4px solid #10b981;
+}
+
+.history-item.incorrect {
+  background: #fef2f2;
+  border-left: 4px solid #ef4444;
+}
+
+.history-time {
+  font-size: 0.8rem;
+  color: #64748b;
+  min-width: 50px;
+  font-weight: 600;
+}
+
+.history-action {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.history-result {
+  font-size: 1rem;
+}
+
+/* Simulation Controls */
+.simulation-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.timer-display {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+/* Skip Button */
+.btn-skip {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.btn-skip:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .urgent-status-bar {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .lifeline-display {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .lifeline-bar {
+    width: 150px;
+  }
+  
+  .action-popup {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .emergency-choice-btn {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .simulation-header-content {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .simulation-controls {
+    order: -1;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
