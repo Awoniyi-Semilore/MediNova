@@ -8,7 +8,7 @@ import Home from './components/Home'
 import CardiacSimulation from './components/simulations/CardiacSimulation'
 import RespiratorySimulation from './components/simulations/RespiratorySimulation'
 import './App.css'
-import CardiacDocumentation from './components/simulations/CardiacDocumentation'
+import CardiacDocumentation from './components/simulations/CardiacDocumentation.jsx'
 
 function App() {
   const [user, setUser] = useState(null)
