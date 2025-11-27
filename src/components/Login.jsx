@@ -1,24 +1,54 @@
 import React, { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase-config'
+import Popup from './Popup'
 
 const Login = ({ onNavigate, setUser }) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [popup, setPopup] = useState({ show: false, message: '', type: 'error' })
+
+  const showPopup = (message, type = 'error') => {
+    setPopup({ show: true, message, type })
+  }
+
+  const hidePopup = () => {
+    setPopup({ ...popup, show: false })
+  }
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault()
     setLoading(true)
-    setError('')
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password)
       setUser(userCredential.user)
-      onNavigate('home')
+      showPopup('Welcome back!', 'success')
+      setTimeout(() => onNavigate('home'), 1000)
     } catch (error) {
-      setError('Failed to login: ' + error.message)
+      let errorMessage = 'Something went wrong. Please try again.'
+      
+      if (error.code === 'auth/invalid-credential') {
+        errorMessage = 'Invalid email or password. Please check your credentials.'
+      } else if (error.code === 'auth/user-not-found') {
+        errorMessage = 'No account found with this email. Please sign up first.'
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'Incorrect password. Please try again.'
+      } else if (error.code === 'auth/too-many-requests') {
+        errorMessage = 'Too many failed attempts. Please try again later.'
+      }
+      
+      showPopup(errorMessage)
     } finally {
       setLoading(false)
     }
@@ -26,26 +56,37 @@ const Login = ({ onNavigate, setUser }) => {
 
   return (
     <div className="auth-page">
+      <Popup 
+        show={popup.show}
+        message={popup.message}
+        type={popup.type}
+        onClose={hidePopup}
+      />
+      
       <div className="auth-container">
         <button 
           className="back-button"
           onClick={() => onNavigate('landing')}
         >
-          ← Back
+          ← Back to Home
         </button>
 
-        <h1>Login to MediNova</h1>
-        <p>Continue your medical training journey</p>
+        <div className="auth-header">
+          <div className="auth-logo">
+            <span className="auth-logo-icon">⚕️</span>
+            <h1>Welcome Back</h1>
+          </div>
+          <p>Continue your medical training journey</p>
+        </div>
 
         <form onSubmit={handleLogin} className="auth-form">
-          {error && <div className="error-message">{error}</div>}
-          
           <div className="form-group">
-            <label>Email</label>
+            <label>Email Address</label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="Enter your email"
               required
             />
@@ -55,8 +96,9 @@ const Login = ({ onNavigate, setUser }) => {
             <label>Password</label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               placeholder="Enter your password"
               required
             />
@@ -64,10 +106,17 @@ const Login = ({ onNavigate, setUser }) => {
 
           <button 
             type="submit" 
-            className="btn btn-primary"
+            className="btn btn-primary auth-submit-btn"
             disabled={loading}
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? (
+              <>
+                <span className="btn-spinner"></span>
+                Signing In...
+              </>
+            ) : (
+              'Sign In to MediNova'
+            )}
           </button>
         </form>
 
@@ -77,7 +126,7 @@ const Login = ({ onNavigate, setUser }) => {
             className="link-button"
             onClick={() => onNavigate('signup')}
           >
-            Sign up here
+            Create one here
           </button>
         </p>
       </div>
