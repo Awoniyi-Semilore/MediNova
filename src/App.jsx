@@ -6,8 +6,10 @@ import Login from './components/Login'
 import SignUp from './components/SignUp'
 import Home from './components/Home'
 import RespiratorySimulation from './components/simulations/RespiratorySimulation'
-import CardiacSimulation from './components/simulations/CardiacSimulation' // <-- ADDED IMPORT
+import CardiacSimulation from './components/simulations/CardiacSimulation'
+import CardiacRhythmSimulation from './components/simulations/CardiacRhythmSimulation' // <-- NEW IMPORT
 import CardiacDocumentation from './components/simulations/CardiacDocumentation'
+import RhythmDocumentation from './components/simulations/RhythmDocumentation' // <-- NEW IMPORT
 import './App.css'
 
 function App() {
@@ -27,10 +29,16 @@ function App() {
 
   // Render different views based on currentView state
   const renderView = () => {
+    // Helper to enforce user authentication before proceeding to a view
+    const authenticatedView = (Component, props = {}) => {
+      if (!user) {
+        setCurrentView('landing')
+        return <Landing onNavigate={setCurrentView} />
+      }
+      return <Component onNavigate={setCurrentView} {...props} />
+    }
+
     switch (currentView) {
-      case 'cardiac-documentation':
-        // Navigation from documentation goes back to home or the next simulation (simulation2-intro)
-        return <CardiacDocumentation onNavigate={setCurrentView} /> 
       case 'landing':
         return <Landing onNavigate={setCurrentView} />
       case 'login':
@@ -38,30 +46,29 @@ function App() {
       case 'signup':
         return <SignUp onNavigate={setCurrentView} setUser={setUser} />
       case 'home':
-        if (!user) {
-          setCurrentView('landing')
-          return <Landing onNavigate={setCurrentView} />
-        }
-        return <Home onNavigate={setCurrentView} user={user} />
+        return authenticatedView(Home, { user })
+
+      // --- Simulation 1 Flow (Recognition) ---
       case 'cardiac-simulation':
-        if (!user) {
-          setCurrentView('landing')
-          return <Landing onNavigate={setCurrentView} />
-        }
-        // Pass the general navigation function AND a specific onPass function
-        // to move to documentation upon successful completion.
-        return (
-          <CardiacSimulation 
-            onNavigate={setCurrentView} 
-            onPass={() => setCurrentView('cardiac-documentation')} 
-          />
-        )
+        return authenticatedView(CardiacSimulation, {
+          onPass: () => setCurrentView('cardiac-documentation')
+        })
+      case 'cardiac-documentation':
+        return authenticatedView(CardiacDocumentation)
+
+      // --- Simulation 2 Flow (Rhythm Management) ---
+      case 'simulation2-intro': // Entry point from Sim 1 documentation
+      case 'cardiac-rhythm-simulation':
+        return authenticatedView(CardiacRhythmSimulation, {
+          onPass: () => setCurrentView('rhythm-documentation')
+        })
+      case 'rhythm-documentation':
+        return authenticatedView(RhythmDocumentation)
+
+      // --- Other Simulations ---
       case 'respiratory-simulation':
-        if (!user) {
-          setCurrentView('landing')
-          return <Landing onNavigate={setCurrentView} />
-        }
-        return <RespiratorySimulation onNavigate={setCurrentView} />
+        return authenticatedView(RespiratorySimulation)
+
       default:
         return <Landing onNavigate={setCurrentView} />
     }
