@@ -18,7 +18,7 @@ const CardiacDocumentation = ({ onNavigate }) => {
         <section className="pathophysiology-review">
           <h2>🧠 Pathophysiology and Distinction</h2>
           <p>
-            **Cardiac arrest (CA)** is the sudden, unexpected loss of heart function, breathing, and consciousness. It is a state of **cessation of cardiac mechanical activity**.
+            <span style={{color: 'blue', fontWeight: 'bold'}}>Cardiac arrest (CA)</span> is the sudden, unexpected loss of heart function, breathing, and consciousness. It is a state of **cessation of cardiac mechanical activity**.
           </p>
           <p>
             The critical skill in Simulation 1 was differentiation:
