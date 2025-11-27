@@ -23,7 +23,7 @@ const ConfirmPopup = ({ show, title, message, onConfirm, onCancel }) => {
           </button>
           <button 
             onClick={onConfirm}
-            className="popup-confirm-btn" {/* Replaced Tailwind */}
+            className="popup-confirm-btn" 
           >
             Confirm
           </button>
