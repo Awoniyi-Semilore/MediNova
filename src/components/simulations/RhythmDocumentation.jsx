@@ -22,29 +22,29 @@ const RhythmDocumentation = ({ onNavigate }) => {
           </p>
           
           <div className="key-terms-box">
-            <h3>Shockable Rhythms ($VF$/$pVT$)</h3>
+            <h3>Shockable Rhythms (VF/pVT)</h3>
             <p>
-              Requires immediate defibrillation. If no $ROSC$, the cycle continues with 2 minutes of $CPR$ and drug administration.
+              Requires immediate defibrillation. If no ROSC, the cycle continues with 2 minutes of CPR and drug administration.
             </p>
             <ul className="clinical-list">
                 <li><span style={{fontWeight: 'bold'}}>Shock 1:</span> Immediate (200J, Biphasic).</li>
-                <li><span style={{fontWeight: 'bold'}}>Post-Shock:</span> 2 minutes $CPR$ immediately (do NOT check pulse).</li>
+                <li><span style={{fontWeight: 'bold'}}>Post-Shock:</span> 2 minutes CPR immediately (do NOT check pulse).</li>
                 <li><span style={{fontWeight: 'bold'}}>Medication Cycle 1:</span> Epinephrine 1 mg IV/IO.</li>
                 <li><span style={{fontWeight: 'bold'}}>Shock 2:</span> Repeat shock (200J+).</li>
                 <li><span style={{fontWeight: 'bold'}}>Medication Cycle 2:</span> Amiodarone 300 mg IV/IO (or Lidocaine).</li>
             </ul>
-            [Image of ACLS Cardiac Arrest Algorithm]
+            
           </div>
 
           <div className="key-terms-box">
-            <h3>Non-Shockable Rhythms (Asystole/$PEA$)</h3>
+            <h3>Non-Shockable Rhythms (Asystole/PEA)</h3>
             <p>
-              Requires high-quality $CPR$ and identification/treatment of underlying causes (H's and T's). Defibrillation is ineffective.
+              Requires high-quality CPR and identification/treatment of underlying causes (H's and T's). Defibrillation is ineffective.
             </p>
             <ul className="clinical-list">
-                <li><span style={{fontWeight: 'bold'}}>Action:</span> Immediate $CPR$ for 2 minutes.</li>
+                <li><span style={{fontWeight: 'bold'}}>Action:</span> Immediate CPR for 2 minutes.</li>
                 <li><span style={{fontWeight: 'bold'}}>Medication Cycle 1:</span> Epinephrine 1 mg IV/IO (as soon as IV/IO access is available).</li>
-                <li><span style={{fontWeight: 'bold'}}>Repeat:</span> Re-assess rhythm (no pulse check unless $ROSC$). Continue $CPR$/Epi every 3-5 minutes.</li>
+                <li><span style={{fontWeight: 'bold'}}>Repeat:</span> Re-assess rhythm (no pulse check unless ROSC). Continue CPR/Epi every 3-5 minutes.</li>
             </ul>
           </div>
         </section>
@@ -52,7 +52,7 @@ const RhythmDocumentation = ({ onNavigate }) => {
         <section className="hs-and-ts">
           <h2>💊 5 H's and 5 T's (Reversible Causes)</h2>
           <p>
-            Documentation of attempts to identify and treat reversible causes is critical. The "H's and T's" should be considered during every $CPR$ cycle.
+            Documentation of attempts to identify and treat reversible causes is critical. The "H's and T's" should be considered during every CPR cycle.
           </p>
           <div style={{display: 'flex', gap: '2rem'}}>
             <ul style={{flex: 1}}>
@@ -66,7 +66,8 @@ const RhythmDocumentation = ({ onNavigate }) => {
             <ul style={{flex: 1}}>
               <span style={{fontWeight: 'bold', fontSize: '1.1rem'}}>T's (Tension Pneumothorax, Tamponade, etc.)</span>
               <li><span style={{fontWeight: 'bold'}}>Tension Pneumothorax:</span> Needle decompression.</li>
-              <li><span style={{fontWeight: 'bold')}>Tamponade (Cardiac):</span> Pericardiocentesis.</li>
+              {/* FIX: Removed the extra closing parenthesis that caused the build error */}
+              <li><span style={{fontWeight: 'bold'}}>Tamponade (Cardiac):</span> Pericardiocentesis.</li>
               <li><span style={{fontWeight: 'bold'}}>Toxins:</span> Consider antidote, call Poison Control.</li>
               <li><span style={{fontWeight: 'bold'}}>Thrombosis (Pulmonary or Coronary):</span> Consider Fibrinolytics (for confirmed PE).</li>
               <li><span style={{fontWeight: 'bold'}}>Trauma:</span> Treat injuries (Bleeding, Spleen Rupture, etc.).</li>
