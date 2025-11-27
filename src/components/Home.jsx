@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { signOut } from ''./config/firebase.js'
+import { signOut } from 'firebase/auth'
 import { auth } from '../firebase-config'
 import ConfirmPopup from './Confirmpopup.jsx'
 
