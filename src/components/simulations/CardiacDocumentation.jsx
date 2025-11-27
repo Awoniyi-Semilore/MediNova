@@ -1,5 +1,5 @@
 import React from 'react'
-import '../App.css'
+import '../../App.css'
 
 const CardiacDocumentation = ({ onNavigate, user }) => {
   const nurseName = user?.displayName?.split(' ')[0] || 'Nurse'
