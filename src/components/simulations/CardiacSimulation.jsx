@@ -9,32 +9,525 @@ const CardiacSimulation = ({ onNavigate, user }) => {
   const [patientLifeline, setPatientLifeline] = useState(100)
   const [isPaused, setIsPaused] = useState(false)
   const [gameHistory, setGameHistory] = useState([])
-  const [audioPlaying, setAudioPlaying] = useState(false)
-  const audioRef = useRef(null)
+  const [score, setScore] = useState(0)
+  const [showFeedback, setShowFeedback] = useState(false)
+  const [currentFeedback, setCurrentFeedback] = useState('')
 
-  // Get user's first name or use "Nurse" as default
   const nurseName = user?.displayName?.split(' ')[0] || 'Nurse'
 
-  // Complete storyline with timed events
+  // Comprehensive Simulation 1 Storyline - Initial Emergency Response
   const storyline = [
     {
-      id: 'arrival',
-      title: "EMERGENCY ARRIVAL",
-      description: `You're at the nurses' station when a man collapses in the waiting room. His wife screams for help!`,
+      id: 'triage_arrival',
+      title: "EMERGENCY DEPARTMENT - TRIAGE",
+      description: `You're at the triage desk when Mr. Johnson (58M) is rushed in by paramedics. He's pale, diaphoretic (sweaty), and clutching his chest. His wife is following, looking terrified.`,
       background: "🏥",
-      audio: "screaming", // You'll add audio file
-      delay: 0,
+      urgency: "URGENT",
       choices: [
         { 
-          text: "Run to assess the patient immediately", 
-          next: 'assessment', 
+          text: "Immediately assess airway, breathing, circulation (ABC)", 
+          next: 'abc_assessment', 
           correct: true,
-          feedback: "Good! Rapid response is critical in cardiac arrest."
+          feedback: "Excellent! ABC assessment is the first priority in any emergency."
         },
         { 
-          text: "Call security first", 
-          next: 'wrong_security', 
+          text: "Ask the wife for complete medical history first", 
+          next: 'wrong_history_first', 
           correct: false,
+          feedback: "While history is important, patient assessment takes priority in emergencies."
+        },
+        { 
+          text: "Direct them to a waiting room bed", 
+          next: 'wrong_waiting', 
+          correct: false,
+          feedback: "Critical patients need immediate assessment, not waiting."
+        },
+        { 
+          text: "Start filling out admission paperwork", 
+          next: 'wrong_paperwork', 
+          correct: false,
+          feedback: "Clinical assessment always comes before administrative tasks."
+        }
+      ]
+    },
+    {
+      id: 'abc_assessment',
+      title: "INITIAL ASSESSMENT - ABC",
+      description: `You quickly assess Mr. Johnson. Airway: patent but he's struggling to speak. Breathing: rapid and shallow at 28/min. Circulation: weak radial pulse, skin cool and clammy.`,
+      background: "🔍",
+      urgency: "HIGH",
+      choices: [
+        { 
+          text: "Apply oxygen via non-rebreather mask at 15L/min", 
+          next: 'oxygen_application', 
+          correct: true,
+          feedback: "Correct! Oxygen is crucial for patients with respiratory distress and potential cardiac issues."
+        },
+        { 
+          text: "Take a full set of vital signs immediately", 
+          next: 'vitals_first', 
+          correct: false,
+          feedback: "While vitals are important, addressing hypoxia takes immediate priority."
+        },
+        { 
+          text: "Ask him to describe his pain in detail", 
+          next: 'wrong_pain_assessment', 
+          correct: false,
+          feedback: "Detailed pain assessment can wait until basic life support is established."
+        },
+        { 
+          text: "Start an IV line immediately", 
+          next: 'wrong_iv_first', 
+          correct: false,
+          feedback: "IV access is important but oxygenation comes first in the ABC sequence."
+        }
+      ]
+    },
+    {
+      id: 'oxygen_application',
+      title: "OXYGEN ADMINISTERED",
+      description: `You apply high-flow oxygen. Mr. Johnson's color improves slightly but he remains in distress. He points to his chest: "The pain... crushing..."`,
+      background: "💨",
+      urgency: "HIGH",
+      choices: [
+        { 
+          text: "Attach cardiac monitor and get 12-lead ECG immediately", 
+          next: 'ecg_monitoring', 
+          correct: true,
+          feedback: "Perfect! Cardiac monitoring is essential for chest pain patients to rule out STEMI."
+        },
+        { 
+          text: "Administer nitroglycerin for the chest pain", 
+          next: 'wrong_nitro_first', 
+          correct: false,
+          feedback: "Never give nitroglycerin before checking blood pressure and ruling out right ventricular infarction."
+        },
+        { 
+          text: "Give morphine for pain relief", 
+          next: 'wrong_morphine', 
+          correct: false,
+          feedback: "Morphine should be given cautiously and only after initial assessment in cardiac patients."
+        },
+        { 
+          text: "Take a detailed family history", 
+          next: 'wrong_family_history', 
+          correct: false,
+          feedback: "Clinical assessment and monitoring take priority over detailed history at this stage."
+        }
+      ]
+    },
+    {
+      id: 'ecg_monitoring',
+      title: "CARDIAC MONITORING INITIATED",
+      description: `You attach the monitor. Rhythm shows sinus tachycardia at 110 bpm. As you're placing ECG electrodes, Mr. Johnson suddenly becomes unresponsive!`,
+      background: "📊",
+      urgency: "CRITICAL",
+      choices: [
+        { 
+          text: "Shout for help and check for responsiveness and pulse", 
+          next: 'unresponsive_check', 
+          correct: true,
+          feedback: "Correct! Immediate assessment of unresponsiveness is the first step in cardiac arrest."
+        },
+        { 
+          text: "Immediately start chest compressions", 
+          next: 'wrong_compressions_early', 
+          correct: false,
+          feedback: "Always check for pulse and breathing before starting CPR to avoid unnecessary compressions."
+        },
+        { 
+          text: "Run to get the crash cart", 
+          next: 'wrong_crash_cart', 
+          correct: false,
+          feedback: "Never leave an unresponsive patient. Call for help while assessing the patient."
+        },
+        { 
+          text: "Check pupil response first", 
+          next: 'wrong_pupils', 
+          correct: false,
+          feedback: "In unresponsive patients, circulation assessment (pulse check) takes priority over neurological exam."
+        }
+      ]
+    },
+    {
+      id: 'unresponsive_check',
+      title: "NO PULSE DETECTED - CARDIAC ARREST",
+      description: `No carotid pulse! Patient is not breathing. Monitor now shows Ventricular Fibrillation! This is a Code Blue!`,
+      background: "💔",
+      urgency: "CRITICAL",
+      choices: [
+        { 
+          text: "Begin high-quality CPR and call Code Blue", 
+          next: 'cpr_initiation', 
+          correct: true,
+          feedback: "Excellent! Early CPR and activating emergency response are critical for survival."
+        },
+        { 
+          text: "Apply defibrillator pads immediately", 
+          next: 'wrong_pads_first', 
+          correct: false,
+          feedback: "CPR should begin immediately while someone else gets the defibrillator."
+        },
+        { 
+          text: "Check for a pulse for another 30 seconds", 
+          next: 'wrong_prolonged_check', 
+          correct: false,
+          feedback: "Pulse check should be brief (5-10 seconds). Prolonged checking delays life-saving CPR."
+        },
+        { 
+          text: "Give emergency medications first", 
+          next: 'wrong_meds_first', 
+          correct: false,
+          feedback: "CPR and defibrillation are the first priorities in cardiac arrest, not medications."
+        }
+      ]
+    },
+    {
+      id: 'cpr_initiation',
+      title: "CPR IN PROGRESS - CODE BLUE ACTIVATED",
+      description: `You're performing chest compressions at 100-120/min. The Code Blue team arrives with the crash cart. Monitor shows persistent V-Fib.`,
+      background: "🫀",
+      urgency: "CRITICAL",
+      choices: [
+        { 
+          text: "Continue CPR while team applies defibrillator pads", 
+          next: 'team_coordination', 
+          correct: true,
+          feedback: "Perfect! Minimizing interruptions in CPR is crucial for maintaining coronary perfusion."
+        },
+        { 
+          text: "Stop CPR to help apply the pads faster", 
+          next: 'wrong_stop_cpr', 
+          correct: false,
+          feedback: "CPR should continue during pad application. Every second without compressions reduces survival."
+        },
+        { 
+          text: "Switch to rescue breaths only", 
+          next: 'wrong_breaths_only', 
+          correct: false,
+          feedback: "In cardiac arrest, chest compressions are more important than rescue breaths initially."
+        },
+        { 
+          text: "Check rhythm before continuing", 
+          next: 'wrong_rhythm_check', 
+          correct: false,
+          feedback: "Rhythm checks should be brief and scheduled, not interrupting ongoing CPR unnecessarily."
+        }
+      ]
+    },
+    {
+      id: 'team_coordination',
+      title: "TEAM RESPONSE - DEFIBRILLATOR READY",
+      description: `Pads applied! "All clear!" your colleague shouts. Monitor shows persistent V-Fib. The team is ready for your direction.`,
+      background: "⚡",
+      urgency: "CRITICAL",
+      choices: [
+        { 
+          text: "Deliver 200J biphasic shock and immediately resume CPR", 
+          next: 'defibrillation', 
+          correct: true,
+          feedback: "Correct! Immediate CPR after defibrillation is essential for success."
+        },
+        { 
+          text: "Wait to see if rhythm changes before resuming", 
+          next: 'wrong_wait_rhythm', 
+          correct: false,
+          feedback: "Never wait after defibrillation. Resume CPR immediately regardless of rhythm."
+        },
+        { 
+          text: "Check pulse before deciding next steps", 
+          next: 'wrong_pulse_check_after', 
+          correct: false,
+          feedback: "Pulse checks immediately after shock are unreliable. Resume CPR immediately."
+        },
+        { 
+          text: "Administer epinephrine before resuming CPR", 
+          next: 'wrong_epi_first', 
+          correct: false,
+          feedback: "Medications can wait. CPR and minimizing interruptions are the priority."
+        }
+      ]
+    },
+    {
+      id: 'defibrillation',
+      title: "SHOCK DELIVERED - CONTINUING RESUSCITATION",
+      description: `Shock delivered successfully! You immediately resume CPR. After 2 minutes of quality CPR, rhythm check shows organized electrical activity!`,
+      background: "📈",
+      urgency: "HIGH",
+      choices: [
+        { 
+          text: "Check for pulse and breathing - ROSC achieved!", 
+          next: 'success', 
+          correct: true,
+          feedback: "OUTSTANDING! You successfully managed the cardiac arrest from recognition to ROSC!"
+        }
+      ]
+    },
+    // Wrong path scenarios with educational feedback
+    {
+      id: 'wrong_history_first',
+      title: "DELAY IN ASSESSMENT",
+      description: `Taking detailed history first wasted critical minutes. Mr. Johnson's condition deteriorates while you're getting history.`,
+      background: "⏰",
+      urgency: "HIGH",
+      choices: [
+        { 
+          text: "Return to ABC assessment immediately", 
+          next: 'abc_assessment', 
+          correct: false,
+          feedback: "Remember: In emergencies, clinical assessment always comes before detailed history."
+        }
+      ]
+    }
+  ]
+
+  // Timer effect
+  useEffect(() => {
+    if (currentStep === 'simulation' && !isPaused) {
+      const interval = setInterval(() => {
+        setTimer(prev => prev + 1)
+      }, 1000)
+      return () => clearInterval(interval)
+    }
+  }, [currentStep, isPaused])
+
+  const handleVideoEnd = () => {
+    startStoryline()
+  }
+
+  const handleSkipVideo = () => {
+    startStoryline()
+  }
+
+  const startStoryline = () => {
+    setCurrentStep('simulation')
+    showNextScene('triage_arrival')
+  }
+
+  const showNextScene = (sceneId) => {
+    const scene = storyline.find(s => s.id === sceneId)
+    if (scene) {
+      setTimeout(() => {
+        setCurrentScene(scene)
+        setShowStoryPopup(true)
+        setShowFeedback(false)
+      }, 1000)
+    }
+  }
+
+  const handleChoice = (choice) => {
+    // Add to game history
+    setGameHistory(prev => [...prev, {
+      scene: currentScene.title,
+      action: choice.text,
+      correct: choice.correct,
+      feedback: choice.feedback,
+      timestamp: timer
+    }])
+
+    // Update score
+    if (choice.correct) {
+      setScore(prev => prev + 10)
+    }
+
+    // Handle lifeline changes
+    if (!choice.correct) {
+      setPatientLifeline(prev => Math.max(0, prev - 15))
+    }
+
+    // Show feedback
+    setShowStoryPopup(false)
+    setCurrentFeedback(choice.feedback)
+    setShowFeedback(true)
+    
+    setTimeout(() => {
+      setShowFeedback(false)
+      
+      if (patientLifeline <= 20 && !choice.correct) {
+        // Game over scenario
+        setCurrentScene({
+          id: 'game_over',
+          title: "SIMULATION FAILED",
+          description: `Critical errors were made in the emergency response. Review the learning objectives and try again.`,
+          background: "💀",
+          choices: [{ 
+            text: "Review Learning Materials", 
+            next: 'documentation',
+            feedback: "Understanding the fundamentals is key to successful emergency response."
+          }]
+        })
+        setShowStoryPopup(true)
+      } else if (choice.next === 'success') {
+        // Success scenario - Calculate final score
+        const finalScore = score + (patientLifeline * 0.5) + 30
+        setCurrentScene({
+          id: 'success',
+          title: "SIMULATION 1 COMPLETE! 🎉",
+          description: `Congratulations ${nurseName}! You successfully managed the cardiac emergency from recognition through resuscitation. Final Score: ${Math.round(finalScore)}/100`,
+          background: "✅",
+          choices: [{ 
+            text: "Review Learning Materials", 
+            next: 'documentation',
+            feedback: "Excellent work! Let's review what you've learned."
+          }]
+        })
+        setShowStoryPopup(true)
+      } else if (choice.next === 'documentation') {
+        // Go to documentation page
+        onNavigate('cardiac-documentation')
+      } else {
+        showNextScene(choice.next)
+      }
+    }, 3000)
+  }
+
+  const handlePause = () => {
+    setIsPaused(!isPaused)
+  }
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+  }
+
+  const getUrgencyColor = (urgency) => {
+    switch(urgency) {
+      case 'CRITICAL': return '#dc2626'
+      case 'HIGH': return '#ea580c'
+      case 'URGENT': return '#d97706'
+      case 'STABLE': return '#059669'
+      default: return '#3b82f6'
+    }
+  }
+
+  return (
+    <div className="simulation-page">
+      <header className="simulation-header">
+        <div className="simulation-header-content">
+          <button 
+            className="back-sim-btn"
+            onClick={() => onNavigate('home')}
+          >
+            ← Exit Simulation
+          </button>
+          <div className="simulation-header-info">
+            <h1>Simulation 1: Cardiac Emergency Response</h1>
+            <p>Initial Assessment & Basic Life Support</p>
+          </div>
+          <div className="simulation-controls">
+            <div className="timer-display">
+              ⏱️ {formatTime(timer)}
+            </div>
+            <div className="score-display">
+              🏆 {score}
+            </div>
+            <button 
+              className={`pause-btn ${isPaused ? 'paused' : ''}`}
+              onClick={handlePause}
+            >
+              {isPaused ? '▶️ Resume' : '⏸️ Pause'}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div className="simulation-content">
+        {/* Video Intro Section */}
+        {currentStep === 'video' && (
+          <div className="video-section">
+            <div className="video-container">
+              <div className="video-placeholder">
+                <div className="video-placeholder-content">
+                  <span className="video-icon">🎬</span>
+                  <h3>SIMULATION 1: CARDIAC EMERGENCY</h3>
+                  <p>Learn to recognize and respond to cardiac emergencies</p>
+                  <div className="learning-objectives">
+                    <h4>Learning Objectives:</h4>
+                    <ul>
+                      <li>✓ Recognize signs of cardiac compromise</li>
+                      <li>✓ Perform initial ABC assessment</li>
+                      <li>✓ Initiate basic life support</li>
+                      <li>✓ Coordinate emergency team response</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="video-controls">
+                <button className="btn btn-skip" onClick={handleSkipVideo}>
+                  ⏭️ Begin Simulation
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Simulation Area */}
+        {currentStep === 'simulation' && (
+          <div className="simulation-game-area">
+            {/* Status Dashboard */}
+            <div className="simulation-dashboard">
+              <div className="dashboard-item">
+                <span className="dashboard-label">Patient Status:</span>
+                <span className={`dashboard-value ${patientLifeline > 60 ? 'stable' : patientLifeline > 30 ? 'critical' : 'failing'}`}>
+                  {patientLifeline > 60 ? 'STABLE' : patientLifeline > 30 ? 'CRITICAL' : 'FAILING'}
+                </span>
+              </div>
+              <div className="dashboard-item">
+                <span className="dashboard-label">Lifeline:</span>
+                <div className="lifeline-container">
+                  <div 
+                    className={`lifeline-bar ${patientLifeline > 60 ? 'good' : patientLifeline > 30 ? 'warning' : 'critical'}`}
+                  >
+                    <div 
+                      className="lifeline-fill"
+                      style={{width: `${patientLifeline}%`}}
+                    ></div>
+                  </div>
+                  <span className="lifeline-percent">{patientLifeline}%</span>
+                </div>
+              </div>
+              <div className="dashboard-item">
+                <span className="dashboard-label">Time:</span>
+                <span className="dashboard-value">{formatTime(timer)}</span>
+              </div>
+              <div className="dashboard-item">
+                <span className="dashboard-label">Score:</span>
+                <span className="dashboard-value">{score}</span>
+              </div>
+            </div>
+
+            {/* Progress Tracker */}
+            <div className="progress-tracker">
+              <h4>Simulation Progress</h4>
+              <div className="progress-steps">
+                {['Triage', 'Assessment', 'Monitoring', 'Arrest', 'CPR', 'Defibrillation', 'ROSC'].map((step, index) => (
+                  <div 
+                    key={step}
+                    className={`progress-step ${currentScene && index <= storyline.findIndex(s => s.id === currentScene.id) ? 'completed' : ''} ${currentScene && storyline.findIndex(s => s.id === currentScene.id) === index ? 'active' : ''}`}
+                  >
+                    <div className="step-number">{index + 1}</div>
+                    <div className="step-label">{step}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Story Popup */}
+            {showStoryPopup && currentScene && (
+              <div className="story-popup-overlay">
+                <div 
+                  className="story-popup"
+                  style={{
+                    borderLeft: `6px solid ${getUrgencyColor(currentScene.urgency)}`
+                  }}
+                >
+                  <div className="popup-scene-background">
+                    {currentScene.background}
+                  </div>
+                  
+                  <div          correct: false,
           feedback: "Delay in assessment reduces survival chances. Always assess first."
         },
         { 
