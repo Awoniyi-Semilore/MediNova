@@ -24,7 +24,8 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
         confirmText: 'Skip Video & Start Simulation',
         cancel: () => { 
           // Logic for showing the video or just proceeding after a timer 
-          alert("Placeholder: Video playing... Click 'Start' when ready.");
+          // NOTE: Changed alert() to a temporary console message for compliance
+          console.log("Placeholder: Video playing... Click 'Start' when ready.");
           setStep('initial-assessment');
         },
         cancelText: 'Watch Video (Placeholder)'
@@ -34,7 +35,7 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
       title: `Patient Check: ${scenarioPatient}`,
       message: (
         <span>
-          You enter the room at 09:30 for a routine check. You see Mr. Chen slumped slightly in bed, and his <span style={{fontWeight: 'bold'}}>breathing is shallow and slow</span> ($\text{RR} \approx 6 \text{ bpm}$). What is your immediate priority?
+          You enter the room at 09:30 for a routine check. You see Mr. Chen slumped slightly in bed, and his <span style={{fontWeight: 'bold'}}>breathing is shallow and slow</span> (RR ≈ 6 bpm). What is your immediate priority?
         </span>
       ),
       type: 'blue',
@@ -72,12 +73,12 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
       options: [
         { text: 'A) Start chest compressions immediately before calling for help.', isCorrect: false, nextStep: 'fail' },
         { text: <span>B) <span style={{fontWeight: 'bold'}}>Activate the Emergency Response System/Call a Code Blue.</span></span>, isCorrect: true, nextStep: 'pass' },
-        { text: 'C) Prepare to administer $\text{IV}$ fluids to increase blood pressure.', isCorrect: false, nextStep: 'fail' }
+        { text: 'C) Prepare to administer IV fluids to increase blood pressure.', isCorrect: false, nextStep: 'fail' }
       ]
     },
     'pass': {
       title: '✅ Simulation Passed!',
-      message: "Code team activated! You correctly identified the cardiac arrest, prioritized the $\text{A-B-C}$ (now $\text{C-A-B}$) steps, and initiated the call for help. This is the foundation of $\text{ACLS}$. Proceed to the Documentation review.",
+      message: "Code team activated! You correctly identified the cardiac arrest, prioritized the A-B-C (now C-A-B) steps, and initiated the call for help. This is the foundation of ACLS. Proceed to the Documentation review.",
       type: 'green',
       isDecision: false,
       actions: {
