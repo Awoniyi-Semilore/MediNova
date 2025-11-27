@@ -24,9 +24,10 @@ const CardiacDocumentation = ({ onNavigate, onPass }) => {
             <h3>Key Takeaways from Simulation 1</h3>
             <ul className="clinical-list">
                 <li><span style={{fontWeight: 'bold'}}>Priority 1:</span> Assess responsiveness immediately (Shake & Shout).</li>
-                <li><span style={{fontWeight: 'bold'}}>Priority 2:</span> If unresponsive, check for pulse and breathing simultaneously for no more than $\le 10$ seconds.</li>
-                <li><span style={{fontWeight: 'bold'}}>Priority 3:</span> If no pulse/apneic, **immediately call a Code Blue** (Activate the Emergency Response System). Do not delay activation to start $CPR$ alone.</li>
-                <li><span style={{fontWeight: 'bold'}}>Priority 4:</span> Start high-quality chest compressions ($CAB$) at a rate of $100\text{–}120\text{ per minute}$, $5\text{–}6\text{ cm}$ deep.</li>
+                <li><span style={{fontWeight: 'bold'}}>Priority 2:</span> If unresponsive, check for pulse and breathing simultaneously for no more than &le; 10 seconds.</li>
+                <li><span style={{fontWeight: 'bold'}}>Priority 3:</span> If no pulse/apneic, **immediately call a Code Blue** (Activate the Emergency Response System). Do not delay activation to start CPR alone.</li>
+                {/* FIX: Removed LaTeX syntax and Unicode dash that caused the Invalid Character error */}
+                <li><span style={{fontWeight: 'bold'}}>Priority 4:</span> Start high-quality chest compressions (CAB) at a rate of 100-120 per minute, 5-6 cm deep.</li>
             </ul>
           </div>
         </section>
@@ -39,10 +40,10 @@ const CardiacDocumentation = ({ onNavigate, onPass }) => {
           </p>
           <ol className="clinical-list">
             <li>Immediate Recognition of Cardiac Arrest and Activation of the Emergency Response System.</li>
-            <li>Early Cardiopulmonary Resuscitation ($CPR$) with emphasis on chest compressions.</li>
-            <li>Rapid Defibrillation (for shockable rhythms like $VF$/$pVT$).</li>
-            <li>Effective Advanced Life Support ($ALS$) (Simulations 2 & 3).</li>
-            <li>Integrated Post-Cardiac Arrest Care ($P\text{-}CACC$) (Simulation 3).</li>
+            <li>Early Cardiopulmonary Resuscitation (CPR) with emphasis on chest compressions.</li>
+            <li>Rapid Defibrillation (for shockable rhythms like VF/pVT).</li>
+            <li>Effective Advanced Life Support (ALS) (Simulations 2 & 3).</li>
+            <li>Integrated Post-Cardiac Arrest Care (P-CACC) (Simulation 3).</li>
           </ol>
         </section>
       </div>
