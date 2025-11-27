@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth } from '../firebase-config'
+import Popup from './Popup'
 
 const SignUp = ({ onNavigate, setUser }) => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,15 @@ const SignUp = ({ onNavigate, setUser }) => {
     lastName: ''
   })
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [popup, setPopup] = useState({ show: false, message: '', type: 'error' })
+
+  const showPopup = (message, type = 'error') => {
+    setPopup({ show: true, message, type })
+  }
+
+  const hidePopup = () => {
+    setPopup({ ...popup, show: false })
+  }
 
   const handleChange = (e) => {
     setFormData({
@@ -23,16 +32,15 @@ const SignUp = ({ onNavigate, setUser }) => {
   const handleSignUp = async (e) => {
     e.preventDefault()
     setLoading(true)
-    setError('')
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
+      showPopup('Passwords do not match. Please try again.')
       setLoading(false)
       return
     }
 
     if (formData.password.length < 6) {
-      setError('Password should be at least 6 characters')
+      showPopup('Password should be at least 6 characters long.')
       setLoading(false)
       return
     }
@@ -44,16 +52,25 @@ const SignUp = ({ onNavigate, setUser }) => {
         formData.password
       )
       
-      // Update profile with name
       await updateProfile(userCredential.user, {
         displayName: `${formData.firstName} ${formData.lastName}`
       })
       
       setUser(userCredential.user)
-      onNavigate('home')
+      showPopup('Account created successfully! Welcome to MediNova.', 'success')
+      setTimeout(() => onNavigate('home'), 1500)
     } catch (error) {
-      console.error('Signup error:', error)
-      setError(error.message)
+      let errorMessage = 'Something went wrong. Please try again.'
+      
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'This email is already registered. Please use a different email or login.'
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Please enter a valid email address.'
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = 'Password is too weak. Please choose a stronger password.'
+      }
+      
+      showPopup(errorMessage)
     } finally {
       setLoading(false)
     }
@@ -61,20 +78,30 @@ const SignUp = ({ onNavigate, setUser }) => {
 
   return (
     <div className="auth-page">
+      <Popup 
+        show={popup.show}
+        message={popup.message}
+        type={popup.type}
+        onClose={hidePopup}
+      />
+      
       <div className="auth-container">
         <button 
           className="back-button"
           onClick={() => onNavigate('landing')}
         >
-          ← Back
+          ← Back to Home
         </button>
 
-        <h1>Join MediNova</h1>
-        <p>Start your emergency medicine training</p>
+        <div className="auth-header">
+          <div className="auth-logo">
+            <span className="auth-logo-icon">⚕️</span>
+            <h1>Join MediNova</h1>
+          </div>
+          <p>Start your emergency medicine training journey</p>
+        </div>
 
         <form onSubmit={handleSignUp} className="auth-form">
-          {error && <div className="error-message">{error}</div>}
-          
           <div className="form-row">
             <div className="form-group">
               <label>First Name</label>
@@ -101,7 +128,7 @@ const SignUp = ({ onNavigate, setUser }) => {
           </div>
           
           <div className="form-group">
-            <label>Email</label>
+            <label>Email Address</label>
             <input
               type="email"
               name="email"
@@ -138,10 +165,17 @@ const SignUp = ({ onNavigate, setUser }) => {
 
           <button 
             type="submit" 
-            className="btn btn-primary"
+            className="btn btn-primary auth-submit-btn"
             disabled={loading}
           >
-            {loading ? 'Creating Account...' : 'Sign Up'}
+            {loading ? (
+              <>
+                <span className="btn-spinner"></span>
+                Creating Account...
+              </>
+            ) : (
+              'Create Account'
+            )}
           </button>
         </form>
 
@@ -151,7 +185,7 @@ const SignUp = ({ onNavigate, setUser }) => {
             className="link-button"
             onClick={() => onNavigate('login')}
           >
-            Login here
+            Sign in here
           </button>
         </p>
       </div>
