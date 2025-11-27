@@ -1,30 +1,59 @@
 import React, { useState } from 'react'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth } from '../firebase-config'
 
-const SignUp = ({ onNavigate }) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+const SignUp = ({ onNavigate, setUser }) => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    firstName: '',
+    lastName: ''
+  })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
 
   const handleSignUp = async (e) => {
     e.preventDefault()
     setLoading(true)
     setError('')
 
-    if (password !== confirmPassword) {
+    if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match')
       setLoading(false)
       return
     }
 
+    if (formData.password.length < 6) {
+      setError('Password should be at least 6 characters')
+      setLoading(false)
+      return
+    }
+
     try {
-      await createUserWithEmailAndPassword(auth, email, password)
-      // Auth state listener will automatically redirect to home
+      const userCredential = await createUserWithEmailAndPassword(
+        auth, 
+        formData.email, 
+        formData.password
+      )
+      
+      // Update profile with name
+      await updateProfile(userCredential.user, {
+        displayName: `${formData.firstName} ${formData.lastName}`
+      })
+      
+      setUser(userCredential.user)
+      onNavigate('home')
     } catch (error) {
-      setError('Failed to create account: ' + error.message)
+      console.error('Signup error:', error)
+      setError(error.message)
     } finally {
       setLoading(false)
     }
@@ -46,12 +75,38 @@ const SignUp = ({ onNavigate }) => {
         <form onSubmit={handleSignUp} className="auth-form">
           {error && <div className="error-message">{error}</div>}
           
+          <div className="form-row">
+            <div className="form-group">
+              <label>First Name</label>
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="First name"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Last Name</label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Last name"
+                required
+              />
+            </div>
+          </div>
+          
           <div className="form-group">
             <label>Email</label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="Enter your email"
               required
             />
@@ -61,9 +116,10 @@ const SignUp = ({ onNavigate }) => {
             <label>Password</label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Create a password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Create a password (min. 6 characters)"
               required
             />
           </div>
@@ -72,8 +128,9 @@ const SignUp = ({ onNavigate }) => {
             <label>Confirm Password</label>
             <input
               type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
               placeholder="Confirm your password"
               required
             />
@@ -102,4 +159,4 @@ const SignUp = ({ onNavigate }) => {
   )
 }
 
-export default SignUp 
+export default SignUp
