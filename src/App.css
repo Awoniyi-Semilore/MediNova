@@ -1385,3 +1385,369 @@
     font-size: 1.2rem;
   }
 }
+
+/* New Compact Home Header */
+.home-header-compact {
+  background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.logo-section:hover {
+  transform: scale(1.02);
+}
+
+.logo-icon-compact {
+  font-size: 2rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.logo-text-compact {
+  display: flex;
+  flex-direction: column;
+}
+
+.medinova-logo {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff, #f0f0f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.logo-full-meaning {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  font-style: italic;
+  margin-top: -2px;
+  font-family: 'Georgia', serif;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-welcome {
+  text-align: right;
+}
+
+.welcome-name {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.logout-btn-compact {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.logout-btn-compact:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Home Hero Section */
+.home-hero {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.hero-content-compact {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hero-content-compact h2 {
+  font-size: 1.75rem;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.hero-content-compact p {
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Scenarios Section */
+.scenarios-section-compact {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.scenarios-header-compact {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.scenarios-header-compact h2 {
+  font-size: 1.75rem;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #1e40af, #dc2626);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.scenarios-header-compact p {
+  color: #64748b;
+  font-size: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Emergency Cards */
+.emergency-cards-compact {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.scenario-card-compact {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.scenario-card-compact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.cardiac-scenario::before {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+
+.respiratory-scenario::before {
+  background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.scenario-card-compact:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.card-badge-compact {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+.urgent-badge {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.critical-badge {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+  color: #059669;
+  border: 1px solid #bbf7d0;
+}
+
+.card-icon-compact {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.card-content-compact {
+  text-align: center;
+}
+
+.scenario-card-compact h3 {
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.card-desc-compact {
+  color: #64748b;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  font-size: 0.9rem;
+}
+
+.card-features-compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.card-features-compact span {
+  background: #f1f5f9;
+  color: #475569;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.card-meta-compact {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.meta-item {
+  color: #64748b;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.start-btn-compact {
+  width: 100%;
+  background: linear-gradient(135deg, #1e40af, #3730a3);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.start-btn-compact:hover {
+  background: linear-gradient(135deg, #3730a3, #312e81);
+  transform: translateY(-1px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .home-header-compact {
+    padding: 0.75rem 1rem;
+  }
+  
+  .header-main {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  
+  .logo-section {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .user-section {
+    justify-content: space-between;
+    order: -1;
+  }
+  
+  .welcome-name {
+    font-size: 0.8rem;
+  }
+  
+  .logout-btn-compact {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .home-hero {
+    padding: 1.5rem 1rem;
+  }
+  
+  .hero-content-compact h2 {
+    font-size: 1.5rem;
+  }
+  
+  .scenarios-section-compact {
+    padding: 1.5rem 1rem;
+  }
+  
+  .scenarios-header-compact h2 {
+    font-size: 1.5rem;
+  }
+  
+  .emergency-cards-compact {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .scenario-card-compact {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .medinova-logo {
+    font-size: 1.25rem;
+  }
+  
+  .logo-full-meaning {
+    font-size: 0.65rem;
+  }
+  
+  .card-features-compact {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card-meta-compact {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
