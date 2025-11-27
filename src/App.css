@@ -1751,3 +1751,271 @@
     gap: 0.5rem;
   }
 }
+
+
+/* Simulation Status Bar */
+.simulation-status {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  border-left: 4px solid #dc2626;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.status-label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.status-value {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.status-value.critical {
+  color: #dc2626;
+}
+
+.status-value.warning {
+  color: #d97706;
+}
+
+.status-value.stable {
+  color: #059669;
+}
+
+/* Lifeline Bar */
+.lifeline-bar {
+  background: #e5e7eb;
+  height: 8px;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.lifeline-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.lifeline-bar:not(.critical) .lifeline-fill {
+  background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.lifeline-bar.warning .lifeline-fill {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+.lifeline-bar.critical .lifeline-fill {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  animation: pulse-critical 1s infinite;
+}
+
+@keyframes pulse-critical {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.lifeline-text {
+  position: absolute;
+  right: 0;
+  top: -20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* Video Section */
+.video-section {
+  background: #1e293b;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.video-container {
+  position: relative;
+}
+
+.video-placeholder {
+  background: #0f172a;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.video-placeholder-content {
+  text-align: center;
+}
+
+.video-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.video-placeholder h3 {
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.video-placeholder p {
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+
+.video-progress {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.video-progress .progress-bar {
+  background: #334155;
+  margin-bottom: 0.5rem;
+}
+
+.video-progress span {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.video-controls {
+  padding: 1.5rem;
+  background: #1e293b;
+  text-align: center;
+  border-top: 1px solid #334155;
+}
+
+/* Pause Button */
+.pause-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.pause-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.pause-btn.paused {
+  background: rgba(34, 197, 94, 0.3);
+}
+
+/* Enhanced Emergency Alert */
+.emergency-alert {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: pulse-alert 2s infinite;
+}
+
+@keyframes pulse-alert {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+  }
+  50% { 
+    transform: scale(1.01); 
+    box-shadow: 0 12px 30px rgba(220, 38, 38, 0.4);
+  }
+}
+
+.alert-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.alert-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.alert-content h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.alert-content p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+/* Choice Feedback */
+.choice-feedback {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.choice-feedback.correct {
+  background: #f0fdf4;
+  border-color: #10b981;
+  color: #047857;
+}
+
+.choice-feedback.incorrect {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #dc2626;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .simulation-status {
+    grid-template-columns: 1fr;
+  }
+  
+  .video-placeholder {
+    height: 200px;
+  }
+  
+  .video-icon {
+    font-size: 3rem;
+  }
+  
+  .alert-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .simulation-header-content {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .pause-btn {
+    order: -1;
+    align-self: flex-start;
+  }
+}
