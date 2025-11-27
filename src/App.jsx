@@ -19,12 +19,6 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user)
       setLoading(false)
-      // Redirect based on auth status
-      if (user) {
-        setCurrentView('home')
-      } else {
-        setCurrentView('landing')
-      }
     })
 
     return () => unsubscribe()
@@ -36,14 +30,26 @@ function App() {
       case 'landing':
         return <Landing onNavigate={setCurrentView} />
       case 'login':
-        return <Login onNavigate={setCurrentView} />
+        return <Login onNavigate={setCurrentView} setUser={setUser} />
       case 'signup':
-        return <SignUp onNavigate={setCurrentView} />
+        return <SignUp onNavigate={setCurrentView} setUser={setUser} />
       case 'home':
+        if (!user) {
+          setCurrentView('landing')
+          return <Landing onNavigate={setCurrentView} />
+        }
         return <Home onNavigate={setCurrentView} user={user} />
       case 'cardiac-simulation':
+        if (!user) {
+          setCurrentView('landing')
+          return <Landing onNavigate={setCurrentView} />
+        }
         return <CardiacSimulation onNavigate={setCurrentView} />
       case 'respiratory-simulation':
+        if (!user) {
+          setCurrentView('landing')
+          return <Landing onNavigate={setCurrentView} />
+        }
         return <RespiratorySimulation onNavigate={setCurrentView} />
       default:
         return <Landing onNavigate={setCurrentView} />
