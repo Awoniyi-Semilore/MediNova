@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase-config'
 
-const Login = ({ onNavigate }) => {
+const Login = ({ onNavigate, setUser }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -14,8 +14,9 @@ const Login = ({ onNavigate }) => {
     setError('')
 
     try {
-      await signInWithEmailAndPassword(auth, email, password)
-      // Auth state listener in App.jsx will automatically redirect to home
+      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+      setUser(userCredential.user)
+      onNavigate('home')
     } catch (error) {
       setError('Failed to login: ' + error.message)
     } finally {
