@@ -1,94 +1,259 @@
 import React, { useState, useEffect, useRef } from 'react'
 import '../../App.css'
 
-const CardiacSimulation = ({ onNavigate }) => {
+const CardiacSimulation = ({ onNavigate, user }) => {
   const [currentStep, setCurrentStep] = useState('video')
-  const [showActionPopup, setShowActionPopup] = useState(false)
-  const [currentScenario, setCurrentScenario] = useState(null)
+  const [showStoryPopup, setShowStoryPopup] = useState(false)
+  const [currentScene, setCurrentScene] = useState(null)
   const [timer, setTimer] = useState(0)
   const [patientLifeline, setPatientLifeline] = useState(100)
   const [isPaused, setIsPaused] = useState(false)
   const [gameHistory, setGameHistory] = useState([])
+  const [audioPlaying, setAudioPlaying] = useState(false)
+  const audioRef = useRef(null)
 
-  // Emergency scenarios data
-  const scenarios = {
-    start: {
-      title: "CODE BLUE - ROOM 3",
-      description: "You rush into Room 3. Mr. Evans (56M) is unconscious on the floor. Monitor shows V-Fib!",
-      background: "🚑", // You'll replace with stretcher image
-      urgency: "HIGH",
+  // Get user's first name or use "Nurse" as default
+  const nurseName = user?.displayName?.split(' ')[0] || 'Nurse'
+
+  // Complete storyline with timed events
+  const storyline = [
+    {
+      id: 'arrival',
+      title: "EMERGENCY ARRIVAL",
+      description: `You're at the nurses' station when a man collapses in the waiting room. His wife screams for help!`,
+      background: "🏥",
+      audio: "screaming", // You'll add audio file
+      delay: 0,
       choices: [
-        { text: "Check patient responsiveness and pulse", next: 'check_pulse', correct: true },
-        { text: "Immediately start chest compressions", next: 'wrong_compressions', correct: false },
-        { text: "Grab the defibrillator pads", next: 'wrong_defib', correct: false },
-        { text: "Call for help and check airway", next: 'call_help', correct: false }
+        { 
+          text: "Run to assess the patient immediately", 
+          next: 'assessment', 
+          correct: true,
+          feedback: "Good! Rapid response is critical in cardiac arrest."
+        },
+        { 
+          text: "Call security first", 
+          next: 'wrong_security', 
+          correct: false,
+          feedback: "Delay in assessment reduces survival chances. Always assess first."
+        },
+        { 
+          text: "Get the crash cart ready first", 
+          next: 'wrong_cart', 
+          correct: false,
+          feedback: "Equipment is important, but patient assessment comes first."
+        }
       ]
     },
-    check_pulse: {
+    {
+      id: 'assessment',
+      title: "INITIAL ASSESSMENT",
+      description: `You reach Mr. Johnson (58M). He's unresponsive, pale, and not breathing. His wife is crying beside him.`,
+      background: "😵",
+      audio: "crying",
+      delay: 2000,
+      choices: [
+        { 
+          text: "Check carotid pulse and breathing", 
+          next: 'pulse_check', 
+          correct: true,
+          feedback: "Correct! Always check ABCs (Airway, Breathing, Circulation) first."
+        },
+        { 
+          text: "Start CPR immediately", 
+          next: 'wrong_cpr_early', 
+          correct: false,
+          feedback: "Need to confirm cardiac arrest before starting CPR to avoid injury."
+        },
+        { 
+          text: "Ask the wife what happened", 
+          next: 'wrong_history', 
+          correct: false,
+          feedback: "Patient assessment takes priority over history in emergency situations."
+        }
+      ]
+    },
+    {
+      id: 'pulse_check',
       title: "NO PULSE DETECTED",
-      description: "You confirm no carotid pulse. Patient is in cardiac arrest!",
+      description: `No carotid pulse! Patient is in cardiac arrest. You feel no breathing. Time to act fast!`,
       background: "💔",
-      urgency: "CRITICAL", 
+      audio: "monitor_beep",
+      delay: 1500,
       choices: [
-        { text: "Begin high-quality CPR immediately", next: 'start_cpr', correct: true },
-        { text: "Apply defibrillator pads now", next: 'apply_pads', correct: false },
-        { text: "Check breathing first", next: 'check_breathing', correct: false },
-        { text: "Administer emergency medication", next: 'wrong_meds', correct: false }
+        { 
+          text: "Shout for help and start high-quality CPR", 
+          next: 'start_cpr', 
+          correct: true,
+          feedback: "Excellent! Early CPR doubles survival chances."
+        },
+        { 
+          text: "Run to get the defibrillator", 
+          next: 'wrong_defib_first', 
+          correct: false,
+          feedback: "Never leave a patient in cardiac arrest. Call for help instead."
+        },
+        { 
+          text: "Check pupil response", 
+          next: 'wrong_pupils', 
+          correct: false,
+          feedback: "Neurological assessment can wait. Circulation is priority."
+        }
       ]
     },
-    start_cpr: {
+    {
+      id: 'start_cpr',
       title: "CPR IN PROGRESS",
-      description: "You're performing chest compressions at 100-120/min. Another nurse arrives with the crash cart.",
+      description: `You're performing chest compressions. Another nurse arrives with the crash cart. Monitor shows V-Fib!`,
       background: "🫀",
-      urgency: "HIGH",
+      audio: "compression_sound",
+      delay: 2000,
       choices: [
-        { text: "Continue CPR while applying defibrillator pads", next: 'apply_pads_correct', correct: true },
-        { text: "Stop CPR to check rhythm", next: 'wrong_stop_cpr', correct: false },
-        { text: "Give rescue breaths immediately", next: 'rescue_breaths', correct: false },
-        { text: "Prepare epinephrine injection", next: 'prepare_epi', correct: false }
+        { 
+          text: "Continue CPR while team applies defibrillator pads", 
+          next: 'apply_pads', 
+          correct: true,
+          feedback: "Perfect! Minimizing interruptions in CPR is crucial."
+        },
+        { 
+          text: "Stop CPR to help apply pads", 
+          next: 'wrong_stop_cpr', 
+          correct: false,
+          feedback: "CPR should continue during pad application to maintain perfusion."
+        },
+        { 
+          text: "Give rescue breaths immediately", 
+          next: 'wrong_breaths', 
+          correct: false,
+          feedback: "In witnessed cardiac arrest, compressions are more important than breaths initially."
+        }
       ]
     },
-    apply_pads_correct: {
+    {
+      id: 'apply_pads',
       title: "DEFIBRILLATOR READY",
-      description: "Pads applied! Monitor shows persistent V-Fib. 'All clear!' you shout.",
+      description: `Pads applied! Monitor shows persistent V-Fib. "All clear!" your colleague shouts.`,
       background: "⚡",
-      urgency: "URGENT",
+      audio: "defib_charge",
+      delay: 1500,
       choices: [
-        { text: "Deliver 200J shock and resume CPR", next: 'deliver_shock', correct: true },
-        { text: "Wait for doctor's order to shock", next: 'wait_doctor', correct: false },
-        { text: "Give medication before shocking", next: 'meds_first', correct: false },
-        { text: "Check pulse again before shocking", next: 'recheck_pulse', correct: false }
+        { 
+          text: "Deliver 200J biphasic shock and immediately resume CPR", 
+          next: 'deliver_shock', 
+          correct: true,
+          feedback: "Correct! Immediate CPR after shock improves outcomes."
+        },
+        { 
+          text: "Wait to see if rhythm changes before resuming CPR", 
+          next: 'wrong_wait', 
+          correct: false,
+          feedback: "Never delay CPR. Resume immediately after shock regardless of rhythm."
+        },
+        { 
+          text: "Check pulse before resuming CPR", 
+          next: 'wrong_pulse_check', 
+          correct: false,
+          feedback: "Pulse checks interrupt CPR. Resume compressions immediately."
+        }
       ]
     },
-    // Add more scenarios as needed...
-  }
+    {
+      id: 'deliver_shock',
+      title: "SHOCK DELIVERED",
+      description: `Shock delivered successfully! You immediately resume CPR. After 2 minutes, rhythm check shows organized activity!`,
+      background: "📈",
+      audio: "success_beep",
+      delay: 2500,
+      choices: [
+        { 
+          text: "Check for pulse and breathing - ROSC achieved!", 
+          next: 'success', 
+          correct: true,
+          feedback: "OUTSTANDING! You successfully achieved Return of Spontaneous Circulation!"
+        }
+      ]
+    },
+    // Wrong path scenarios
+    {
+      id: 'wrong_security',
+      title: "CRITICAL DELAY",
+      description: `Calling security wasted 45 seconds. Mr. Johnson's brain has been without oxygen. Survival chances decreased.`,
+      background: "⏰",
+      audio: "error_beep",
+      delay: 0,
+      choices: [
+        { 
+          text: "Continue with patient assessment (with penalty)", 
+          next: 'assessment', 
+          correct: false,
+          feedback: "Time is muscle! Every second counts in cardiac arrest."
+        }
+      ]
+    },
+    {
+      id: 'wrong_cpr_early',
+      title: "INAPPROPRIATE CPR",
+      description: `Starting CPR without confirming cardiac arrest could cause injury. The patient groans - he was just fainting!`,
+      background: "😨",
+      audio: "groan",
+      delay: 0,
+      choices: [
+        { 
+          text: "Stop CPR and properly assess the patient", 
+          next: 'assessment', 
+          correct: false,
+          feedback: "Always confirm unresponsiveness and absence of breathing/pulse before CPR."
+        }
+      ]
+    }
+  ]
 
   // Timer effect
   useEffect(() => {
     if (currentStep === 'simulation' && !isPaused) {
       const interval = setInterval(() => {
         setTimer(prev => prev + 1)
-        // Every 10 seconds, lifeline decreases slightly to add urgency
-        if (prev % 10 === 0 && prev > 0) {
-          setPatientLifeline(current => Math.max(0, current - 2))
-        }
       }, 1000)
       return () => clearInterval(interval)
     }
   }, [currentStep, isPaused])
 
+  // Play audio for current scene
+  useEffect(() => {
+    if (currentScene && currentScene.audio) {
+      setAudioPlaying(true)
+      // Simulate audio playing - replace with actual audio files
+      console.log(`Playing audio: ${currentScene.audio}`)
+      
+      const audioTimer = setTimeout(() => {
+        setAudioPlaying(false)
+      }, 3000)
+      
+      return () => clearTimeout(audioTimer)
+    }
+  }, [currentScene])
+
   const handleVideoEnd = () => {
-    startSimulation()
+    startStoryline()
   }
 
   const handleSkipVideo = () => {
-    startSimulation()
+    startStoryline()
   }
 
-  const startSimulation = () => {
+  const startStoryline = () => {
     setCurrentStep('simulation')
-    setCurrentScenario(scenarios.start)
-    setShowActionPopup(true)
+    showNextScene('arrival')
+  }
+
+  const showNextScene = (sceneId) => {
+    const scene = storyline.find(s => s.id === sceneId)
+    if (scene) {
+      setTimeout(() => {
+        setCurrentScene(scene)
+        setShowStoryPopup(true)
+      }, scene.delay)
+    }
   }
 
   const handleChoice = (choice) => {
@@ -96,39 +261,51 @@ const CardiacSimulation = ({ onNavigate }) => {
     setGameHistory(prev => [...prev, {
       action: choice.text,
       correct: choice.correct,
+      feedback: choice.feedback,
       timestamp: timer
     }])
 
     // Handle lifeline changes
     if (!choice.correct) {
-      setPatientLifeline(prev => Math.max(0, prev - 20)) // Big penalty for wrong choices
+      setPatientLifeline(prev => Math.max(0, prev - 25)) // Big penalty for wrong choices
     }
 
-    // Show feedback briefly
+    // Show feedback
+    setShowStoryPopup(false)
+    
     setTimeout(() => {
-      if (scenarios[choice.next]) {
-        setCurrentScenario(scenarios[choice.next])
+      if (patientLifeline <= 25 && !choice.correct) {
+        // Game over scenario
+        setCurrentScene({
+          id: 'game_over',
+          title: "GAME OVER - PATIENT EXPIRED",
+          description: `Despite efforts, Mr. Johnson didn't survive. Critical errors and delays reduced chances of recovery.`,
+          background: "💀",
+          choices: [{ 
+            text: "Restart Simulation", 
+            next: 'restart',
+            feedback: "Learn from mistakes and try again!"
+          }]
+        })
+        setShowStoryPopup(true)
+      } else if (choice.next === 'success') {
+        // Success scenario
+        setCurrentScene({
+          id: 'success',
+          title: "MISSION ACCOMPLISHED! 🎉",
+          description: `Congratulations ${nurseName}! You successfully managed the cardiac arrest. Mr. Johnson has Return of Spontaneous Circulation and is being transferred to ICU. The family thanks you!`,
+          background: "✅",
+          choices: [{ 
+            text: "Play Again", 
+            next: 'restart',
+            feedback: "Excellent work! Ready for another challenge?"
+          }]
+        })
+        setShowStoryPopup(true)
       } else {
-        // End of scenario or game over
-        if (patientLifeline <= 0) {
-          setCurrentScenario({
-            title: "GAME OVER",
-            description: "Patient didn't survive. Critical errors were made.",
-            background: "💀",
-            urgency: "FAILED",
-            choices: [{ text: "Restart Simulation", next: 'restart' }]
-          })
-        } else {
-          setCurrentScenario({
-            title: "SUCCESS!",
-            description: "ROSC achieved! Patient stabilized and transferred to ICU.",
-            background: "✅",
-            urgency: "STABLE",
-            choices: [{ text: "Play Again", next: 'restart' }]
-          })
-        }
+        showNextScene(choice.next)
       }
-    }, 1500)
+    }, 2000)
   }
 
   const handlePause = () => {
@@ -141,26 +318,33 @@ const CardiacSimulation = ({ onNavigate }) => {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
   }
 
-  const getUrgencyColor = (urgency) => {
-    switch(urgency) {
-      case 'CRITICAL': return '#dc2626'
-      case 'HIGH': return '#ea580c'
-      case 'URGENT': return '#d97706'
-      case 'STABLE': return '#059669'
-      case 'FAILED': return '#6b7280'
-      default: return '#3b82f6'
-    }
+  const getUrgencyColor = (sceneId) => {
+    if (sceneId.includes('wrong') || sceneId === 'game_over') return '#dc2626'
+    if (sceneId === 'success') return '#059669'
+    return '#3b82f6'
+  }
+
+  const restartSimulation = () => {
+    setPatientLifeline(100)
+    setTimer(0)
+    setGameHistory([])
+    startStoryline()
   }
 
   return (
     <div className="simulation-page">
+      {/* Hidden audio element */}
+      <audio ref={audioRef} loop>
+        <source src="/assets/emergency-audio.mp3" type="audio/mpeg" />
+      </audio>
+
       <header className="simulation-header">
         <div className="simulation-header-content">
           <button 
             className="back-sim-btn"
             onClick={() => onNavigate('home')}
           >
-            ← Exit Simulation
+            ← Exit to Dashboard
           </button>
           <div className="simulation-header-info">
             <h1>Code Blue: Cardiac Arrest</h1>
@@ -230,49 +414,65 @@ const CardiacSimulation = ({ onNavigate }) => {
               
               <div className="time-pressure">
                 <span>⏰ TIME ELAPSED: {formatTime(timer)}</span>
+                {audioPlaying && <span className="audio-indicator">🔊</span>}
               </div>
             </div>
 
-            {/* Current Game State Display */}
-            <div className="game-state">
-              <div className="scenario-preview">
-                <h3>CURRENT SITUATION</h3>
-                <p>Make quick decisions to save the patient!</p>
+            {/* Current Scene Display */}
+            <div className="current-scene-display">
+              <h3>ACTIVE EMERGENCY</h3>
+              <p>Make quick clinical decisions to save Mr. Johnson!</p>
+              <div className="scene-progress">
+                <div className="progress-dots">
+                  {['arrival', 'assessment', 'pulse_check', 'start_cpr', 'apply_pads', 'deliver_shock'].map((sceneId, index) => (
+                    <div 
+                      key={sceneId}
+                      className={`progress-dot ${currentScene?.id === sceneId ? 'active' : ''} ${gameHistory.some(h => h.next === sceneId) ? 'completed' : ''}`}
+                    >
+                      {index + 1}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Action Popup */}
-            {showActionPopup && currentScenario && (
-              <div className="action-popup-overlay">
+            {/* Story Popup */}
+            {showStoryPopup && currentScene && (
+              <div className="story-popup-overlay">
                 <div 
-                  className="action-popup"
+                  className="story-popup"
                   style={{
-                    borderLeft: `6px solid ${getUrgencyColor(currentScenario.urgency)}`,
-                    background: 'linear-gradient(135deg, #1e293b, #0f172a)'
+                    borderLeft: `6px solid ${getUrgencyColor(currentScene.id)}`
                   }}
                 >
-                  {/* Background Image Placeholder - Replace with stretcher image */}
-                  <div className="popup-background">🚑</div>
+                  {/* Background Scene */}
+                  <div className="popup-scene-background">
+                    {currentScene.background}
+                  </div>
                   
                   <div className="popup-header">
-                    <div 
-                      className="urgency-badge"
-                      style={{backgroundColor: getUrgencyColor(currentScenario.urgency)}}
-                    >
-                      {currentScenario.urgency}
+                    <div className="scene-title">
+                      <h2>{currentScene.title}</h2>
+                      {audioPlaying && <span className="audio-badge">🔊 AUDIO PLAYING</span>}
                     </div>
-                    <h2>{currentScenario.title}</h2>
-                    <p>{currentScenario.description}</p>
+                    <p className="scene-description">{currentScene.description}</p>
+                    
+                    {currentScene.id.includes('wrong') && (
+                      <div className="error-alert">
+                        ⚠️ CRITICAL ERROR - LIFELINE DECREASED
+                      </div>
+                    )}
                   </div>
 
                   <div className="popup-choices">
-                    <h4>WHAT DO YOU DO?</h4>
+                    <h4>NURSE {nurseName.toUpperCase()}, WHAT'S YOUR ACTION?</h4>
                     <div className="emergency-choices">
-                      {currentScenario.choices.map((choice, index) => (
+                      {currentScene.choices.map((choice, index) => (
                         <button
                           key={index}
                           className="emergency-choice-btn"
                           onClick={() => handleChoice(choice)}
+                          disabled={currentScene.id === 'game_over' || currentScene.id === 'success'}
                         >
                           {choice.text}
                         </button>
@@ -281,15 +481,32 @@ const CardiacSimulation = ({ onNavigate }) => {
                   </div>
 
                   <div className="popup-footer">
-                    <span className="time-warning">⏱️ Decide quickly! Time is critical</span>
+                    <div className="decision-context">
+                      <strong>Real-world context:</strong> Every 1-minute delay in CPR reduces survival by 10%
+                    </div>
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* Feedback Display */}
+            {gameHistory.length > 0 && !showStoryPopup && (
+              <div className="feedback-popup">
+                <div className={`feedback-message ${gameHistory[gameHistory.length - 1].correct ? 'correct' : 'incorrect'}`}>
+                  <h4>{gameHistory[gameHistory.length - 1].correct ? '✅ CORRECT DECISION' : '❌ NEEDS IMPROVEMENT'}</h4>
+                  <p>{gameHistory[gameHistory.length - 1].feedback}</p>
+                  {!gameHistory[gameHistory.length - 1].correct && (
+                    <div className="lifeline-loss">
+                      ❤️ Lifeline decreased by 25%
+                    </div>
+                  )}
                 </div>
               </div>
             )}
 
             {/* Game History */}
             <div className="game-history">
-              <h4>ACTION LOG</h4>
+              <h4>CLINICAL DECISION LOG</h4>
               <div className="history-list">
                 {gameHistory.slice(-5).map((entry, index) => (
                   <div key={index} className={`history-item ${entry.correct ? 'correct' : 'incorrect'}`}>
