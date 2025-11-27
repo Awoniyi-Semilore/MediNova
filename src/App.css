@@ -310,3 +310,177 @@ body {
     align-items: stretch;
   }
 }
+
+
+/* Simulation Pages */
+.simulation-page {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.simulation-header {
+  background: white;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.simulation-header h1 {
+  color: #1e293b;
+  margin: 0.5rem 0 0.25rem 0;
+}
+
+.simulation-header p {
+  color: #64748b;
+  margin: 0;
+}
+
+.simulation-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.scenario-intro {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.scenario-intro h2 {
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.scenario-intro p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.simulation-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.patient-status {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.patient-status h3 {
+  color: #1e293b;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #3b82f6;
+  padding-bottom: 0.5rem;
+}
+
+.status-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.status-item:last-child {
+  border-bottom: none;
+}
+
+.critical {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.warning {
+  color: #d97706;
+  font-weight: 600;
+}
+
+.action-choices {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.action-choices h3 {
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.choice-btn {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  padding: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.choice-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.choice-btn.correct {
+  border-color: #10b981;
+  background: #f0fdf4;
+}
+
+.choice-btn.incorrect {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.simulation-progress {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.progress-bar {
+  background: #e2e8f0;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  background: #3b82f6;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .simulation-area {
+    grid-template-columns: 1fr;
+  }
+  
+  .simulation-content {
+    padding: 1rem;
+  }
+}
