@@ -8,6 +8,7 @@ import Home from './components/Home'
 import CardiacSimulation from './components/simulations/CardiacSimulation'
 import RespiratorySimulation from './components/simulations/RespiratorySimulation'
 import './App.css'
+import CardiacDocumentation from './components/CardiacDocumentation'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -27,6 +28,8 @@ function App() {
   // Render different views based on currentView state
   const renderView = () => {
     switch (currentView) {
+      case 'cardiac-documentation':
+  return <CardiacDocumentation onNavigate={setCurrentView} user={user} />
       case 'landing':
         return <Landing onNavigate={setCurrentView} />
       case 'login':
