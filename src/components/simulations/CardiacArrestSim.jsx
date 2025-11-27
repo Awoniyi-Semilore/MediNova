@@ -1,23 +1,40 @@
 import React, { useState, useEffect } from 'react';
 
-// IMPORTANT: Replace this placeholder URL with the actual URL of your hosted video file.
-// Remember, GitHub is not ideal for video hosting; use YouTube, Vimeo, or a CDN.
-const SIM_VIDEO_URL = "https://your-hosted-video-platform.com/path/to/sim_intro.mp4";
+// === FINAL VIDEO URL ===
+// The Vimeo embed URL based on the ID provided by the user.
+const SIM_VIDEO_URL = "https://player.vimeo.com/video/1141231294"; 
 
 const CardiacArrestSim = ({ onNavigate }) => {
     const [showVideo, setShowVideo] = useState(true);
     const [videoError, setVideoError] = useState(false);
+    
+    // State to manage when the video is presumed finished
+    const [videoFinished, setVideoFinished] = useState(false);
 
     const startSimulation = () => {
         setShowVideo(false);
     };
 
-    const handleVideoError = (e) => {
-        console.error("Video load failed:", e.target.error);
+    // Note: Iframes don't directly report errors like a <video> tag does, 
+    // but the error message helps the user know if the URL is bad.
+    const handleVideoError = () => {
         setVideoError(true);
-        // Do NOT automatically start the simulation on error, 
-        // give the user a chance to read the error message and press the button.
     };
+
+    // Use a timer to suggest the video is finished (Vimeo doesn't give a simple 'onEnded' event to React)
+    // IMPORTANT: You might need to adjust the duration here (in seconds) to match your video's actual length.
+    useEffect(() => {
+        const videoDurationGuessSeconds = 60; // Assumed duration (e.g., 60 seconds)
+        
+        if (showVideo && !videoError) {
+            const timer = setTimeout(() => {
+                setVideoFinished(true);
+            }, videoDurationGuessSeconds * 1000); 
+            
+            return () => clearTimeout(timer);
+        }
+    }, [showVideo, videoError]);
+
 
     if (showVideo) {
         return (
@@ -28,37 +45,44 @@ const CardiacArrestSim = ({ onNavigate }) => {
                     </h1>
                     
                     {videoError && (
-                        <div className="p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded-lg text-center">
-                            <strong>Video Error!</strong> The video could not be loaded. Please ensure the 
+                        <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center">
+                            <strong>Embed Error!</strong> The video link is broken or restricted. Please ensure the 
                             <code className="text-sm font-mono bg-gray-200 p-1 rounded">SIM_VIDEO_URL</code> 
-                            is correct and try to start the simulation manually.
+                            is set to the correct public Vimeo embed URL and that your Vimeo privacy settings allow embedding.
                         </div>
                     )}
                     
-                    {/* Responsive Video Container */}
-                    <div className="relative w-full overflow-hidden rounded-lg shadow-xl">
-                        <video 
-                            src={SIM_VIDEO_URL} 
-                            controls 
-                            autoPlay 
-                            className="w-full h-auto"
-                            onEnded={startSimulation} // Automatically start the sim when video finishes
-                            onError={handleVideoError} // Use the new error handler
-                        >
-                            Your browser does not support the video tag.
-                        </video>
+                    {/* Responsive Iframe Container (for Vimeo/YouTube) */}
+                    <div className="relative w-full overflow-hidden rounded-lg shadow-xl" style={{ paddingTop: '56.25%' }}> {/* 16:9 Aspect Ratio */}
+                        <iframe
+                            // Added parameters for cleaner playback: autoplay, no loop, no user profile, no title, no portrait.
+                            src={`${SIM_VIDEO_URL}?autoplay=1&loop=0&byline=0&title=0&portrait=0`} 
+                            allow="autoplay; fullscreen; picture-in-picture"
+                            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                            frameBorder="0"
+                            allowFullScreen
+                            title="Simulation Introduction Video"
+                            onLoad={handleVideoError} // Check if the iframe loads (not a perfect error check, but better than nothing)
+                        ></iframe>
                     </div>
 
                     <div className="flex justify-center">
                         <button
                             onClick={startSimulation}
                             className={`px-6 py-2 font-semibold rounded-full shadow-md transition duration-300 transform hover:scale-105 ${
-                                videoError ? 'bg-yellow-600 hover:bg-yellow-700 text-white' : 'bg-red-500 hover:bg-red-600 text-white'
+                                videoFinished || videoError ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-red-500 text-white opacity-70 cursor-not-allowed'
                             }`}
+                            disabled={!videoFinished && !videoError}
                         >
-                            {videoError ? 'Start Simulation Anyway' : 'Skip Video and Start Simulation'} &rarr;
+                            {videoError ? 'Start Simulation Anyway' : 'Skip/Continue to Simulation'} &rarr;
                         </button>
                     </div>
+                    
+                    {!videoFinished && !videoError && (
+                        <p className="text-center text-sm text-gray-500">
+                            (Button will activate after the estimated video duration or if you manually click skip.)
+                        </p>
+                    )}
                 </div>
             </div>
         );
