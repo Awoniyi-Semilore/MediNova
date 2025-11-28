@@ -1,10 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../styles/globals.css';
 
-function Landing() {
-  const navigate = useNavigate();
-
+function Landing({ navigateTo }) {
   return (
     <div className="landing-container">
       <div className="landing-content">
@@ -14,20 +11,20 @@ function Landing() {
         <div className="auth-buttons">
           <button 
             className="btn btn-primary"
-            onClick={() => navigate('/home')}
+            onClick={() => navigateTo('home')}
           >
             Get Started
           </button>
           <div className="button-group">
             <button 
               className="btn btn-secondary"
-              onClick={() => navigate('/login')}
+              onClick={() => navigateTo('home')}
             >
               Login
             </button>
             <button 
               className="btn btn-secondary"
-              onClick={() => navigate('/signup')}
+              onClick={() => navigateTo('home')}
             >
               Sign Up
             </button>
