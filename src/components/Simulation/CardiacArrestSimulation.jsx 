@@ -1,1 +1,93 @@
-i
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import VideoPlayer from './VideoPlayer';
+import Simulation1 from './Simulation1';
+import Popup from '../UI/Popup';
+
+function CardiacArrestSimulation() {
+  const navigate = useNavigate();
+  const [currentStep, setCurrentStep] = useState('video');
+  const [simulation1Completed, setSimulation1Completed] = useState(false);
+
+  const vimeoUrl = "https://player.vimeo.com/video/1141231294?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1";
+
+  const handleVideoEnd = () => {
+    setCurrentStep('storyline');
+  };
+
+  const handleSkip = () => {
+    setCurrentStep('storyline');
+  };
+
+  const handleSimulation1Complete = (success) => {
+    if (success) {
+      setSimulation1Completed(true);
+      setCurrentStep('success');
+    } else {
+      setCurrentStep('fail');
+    }
+  };
+
+  const handleRetry = () => {
+    setCurrentStep('simulation1');
+  };
+
+  const handleContinue = () => {
+    navigate('/cardiac-documentation');
+  };
+
+  if (currentStep === 'video') {
+    return (
+      <VideoPlayer 
+        vimeoUrl={vimeoUrl}
+        onVideoEnd={handleVideoEnd}
+        onSkip={handleSkip}
+      />
+    );
+  }
+
+  if (currentStep === 'storyline') {
+    return (
+      <Popup
+        type="info"
+        title="Scenario: Cardiac Arrest Emergency"
+        message="56-year-old male, Mr. Johnson, rushed to ER via ambulance. Cyanotic (blue-tinged skin), barely breathing, unresponsive. You are the primary nurse receiving this patient. Your immediate assessment and actions will determine the outcome."
+        onConfirm={() => setCurrentStep('simulation1')}
+      />
+    );
+  }
+
+  if (currentStep === 'simulation1') {
+    return (
+      <Simulation1 
+        scenario="cardiac"
+        onComplete={handleSimulation1Complete}
+      />
+    );
+  }
+
+  if (currentStep === 'success') {
+    return (
+      <Popup
+        type="success"
+        title="Excellent Assessment!"
+        message="You successfully identified cardiac arrest and initiated proper emergency response. The patient has been stabilized and transferred to ICU."
+        onConfirm={handleContinue}
+      />
+    );
+  }
+
+  if (currentStep === 'fail') {
+    return (
+      <Popup
+        type="error"
+        title="Critical Intervention Needed"
+        message="The patient's condition deteriorated due to delayed recognition of cardiac arrest. Immediate CPR and defibrillation are required."
+        onConfirm={handleRetry}
+        showCancel={false}
+      />
+    );
+  }
+}
+
+export default CardiacArrestSimulation;
