@@ -1,106 +1,110 @@
-import React, { useState, useEffect } from 'react'Expand commentComment on line R1Code has comments. Press enter to view.
-import { auth } from './firebase-config'
+import React, { useState, useEffect } from 'react'
+import { auth } from './src/firebase-config' // Path updated
 import { onAuthStateChanged } from 'firebase/auth'
-import Landing from './components/Landing'
-import Login from './components/Login'
-import SignUp from './components/SignUp'
-import Home from './components/Home'
-import RespiratorySimulation from './components/simulations/RespiratorySimulation'
-import CardiacSimulation from './components/simulations/CardiacSimulation'
-import CardiacRhythmSimulation from './components/simulations/CardiacRhythmSimulation'
-import CardiacAsystoleSimulation from './components/simulations/CardiacAsystoleSimulation'
-import CardiacDocumentation from './components/simulations/CardiacDocumentation' // <-- NOW EXPLICITLY DEFINED
-import RhythmDocumentation from './components/simulations/RhythmDocumentation'
-import PostArrestDocumentation from './components/simulations/PostArrestDocumentation'
+import Landing from './src/components/Landing' // Path updated
+import Login from './src/components/Login' // Path updated
+import SignUp from './src/components/SignUp' // Path updated
+import Home from './src/components/Home' // Path updated
+import VideoIntro from './src/components/VideoIntro' // Path updated
+import RespiratorySimulation from './src/components/simulations/RespiratorySimulation' // Path updated
+import CardiacSimulation from './src/components/simulations/CardiacSimulation' // Path updated
+import CardiacRhythmSimulation from './src/components/simulations/CardiacRhythmSimulation' // Path updated
+import CardiacAsystoleSimulation from './src/components/simulations/CardiacAsystoleSimulation' // Path updated
+import CardiacDocumentation from './src/components/simulations/CardiacDocumentation' // Path updated
+import RhythmDocumentation from './src/components/simulations/RhythmDocumentation' // Path updated
+import PostArrestDocumentation from './src/components/simulations/PostArrestDocumentation' // Path updated
 import './App.css'
 
 function App() {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [currentView, setCurrentView] = useState('landing')
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [currentView, setCurrentView] = useState('landing')
 
-  // Auth state listener
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user)
-      setLoading(false)
-    })
+  // Auth state listener
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user)
+      setLoading(false)
+    })
 
-    return () => unsubscribe()
-  }, [])
+    return () => unsubscribe()
+  }, [])
 
-  // Render different views based on currentView state
-  const renderView = () => {
-    // Helper to enforce user authentication before proceeding to a view
-    const authenticatedView = (Component, props = {}) => {
-      if (!user) {
-        setCurrentView('landing')
-        return <Landing onNavigate={setCurrentView} />
-      }
-      return <Component onNavigate={setCurrentView} {...props} />
-    }
+  // Render different views based on currentView state
+  const renderView = () => {
+    // Helper to enforce user authentication before proceeding to a view
+    const authenticatedView = (Component, props = {}) => {
+      if (!user) {
+        setCurrentView('landing')
+        return <Landing onNavigate={setCurrentView} />
+      }
+      return <Component onNavigate={setCurrentView} {...props} />
+    }
 
-    switch (currentView) {
-      case 'landing':
-        return <Landing onNavigate={setCurrentView} />
-      case 'login':
-        return <Login onNavigate={setCurrentView} setUser={setUser} />
-      case 'signup':
-        return <SignUp onNavigate={setCurrentView} setUser={setUser} />
-      case 'home':
-        return authenticatedView(Home, { user })
-
-      // --- Simulation 1 Flow (Recognition) ---
-      case 'cardiac-simulation':
-        return authenticatedView(CardiacSimulation, {
-          onPass: () => setCurrentView('cardiac-documentation')
-        })
-      case 'cardiac-documentation':
-        // FIX: The onPass prop is passed here, linking to Sim 2
-        return authenticatedView(CardiacDocumentation, {
-          onPass: () => setCurrentView('cardiac-rhythm-simulation')
-        })
-
-      // --- Simulation 2 Flow (Rhythm Management) ---
-      case 'cardiac-rhythm-simulation':
-        return authenticatedView(CardiacRhythmSimulation, {
-          onPass: () => setCurrentView('rhythm-documentation')
-        })
-      case 'rhythm-documentation':
-        return authenticatedView(RhythmDocumentation, {
-          onPass: () => setCurrentView('cardiac-asystole-simulation')
-        })
+    switch (currentView) {
+      case 'landing':
+        return <Landing onNavigate={setCurrentView} />
+      case 'login':
+        return <Login onNavigate={setCurrentView} setUser={setUser} />
+      case 'signup':
+        return <SignUp onNavigate={setCurrentView} setUser={setUser} />
+      case 'home':
+        return authenticatedView(Home, { user })
+      
+      // --- Simulation 1 Flow: Video Briefing -> Core Simulation ---
+      case 'cardiac-video-briefing':
+        // VideoIntro component handles navigation to 'cardiac-simulation'
+        return authenticatedView(VideoIntro, { onNavigate: setCurrentView })
         
-      // --- Simulation 3 Flow (Asystole & Post-Arrest) ---
-      case 'cardiac-asystole-simulation':
-        return authenticatedView(CardiacAsystoleSimulation, {
-          onPass: () => setCurrentView('post-arrest-documentation')
-        })
-      case 'post-arrest-documentation':
-        return authenticatedView(PostArrestDocumentation)
+      case 'cardiac-simulation':
+        return authenticatedView(CardiacSimulation, {
+          onPass: () => setCurrentView('cardiac-documentation')
+        })
+      case 'cardiac-documentation':
+        return authenticatedView(CardiacDocumentation, {
+          onPass: () => setCurrentView('cardiac-rhythm-simulation')
+        })
 
-      // --- Other Simulations ---
-      case 'respiratory-simulation':
-        return authenticatedView(RespiratorySimulation)
+      // --- Simulation 2 Flow (Rhythm Management) ---
+      case 'cardiac-rhythm-simulation':
+        return authenticatedView(CardiacRhythmSimulation, {
+          onPass: () => setCurrentView('rhythm-documentation')
+        })
+      case 'rhythm-documentation':
+        return authenticatedView(RhythmDocumentation, {
+          onPass: () => setCurrentView('cardiac-asystole-simulation')
+        })
+        
+      // --- Simulation 3 Flow (Asystole & Post-Arrest) ---
+      case 'cardiac-asystole-simulation':
+        return authenticatedView(CardiacAsystoleSimulation, {
+          onPass: () => setCurrentView('post-arrest-documentation')
+        })
+      case 'post-arrest-documentation':
+        return authenticatedView(PostArrestDocumentation)
 
-      default:
-        return <Landing onNavigate={setCurrentView} />
-    }
-  }
+      // --- Other Simulations ---
+      case 'respiratory-simulation':
+        return authenticatedView(RespiratorySimulation)
 
-  if (loading) {
-    return (
-      <div className="loading-screen">
-        <div className="loading-spinner">Loading MediNova...</div>
-      </div>
-    )
-  }
+      default:
+        return <Landing onNavigate={setCurrentView} />
+    }
+  }
 
-  return (
-    <div className="app">
-      {renderView()}
-    </div>
-  )
+  if (loading) {
+    return (
+      <div className="loading-screen text-center p-10">
+        <div className="loading-spinner text-lg font-semibold text-blue-600">Loading MediNova...</div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="app min-h-screen bg-gray-50 font-inter">
+      {renderView()}
+    </div>
+  )
 }
 
 export default App
