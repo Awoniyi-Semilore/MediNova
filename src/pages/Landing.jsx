@@ -9,12 +9,7 @@ function Landing({ navigateTo }) {
         <p className="subtitle">Medical Innovations Simulation Platform</p>
         
         <div className="auth-buttons">
-          <button 
-            className="btn btn-primary"
-            onClick={() => navigateTo('home')}
-          >
-            Get Started
-          </button>
+          
           <div className="button-group">
             <button 
               className="btn btn-secondary"
