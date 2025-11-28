@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import VideoPlayer from './VideoPlayer';
 import Simulation1 from './Simulation1';
 import Popup from '../UI/Popup';
 
-function CardiacArrestSimulation() {
-  const navigate = useNavigate();
+function CardiacArrestSimulation({ navigateTo }) {
   const [currentStep, setCurrentStep] = useState('video');
   const [simulation1Completed, setSimulation1Completed] = useState(false);
 
@@ -33,7 +31,7 @@ function CardiacArrestSimulation() {
   };
 
   const handleContinue = () => {
-    navigate('/cardiac-documentation');
+    navigateTo('cardiac-documentation');
   };
 
   if (currentStep === 'video') {
