@@ -1,0 +1,119 @@
+/* --- Revised Landing Component Styles: Calm & Urgent --- */
+
+:root {
+  /* Define colors for easy adjustments */
+  --calm-blue: #e8f4f8; /* Very light, cool hospital background */
+  --urgent-blue: #008cba; /* Deep, professional, reassuring blue */
+  --text-primary: #333333;
+  --text-secondary: #5f7481;
+}
+
+.landing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--calm-blue); /* Light, cool base */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.landing-content {
+  background-color: #ffffff;
+  padding: 50px; /* Slightly larger padding for a spacious feel */
+  border-radius: 16px;
+  /* Subtle, modern shadow for depth */
+  box-shadow: 0 10px 30px rgba(0, 50, 80, 0.1); 
+  text-align: center;
+  max-width: 550px;
+  width: 100%;
+  border-top: 5px solid var(--urgent-blue); /* A line of 'urgency' */
+}
+
+.medinova-title {
+  font-size: 3rem; /* Larger, more impactful title */
+  color: var(--urgent-blue);
+  margin-bottom: 5px;
+  font-weight: 800; /* Bold to convey importance */
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  font-weight: 300; /* Light weight for calmness */
+}
+
+/* --- Authentication Buttons --- */
+
+.auth-buttons {
+  margin-top: 30px;
+}
+
+.button-group {
+  display: flex;
+  gap: 20px; /* Increased space between buttons */
+  justify-content: center;
+}
+
+.btn {
+  padding: 15px 35px; /* Bigger buttons */
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 40px; /* Pill-shaped for a softer, modern look */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-grow: 1;
+  max-width: 200px;
+}
+
+/* Secondary Button (Login/Sign Up) */
+.btn-secondary {
+  background-color: var(--urgent-blue); 
+  color: #ffffff;
+  /* Subtle border adds definition */
+  border: 2px solid var(--urgent-blue);
+}
+
+.btn-secondary:hover {
+  background-color: #006b95; /* Darker on hover */
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 140, 186, 0.3);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+  background-color: #00507a;
+  box-shadow: none;
+}
+
+/* --- Media Queries for Responsiveness --- */
+
+@media (max-width: 600px) {
+  .landing-content {
+    padding: 30px 20px;
+    border-radius: 12px;
+  }
+  
+  .medinova-title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+  }
+
+  .button-group {
+    flex-direction: column; 
+    gap: 15px;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: none;
+  }
+}
