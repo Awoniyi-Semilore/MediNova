@@ -1,19 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Header from '../components/UI/Header';
-import { useAuth } from '../contexts/AuthContext';
 
-function CardiacDocumentation() {
-  const navigate = useNavigate();
-  const { logout } = useNavigate();
-
+function CardiacDocumentation({ navigateTo, currentUser }) {
   const handleLogout = async () => {
-    try {
-      await logout();
-      navigate('/');
-    } catch (error) {
-      console.error('Failed to log out', error);
-    }
+    navigateTo('landing');
   };
 
   return (
@@ -97,13 +87,13 @@ function CardiacDocumentation() {
         <div className="navigation-buttons">
           <button 
             className="btn btn-primary"
-            onClick={() => navigate('/home')}
+            onClick={() => navigateTo('home')}
           >
             Back to Simulations
           </button>
           <button 
             className="btn btn-secondary"
-            onClick={() => navigate('/cardiac-simulation2')}
+            onClick={() => navigateTo('cardiac-simulation2')}
           >
             Continue to Simulation 2
           </button>
