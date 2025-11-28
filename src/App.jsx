@@ -1,5 +1,4 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
 import Landing from './pages/Landing';
 import Home from './pages/Home';
@@ -10,21 +9,38 @@ import PediatricDocumentation from './pages/PediatricDocumentation';
 import './styles/globals.css';
 
 function App() {
+  const [currentPage, setCurrentPage] = useState('landing');
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const navigateTo = (page) => {
+    setCurrentPage(page);
+  };
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'landing':
+        return <Landing navigateTo={navigateTo} />;
+      case 'home':
+        return <Home navigateTo={navigateTo} currentUser={currentUser} />;
+      case 'cardiac-simulation':
+        return <CardiacArrestSimulation navigateTo={navigateTo} />;
+      case 'pediatric-simulation':
+        return <PediatricRespiratorySimulation navigateTo={navigateTo} />;
+      case 'cardiac-documentation':
+        return <CardiacDocumentation navigateTo={navigateTo} currentUser={currentUser} />;
+      case 'pediatric-documentation':
+        return <PediatricDocumentation navigateTo={navigateTo} currentUser={currentUser} />;
+      default:
+        return <Landing navigateTo={navigateTo} />;
+    }
+  };
+
   return (
-    <Router>
-      <AuthProvider>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/cardiac-simulation" element={<CardiacArrestSimulation />} />
-            <Route path="/pediatric-simulation" element={<PediatricRespiratorySimulation />} />
-            <Route path="/cardiac-documentation" element={<CardiacDocumentation />} />
-            <Route path="/pediatric-documentation" element={<PediatricDocumentation />} />
-          </Routes>
-        </div>
-      </AuthProvider>
-    </Router>
+    <AuthProvider>
+      <div className="App">
+        {renderPage()}
+      </div>
+    </AuthProvider>
   );
 }
 
