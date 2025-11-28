@@ -1,478 +1,108 @@
-/* Landing Page - Medical Professional Design */
-.landing-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
-  color: #1e293b;
-  position: relative;
-  overflow: hidden;
-}
+/* --- Landing Component Styles --- */
 
-.landing-page::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(30, 64, 175, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(5, 150, 105, 0.1) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.hero-section {
+.landing-container {
   display: flex;
-  align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+  width: 100%;
+  background-color: #f4f6f9; /* Light, medical-inspired background */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.landing-content {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
-  position: relative;
-  z-index: 1;
+  max-width: 500px; /* Constrain content width */
+  width: 100%;
 }
 
-.hero-content {
-  max-width: 600px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 3rem 2rem;
-  border-radius: 20px;
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.logo-icon {
-  font-size: 3.5rem;
-  background: linear-gradient(135deg, var(--medical-blue), var(--medical-green));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-}
-
-.logo h1 {
-  font-size: 3rem;
-  background: linear-gradient(135deg, var(--medical-blue), var(--medical-green));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 0;
+.medinova-title {
+  font-size: 2.5rem;
+  color: #007bff; /* Primary brand color (blue) */
+  margin-bottom: 10px;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: 1px;
 }
 
-.hero-content h2 {
-  font-size: 1.5rem;
-  color: var(--medical-gray);
-  margin-bottom: 1rem;
+.subtitle {
+  font-size: 1.2rem;
+  color: #5a6268;
+  margin-bottom: 30px;
   font-weight: 400;
 }
 
-.hero-content p {
-  font-size: 1.1rem;
-  color: var(--medical-gray);
-  margin-bottom: 2.5rem;
-  line-height: 1.7;
+/* --- Authentication Buttons --- */
+
+.auth-buttons {
+  margin-top: 20px;
 }
 
-.hero-buttons {
+.button-group {
   display: flex;
-  gap: 1rem;
+  gap: 15px; /* Space between buttons */
   justify-content: center;
-  flex-wrap: wrap;
 }
 
-/* Features Section - Medical Cards */
-.features-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  padding: 4rem 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-
-.feature {
-  background: white;
-  padding: 2.5rem 2rem;
-  border-radius: 16px;
-  box-shadow: 
-    0 10px 25px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(255, 255, 255, 0.8);
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  position: relative;
-  overflow: hidden;
-}
-
-.feature::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(135deg, var(--medical-blue), var(--medical-green));
-}
-
-.feature:hover {
-  transform: translateY(-8px);
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.12),
-    0 0 0 1px rgba(255, 255, 255, 0.9);
-}
-
-.feature-icon {
-  font-size: 3.5rem;
-  margin-bottom: 1.5rem;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-}
-
-.feature h3 {
-  color: #1e293b;
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
-  font-weight: 600;
-}
-
-.feature p {
-  color: var(--medical-gray);
-  line-height: 1.7;
+.btn {
+  padding: 12px 25px;
   font-size: 1rem;
-}
-
-/* Auth Pages - Medical Theme */
-.auth-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
-  padding: 2rem;
-  position: relative;
-}
-
-.auth-page::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 90% 80%, rgba(5, 150, 105, 0.05) 0%, transparent 50%);
-}
-
-.auth-container {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 3rem;
-  border-radius: 20px;
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.8);
-  width: 100%;
-  max-width: 450px;
-  position: relative;
-  z-index: 1;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.back-button {
-  background: none;
+  font-weight: 600;
   border: none;
-  color: var(--medical-gray);
-  cursor: pointer;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: color 0.3s ease;
-}
-
-.back-button:hover {
-  color: var(--medical-blue);
-}
-
-.auth-container h1 {
-  color: #1e293b;
-  margin-bottom: 0.5rem;
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-.auth-container > p {
-  color: var(--medical-gray);
-  margin-bottom: 2rem;
-}
-
-.auth-form {
-  margin: 2rem 0;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: #374151;
-  font-size: 0.95rem;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 14px;
-  border: 2px solid #e5e7eb;
   border-radius: 8px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  background: white;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: var(--medical-blue);
-  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.error-message {
-  background: #fef2f2;
-  color: var(--medical-red);
-  padding: 12px 16px;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  border: 1px solid #fecaca;
-  font-size: 0.95rem;
-}
-
-.auth-switch {
-  text-align: center;
-  color: var(--medical-gray);
-  font-size: 0.95rem;
-}
-
-.link-button {
-  background: none;
-  border: none;
-  color: var(--medical-blue);
   cursor: pointer;
-  text-decoration: underline;
-  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  flex-grow: 1; /* Allows buttons to expand equally */
+  max-width: 180px; /* Optional: limit max width for better appearance */
 }
 
-/* Home Page - Medical Dashboard */
-.home-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+/* Secondary Button (Used for both Login and Sign Up in your current structure) */
+.btn-secondary {
+  background-color: #007bff; /* Matching the title color */
+  color: #ffffff;
 }
 
-.home-header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 2rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+.btn-secondary:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
 }
 
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
+.btn-secondary:active {
+  transform: translateY(0);
+  background-color: #004085;
+  box-shadow: none;
 }
 
-.header-content h1 {
-  color: #1e293b;
-  margin-bottom: 0.5rem;
-  font-size: 2.5rem;
-  font-weight: 700;
-}
+/* --- Media Queries for Responsiveness --- */
 
-.header-content p {
-  color: var(--medical-gray);
-  margin-bottom: 1.5rem;
-  font-size: 1.1rem;
-}
-
-.logout-btn {
-  margin-top: 1rem;
-}
-
-.scenarios-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 2rem;
-}
-
-.scenarios-section h2 {
-  text-align: center;
-  margin-bottom: 3rem;
-  color: #1e293b;
-  font-size: 2rem;
-  font-weight: 600;
-}
-
-.emergency-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 2rem;
-}
-
-.emergency-card {
-  background: white;
-  border-radius: 16px;
-  padding: 2.5rem;
-  box-shadow: 
-    0 10px 25px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  position: relative;
-  overflow: hidden;
-}
-
-.emergency-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(135deg, var(--medical-blue), var(--medical-green));
-}
-
-.emergency-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.12),
-    0 0 0 1px rgba(255, 255, 255, 0.9);
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-}
-
-.card-icon {
-  font-size: 3rem;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-}
-
-.card-badge {
-  background: var(--medical-light-blue);
-  color: var(--medical-blue);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.emergency-card h3 {
-  color: #1e293b;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.emergency-card > p {
-  color: var(--medical-gray);
-  margin-bottom: 1.5rem;
-  font-size: 1.1rem;
-}
-
-.scenario-features {
-  list-style: none;
-  margin-bottom: 2rem;
-}
-
-.scenario-features li {
-  padding: 0.5rem 0;
-  color: #475569;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.scenario-features li::before {
-  content: '✓';
-  color: var(--medical-green);
-  font-weight: bold;
-}
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.duration {
-  color: var(--medical-gray);
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .hero-buttons {
-    flex-direction: column;
+@media (max-width: 600px) {
+  .landing-content {
+    padding: 30px 20px;
+    border-radius: 8px;
   }
 
-  .form-row {
-    grid-template-columns: 1fr;
+  .medinova-title {
+    font-size: 2rem;
   }
 
-  .logo {
-    flex-direction: column;
-    text-align: center;
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 25px;
   }
 
-  .emergency-cards {
-    grid-template-columns: 1fr;
+  .button-group {
+    flex-direction: column; /* Stack buttons vertically on small screens */
+    gap: 10px;
   }
 
-  .card-footer {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: stretch;
-  }
-
-  .hero-content {
-    padding: 2rem 1.5rem;
-  }
-
-  .auth-container {
-    padding: 2rem 1.5rem;
-    margin: 1rem;
-  }
-
-  .feature, .emergency-card {
-    padding: 2rem 1.5rem;
+  .btn {
+    width: 100%; /* Full width when stacked */
+    max-width: none;
   }
 }
 
