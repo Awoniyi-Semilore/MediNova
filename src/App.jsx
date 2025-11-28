@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
 import Landing from './pages/Landing';
 import Home from './pages/Home';
-import CardiacArrestSimulation from './components/Simulation/CardiacArrestSimulation.jsx';
+import CardiacArrestSimulation from './components/Simulation/CardiacArrestSimulation';
 import PediatricRespiratorySimulation from './components/Simulation/PediatricRespiratorySimulation';
 import CardiacDocumentation from './pages/CardiacDocumentation';
 import PediatricDocumentation from './pages/PediatricDocumentation';
