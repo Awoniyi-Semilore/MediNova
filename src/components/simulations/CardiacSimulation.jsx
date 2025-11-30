@@ -25,11 +25,11 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
       type: 'blue',
       isDecision: false,
       actions: {
-        confirm: startSimulation,
+        confirm: startSimulation, // Skip video
         confirmText: 'Skip Video & Start Simulation',
         cancel: () => { 
-          setIsModalOpen(false);
-          setStep('play-video');
+          setIsModalOpen(false); // Close modal
+          setStep('play-video'); // Change step to trigger video display
         },
         cancelText: 'Watch Video Briefing'
       }
@@ -102,6 +102,7 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
   // --- Logic and Handlers ---
 
   useEffect(() => {
+    // Only show the modal if the step is NOT 'play-video'
     const currentStep = steps[step];
     if (currentStep && step !== 'play-video') {
       setModalContent(currentStep);
@@ -128,13 +129,13 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
 
   // --- Conditional Rendering: Show VideoPlayer when step is 'play-video' ---
   if (step === 'play-video') {
-    // Use your Vimeo URL here
+    // Use your Vimeo URL with proper embed parameters
     const vimeoUrl = "https://player.vimeo.com/video/1141231294";
     
     return <VideoPlayer videoSource={vimeoUrl} onVideoEnd={startSimulation} />;
   }
 
-  // Render the main scenario backdrop
+  // Render the main scenario backdrop (only when NOT in play-video step)
   return (
     <div className="cardiac-simulation-page">
       <div className="simulation-header">
