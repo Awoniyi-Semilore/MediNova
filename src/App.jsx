@@ -9,7 +9,7 @@ import RespiratorySimulation from './components/simulations/RespiratorySimulatio
 import RespiratorySimulation1 from './components/simulations/RespiratorySimulation1'
 import RespiratorySimulation2 from './components/simulations/RespiratorySimulation2'
 import RespiratorySimulation3 from './components/simulations/RespiratorySimulation3'
-import RespiratoryDocumentation1 from './components/simulations/RespiratoryDocumentation1'
+import RespiratoryDocumentation1 from './components/simulations/RespiratoryDocumentation1.jsx'
 import RespiratoryDocumentation2 from './components/simulations/RespiratoryDocumentation2'
 import RespiratoryDocumentation3 from './components/simulations/RespiratoryDocumentation3'
 import CardiacSimulation from './components/simulations/CardiacSimulation'
