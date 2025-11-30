@@ -109,7 +109,7 @@ const Home = ({ onNavigate, user }) => {
           {/* Respiratory Emergency - UPDATED */}
           <div
             className="scenario-card-compact respiratory-scenario"
-            onClick={() => onNavigate('respiratory-simulation1')}  {/* Changed to simulation1 */}
+            onClick={() => onNavigate('respiratory-simulation1')}
           >
             <div className="card-badge-compact critical-badge">CRITICAL CARE</div>
             <div className="card-icon-compact">💨</div>
