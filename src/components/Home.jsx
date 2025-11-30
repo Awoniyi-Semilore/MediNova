@@ -53,6 +53,15 @@ const Home = ({ onNavigate, user }) => {
             <div className="user-welcome">
               <span className="welcome-name">Welcome, {user?.displayName?.split(' ')[0] || 'Medic'}!</span>
             </div>
+            {/* Admin Link for specific email */}
+            {user?.email === 'semiloreawoniyi@gmail.com' && (
+              <button 
+                onClick={() => onNavigate('feedback-admin')}
+                className="admin-link"
+              >
+                📊 View Feedback
+              </button>
+            )}
             <button
               className="logout-btn-compact"
               onClick={handleLogout}
@@ -63,7 +72,7 @@ const Home = ({ onNavigate, user }) => {
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Rest of your Home component remains the same */}
       <section className="home-hero">
         <div className="hero-content-compact">
           <h2>Emergency Medicine Training Center</h2>
@@ -71,7 +80,6 @@ const Home = ({ onNavigate, user }) => {
         </div>
       </section>
 
-      {/* Emergency Scenarios */}
       <section className="scenarios-section-compact">
         <div className="scenarios-header-compact">
           <h2>Choose Your Training Scenario</h2>
@@ -106,7 +114,7 @@ const Home = ({ onNavigate, user }) => {
             </button>
           </div>
 
-          {/* Respiratory Emergency - UPDATED */}
+          {/* Respiratory Emergency */}
           <div
             className="scenario-card-compact respiratory-scenario"
             onClick={() => onNavigate('respiratory-simulation1')}
