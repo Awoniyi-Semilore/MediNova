@@ -6,10 +6,16 @@ import Login from './components/Login'
 import SignUp from './components/SignUp'
 import Home from './components/Home'
 import RespiratorySimulation from './components/simulations/RespiratorySimulation'
+import RespiratorySimulation1 from './components/simulations/RespiratorySimulation1'
+import RespiratorySimulation2 from './components/simulations/RespiratorySimulation2'
+import RespiratorySimulation3 from './components/simulations/RespiratorySimulation3'
+import RespiratoryDocumentation1 from './components/simulations/RespiratoryDocumentation1'
+import RespiratoryDocumentation2 from './components/simulations/RespiratoryDocumentation2'
+import RespiratoryDocumentation3 from './components/simulations/RespiratoryDocumentation3'
 import CardiacSimulation from './components/simulations/CardiacSimulation'
 import CardiacRhythmSimulation from './components/simulations/CardiacRhythmSimulation'
 import CardiacAsystoleSimulation from './components/simulations/CardiacAsystoleSimulation'
-import CardiacDocumentation from './components/simulations/CardiacDocumentation' // <-- NOW EXPLICITLY DEFINED
+import CardiacDocumentation from './components/simulations/CardiacDocumentation'
 import RhythmDocumentation from './components/simulations/RhythmDocumentation'
 import PostArrestDocumentation from './components/simulations/PostArrestDocumentation'
 import './App.css'
@@ -41,29 +47,6 @@ function App() {
     }
 
     switch (currentView) {
-// Add these to your App.jsx routes
-case 'respiratory-simulation1':
-  return authenticatedView(RespiratorySimulation1, {
-    onPass: () => setCurrentView('respiratory-documentation1')
-  });
-case 'respiratory-documentation1':
-  return authenticatedView(RespiratoryDocumentation1, {
-    onPass: () => setCurrentView('respiratory-simulation2')
-  });
-case 'respiratory-simulation2':
-  return authenticatedView(RespiratorySimulation2, {
-    onPass: () => setCurrentView('respiratory-documentation2')
-  });
-case 'respiratory-documentation2':
-  return authenticatedView(RespiratoryDocumentation2, {
-    onPass: () => setCurrentView('respiratory-simulation3')
-  });
-case 'respiratory-simulation3':
-  return authenticatedView(RespiratorySimulation3, {
-    onPass: () => setCurrentView('respiratory-documentation3')
-  });
-case 'respiratory-documentation3':
-  return authenticatedView(RespiratoryDocumentation3);
       case 'landing':
         return <Landing onNavigate={setCurrentView} />
       case 'login':
@@ -73,18 +56,15 @@ case 'respiratory-documentation3':
       case 'home':
         return authenticatedView(Home, { user })
 
-      // --- Simulation 1 Flow (Recognition) ---
+      // --- Cardiac Simulation Flow ---
       case 'cardiac-simulation':
         return authenticatedView(CardiacSimulation, {
           onPass: () => setCurrentView('cardiac-documentation')
         })
       case 'cardiac-documentation':
-        // FIX: The onPass prop is passed here, linking to Sim 2
         return authenticatedView(CardiacDocumentation, {
           onPass: () => setCurrentView('cardiac-rhythm-simulation')
         })
-
-      // --- Simulation 2 Flow (Rhythm Management) ---
       case 'cardiac-rhythm-simulation':
         return authenticatedView(CardiacRhythmSimulation, {
           onPass: () => setCurrentView('rhythm-documentation')
@@ -93,8 +73,6 @@ case 'respiratory-documentation3':
         return authenticatedView(RhythmDocumentation, {
           onPass: () => setCurrentView('cardiac-asystole-simulation')
         })
-        
-      // --- Simulation 3 Flow (Asystole & Post-Arrest) ---
       case 'cardiac-asystole-simulation':
         return authenticatedView(CardiacAsystoleSimulation, {
           onPass: () => setCurrentView('post-arrest-documentation')
@@ -102,7 +80,35 @@ case 'respiratory-documentation3':
       case 'post-arrest-documentation':
         return authenticatedView(PostArrestDocumentation)
 
-      // --- Other Simulations ---
+      // --- Respiratory Simulation 1 Flow (Diagnosis) ---
+      case 'respiratory-simulation1':
+        return authenticatedView(RespiratorySimulation1, {
+          onPass: () => setCurrentView('respiratory-documentation1')
+        })
+      case 'respiratory-documentation1':
+        return authenticatedView(RespiratoryDocumentation1, {
+          onPass: () => setCurrentView('respiratory-simulation2')
+        })
+
+      // --- Respiratory Simulation 2 Flow (Immediate Interventions) ---
+      case 'respiratory-simulation2':
+        return authenticatedView(RespiratorySimulation2, {
+          onPass: () => setCurrentView('respiratory-documentation2')
+        })
+      case 'respiratory-documentation2':
+        return authenticatedView(RespiratoryDocumentation2, {
+          onPass: () => setCurrentView('respiratory-simulation3')
+        })
+
+      // --- Respiratory Simulation 3 Flow (Advanced Management) ---
+      case 'respiratory-simulation3':
+        return authenticatedView(RespiratorySimulation3, {
+          onPass: () => setCurrentView('respiratory-documentation3')
+        })
+      case 'respiratory-documentation3':
+        return authenticatedView(RespiratoryDocumentation3)
+
+      // --- Legacy Respiratory Simulation (Keep for backward compatibility) ---
       case 'respiratory-simulation':
         return authenticatedView(RespiratorySimulation)
 
