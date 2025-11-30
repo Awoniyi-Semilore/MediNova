@@ -41,6 +41,29 @@ function App() {
     }
 
     switch (currentView) {
+// Add these to your App.jsx routes
+case 'respiratory-simulation1':
+  return authenticatedView(RespiratorySimulation1, {
+    onPass: () => setCurrentView('respiratory-documentation1')
+  });
+case 'respiratory-documentation1':
+  return authenticatedView(RespiratoryDocumentation1, {
+    onPass: () => setCurrentView('respiratory-simulation2')
+  });
+case 'respiratory-simulation2':
+  return authenticatedView(RespiratorySimulation2, {
+    onPass: () => setCurrentView('respiratory-documentation2')
+  });
+case 'respiratory-documentation2':
+  return authenticatedView(RespiratoryDocumentation2, {
+    onPass: () => setCurrentView('respiratory-simulation3')
+  });
+case 'respiratory-simulation3':
+  return authenticatedView(RespiratorySimulation3, {
+    onPass: () => setCurrentView('respiratory-documentation3')
+  });
+case 'respiratory-documentation3':
+  return authenticatedView(RespiratoryDocumentation3);
       case 'landing':
         return <Landing onNavigate={setCurrentView} />
       case 'login':
