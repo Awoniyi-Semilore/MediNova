@@ -9,7 +9,7 @@ import RespiratorySimulation from './components/simulations/RespiratorySimulatio
 import RespiratorySimulation1 from './components/simulations/RespiratorySimulation1'
 import RespiratorySimulation2 from './components/simulations/RespiratorySimulation2'
 import RespiratorySimulation3 from './components/simulations/RespiratorySimulation3'
-import RespiratoryDocumentation1 from './components/simulations/RespiratoryDocumentation1.jsx'
+import RespiratoryDocumentation1 from './components/simulations/RespiratoryDocumentation1'
 import RespiratoryDocumentation2 from './components/simulations/RespiratoryDocumentation2'
 import RespiratoryDocumentation3 from './components/simulations/RespiratoryDocumentation3'
 import CardiacSimulation from './components/simulations/CardiacSimulation'
@@ -18,27 +18,13 @@ import CardiacAsystoleSimulation from './components/simulations/CardiacAsystoleS
 import CardiacDocumentation from './components/simulations/CardiacDocumentation'
 import RhythmDocumentation from './components/simulations/RhythmDocumentation'
 import PostArrestDocumentation from './components/simulations/PostArrestDocumentation'
-// Add to your imports
-
-import FeedbackAdmin from './components/simulations/FeedbackAdmin';
-// Add to your routes
-
+import FeedbackAdmin from './components/simulations/FeedbackAdmin'
 import './App.css'
 
 function App() {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [currentView, setCurrentView] = useState('landing')
-
-// Add this somewhere in your Home component, maybe in the header or footer
-{user?.email === 'your-admin-semiloreawoniyi@gmail.com' && (
-  <button 
-    onClick={() => onNavigate('feedback-admin')}
-    className="admin-link"
-  >
-    📊 View Feedback
-  </button>
-)}
 
   // Auth state listener
   useEffect(() => {
@@ -62,8 +48,8 @@ function App() {
     }
 
     switch (currentView) {
-case 'feedback-admin':
-  return authenticatedView(FeedbackAdmin);
+      case 'feedback-admin':
+        return authenticatedView(FeedbackAdmin)
       case 'landing':
         return <Landing onNavigate={setCurrentView} />
       case 'login':
