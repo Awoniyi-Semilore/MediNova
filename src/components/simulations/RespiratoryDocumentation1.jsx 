@@ -66,4 +66,4 @@ const RespiratoryDocumentation1 = ({ onNavigate, onPass }) => {
   );
 };
 
-export default RespiratoryDocumentation1;
+export default RespiratoryDocumentation1
