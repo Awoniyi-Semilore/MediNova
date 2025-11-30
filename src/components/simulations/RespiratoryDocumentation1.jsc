@@ -1,0 +1,69 @@
+import React from 'react';
+
+const RespiratoryDocumentation1 = ({ onNavigate, onPass }) => {
+  return (
+    <div className="documentation-page">
+      <header className="doc-header">
+        <h1>Pediatric Respiratory: Diagnosis & Assessment Review</h1>
+        <button className="skip-btn" onClick={() => onNavigate('home')}>
+          Return to Home &rarr;
+        </button>
+      </header>
+
+      <div className="doc-content">
+        <section className="key-concepts">
+          <h2>🔍 Pediatric Asthma Assessment</h2>
+          <div className="key-terms-box">
+            <h3>Key Assessment Findings</h3>
+            <ul className="clinical-list">
+              <li><strong>Respiratory Rate:</strong> &gt;30/min indicates severe distress in children</li>
+              <li><strong>SpO₂:</strong> &lt;92% requires immediate oxygen therapy</li>
+              <li><strong>Work of Breathing:</strong> Accessory muscle use, nasal flaring, retractions</li>
+              <li><strong>Speech:</strong> Inability to speak in full sentences = severe exacerbation</li>
+              <li><strong>Wheezing:</strong> May disappear in severe cases ("silent chest")</li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="assessment-criteria">
+          <h2>📊 Asthma Severity Classification</h2>
+          <div className="clinical-table">
+            <div className="table-row header">
+              <div>Severity</div>
+              <div>Respiratory Rate</div>
+              <div>SpO₂</div>
+              <div>Speech</div>
+            </div>
+            <div className="table-row">
+              <div>Mild</div>
+              <div>Increased</div>
+              <div>&gt;95%</div>
+              <div>Full sentences</div>
+            </div>
+            <div className="table-row">
+              <div>Moderate</div>
+              <div>&gt;30/min</div>
+              <div>90-95%</div>
+              <div>Phrases</div>
+            </div>
+            <div className="table-row severe">
+              <div>Severe</div>
+              <div>&gt;40/min</div>
+              <div>&lt;90%</div>
+              <div>Words only</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer className="doc-footer">
+        <p>You have completed the diagnosis phase. Ready to learn about immediate interventions?</p>
+        <button className="next-sim-btn" onClick={onPass}>
+          Continue to Simulation 2: Immediate Interventions &rarr;
+        </button>
+      </footer>
+    </div>
+  );
+};
+
+export default RespiratoryDocumentation1;
