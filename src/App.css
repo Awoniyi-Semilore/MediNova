@@ -3537,3 +3537,100 @@
     margin-bottom: 1.5rem;
   }
 }
+
+/* Respiratory Simulation Specific Styles */
+.respiratory-simulation-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  padding: 1rem;
+}
+
+.respiratory-simulation-page .simulation-header {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+}
+
+.respiratory-simulation-page .patient-visual {
+  background: linear-gradient(135deg, #22d3ee, #0ea5e9);
+}
+
+.respiratory-simulation-page .monitor-display {
+  background: linear-gradient(135deg, #0c4a6e, #0369a1);
+}
+
+/* Respiratory Status Colors */
+.status-respiratory-distress {
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+}
+
+.status-severe-exacerbation {
+  background: #fef2f2;
+  border-left: 4px solid #ef4444;
+}
+
+.status-status-asthmaticus {
+  background: #fecaca;
+  border-left: 4px solid #dc2626;
+  animation: pulse-critical 1s infinite;
+}
+
+/* Respiratory-specific monitor lines */
+.monitor-spo2 {
+  color: #0ea5e9;
+  font-weight: 600;
+}
+
+.monitor-spo2 .red-text {
+  color: #ef4444;
+  animation: pulse-oxygen 2s infinite;
+}
+
+.monitor-treatment {
+  color: #10b981;
+  font-weight: 600;
+}
+
+@keyframes pulse-oxygen {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Respiratory Assessment Notes */
+.respiratory-notes {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.respiratory-notes h4 {
+  color: #0ea5e9;
+  margin-bottom: 0.5rem;
+}
+
+.respiratory-signs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.respiratory-sign {
+  background: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border-left: 3px solid #0ea5e9;
+  font-size: 0.9rem;
+}
+
+/* Responsive Design for Respiratory Pages */
+@media (max-width: 768px) {
+  .respiratory-signs {
+    grid-template-columns: 1fr;
+  }
+  
+  .respiratory-simulation-page .scenario-container {
+    grid-template-columns: 1fr;
+  }
+}
