@@ -1,91 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const VideoPlayer = ({ videoSource, onVideoEnd }) => {
     const [videoError, setVideoError] = useState(false);
-    const [videoFinished, setVideoFinished] = useState(false);
 
-    // Check if the source is a Vimeo URL
-    const isVimeoLink = videoSource.includes('vimeo.com');
-    
     // Extract Vimeo video ID from URL
     const getVimeoId = (url) => {
         const match = url.match(/(?:vimeo\.com\/|player\.vimeo\.com\/video\/)([0-9]+)/);
         return match ? match[1] : null;
     };
 
-    const vimeoId = isVimeoLink ? getVimeoId(videoSource) : null;
+    const vimeoId = getVimeoId(videoSource);
 
     const handleSkip = () => {
         onVideoEnd();
     };
 
-    // For Vimeo, we can't easily detect when the video ends, 
-    // so we'll rely on the skip button or a timer
-    React.useEffect(() => {
-        if (isVimeoLink && !videoError) {
-            // Set a timer to auto-advance after estimated video duration
-            const timer = setTimeout(() => {
-                setVideoFinished(true);
-            }, 60000); // 60 seconds - adjust based on your video length
-            
-            return () => clearTimeout(timer);
+    // Load Vimeo API script
+    useEffect(() => {
+        if (!vimeoId) {
+            setVideoError(true);
+            return;
         }
-    }, [isVimeoLink, videoError]);
+
+        const script = document.createElement('script');
+        script.src = 'https://player.vimeo.com/api/player.js';
+        script.async = true;
+        document.body.appendChild(script);
+
+        return () => {
+            if (document.body.contains(script)) {
+                document.body.removeChild(script);
+            }
+        };
+    }, [vimeoId]);
+
+    if (!vimeoId) {
+        return (
+            <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-4">
+                <div className="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-6 space-y-4">
+                    <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center">
+                        Invalid Vimeo URL provided.
+                    </div>
+                    <button
+                        onClick={handleSkip}
+                        className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                    >
+                        Start Simulation &rarr;
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-4">
             <div className="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-6 space-y-4">
                 <h1 className="text-3xl font-bold text-indigo-700 text-center">
-                    Simulation 1: Cardiac Arrest Recognition - Video Brief
+                    Simulation Briefing Video
                 </h1>
 
-                {/* Video Container */}
-                <div className="relative w-full overflow-hidden rounded-lg shadow-xl" style={{ paddingTop: '56.25%' }}>
-                    {isVimeoLink && vimeoId ? (
-                        <iframe
-                            src={`https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0`}
-                            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                            frameBorder="0"
-                            allow="autoplay; fullscreen; picture-in-picture"
-                            allowFullScreen
-                            title="Simulation Introduction Video"
-                            onError={() => setVideoError(true)}
-                        ></iframe>
-                    ) : (
-                        // Fallback for local videos
-                        <video
-                            src={videoSource}
-                            onEnded={onVideoEnd}
-                            controls
-                            autoPlay
-                            className="absolute top-0 left-0 w-full h-full object-cover"
-                            onError={() => setVideoError(true)}
-                        >
-                            Your browser does not support the video tag.
-                        </video>
-                    )}
+                <p className="text-center text-gray-600">
+                    Watch the scenario briefing video to understand the situation.
+                </p>
+
+                {/* Vimeo Video Container */}
+                <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+                    <iframe 
+                        src={`https://player.vimeo.com/video/${vimeoId}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1`}
+                        frameBorder="0" 
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                        title="Cardiac Arrest"
+                        onError={() => setVideoError(true)}
+                    ></iframe>
                 </div>
 
-                <div className="flex justify-center">
+                <div className="flex justify-center space-x-4">
                     <button
                         onClick={handleSkip}
-                        className={`px-6 py-2 font-semibold rounded-full shadow-md transition duration-300 transform hover:scale-105 ${
-                            videoFinished || videoError ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-red-600 hover:bg-red-700 text-white'
-                        }`}
+                        className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-semibold"
                     >
-                        {videoError ? 'Continue Anyway' : 'Skip Video'} &rarr;
+                        Start Simulation &rarr;
                     </button>
                 </div>
 
-                {!videoFinished && !videoError && isVimeoLink && (
-                    <div className="p-4 bg-blue-100 border border-blue-400 text-blue-700 rounded-lg text-center text-sm">
-                        <strong>Video Playing:</strong> The button will activate automatically after the estimated video duration, or you can skip anytime.
-                    </div>
-                )}
-
                 {videoError && (
                     <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center text-sm">
-                        <strong>Video Error:</strong> There was a problem loading the video. You can continue to the simulation.
+                        <strong>Video Error:</strong> There was a problem loading the video. You can start the simulation anyway.
                     </div>
                 )}
             </div>
