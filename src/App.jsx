@@ -18,6 +18,11 @@ import CardiacAsystoleSimulation from './components/simulations/CardiacAsystoleS
 import CardiacDocumentation from './components/simulations/CardiacDocumentation'
 import RhythmDocumentation from './components/simulations/RhythmDocumentation'
 import PostArrestDocumentation from './components/simulations/PostArrestDocumentation'
+// Add to your imports
+
+import FeedbackAdmin from './components/simulations/FeedbackAdmin';
+// Add to your routes
+
 import './App.css'
 
 function App() {
@@ -47,6 +52,8 @@ function App() {
     }
 
     switch (currentView) {
+case 'feedback-admin':
+  return authenticatedView(FeedbackAdmin);
       case 'landing':
         return <Landing onNavigate={setCurrentView} />
       case 'login':
