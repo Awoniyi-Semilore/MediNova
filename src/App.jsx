@@ -30,6 +30,16 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [currentView, setCurrentView] = useState('landing')
 
+// Add this somewhere in your Home component, maybe in the header or footer
+{user?.email === 'your-admin-semiloreawoniyi@gmail.com' && (
+  <button 
+    onClick={() => onNavigate('feedback-admin')}
+    className="admin-link"
+  >
+    📊 View Feedback
+  </button>
+)}
+
   // Auth state listener
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
