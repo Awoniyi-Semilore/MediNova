@@ -4,8 +4,8 @@ import VideoPlayer from './VideoPlayer.jsx';
 import '../Css files/CardiacSimulation.css'; 
 
 const CardiacSimulation = ({ onNavigate, onPass }) => {
-  // Scenario Flow State
-  const [step, setStep] = useState('video-intro'); 
+  // Start directly with video
+  const [step, setStep] = useState('play-video'); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const [attempts, setAttempts] = useState(0);
@@ -19,28 +19,6 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
 
   // --- SCENARIO STEP DEFINITIONS ---
   const steps = {
-    'video-intro': {
-      title: '🎥 Simulation 1: Cardiac Arrest Recognition',
-      message: 'Welcome, Nurse! You are on a post-surgical unit. A video briefing on the scenario is ready. You may skip the video if you feel prepared.',
-      type: 'blue',
-      isDecision: false,
-      actions: {
-        confirm: startSimulation, // Skip video
-        confirmText: 'Skip Video & Start Simulation',
-        cancel: () => { 
-          setIsModalOpen(false); // Close modal
-          setStep('play-video'); // Change step to trigger video display
-        },
-        cancelText: 'Watch Video Briefing'
-      }
-    },
-    'play-video': {
-      title: 'Video Briefing',
-      message: 'Please watch the scenario video.',
-      type: 'blue',
-      isDecision: false,
-      actions: {}
-    },
     'initial-assessment': {
       title: `Patient Check: ${scenarioPatient}`,
       message: `You enter the room at 09:30 for a routine check. You see Mr. Chen slumped slightly in bed, and his <b>breathing is shallow and slow</b> (RR ≈ 6 bpm). What is your immediate priority?`,
@@ -102,9 +80,9 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
   // --- Logic and Handlers ---
 
   useEffect(() => {
-    // Only show the modal if the step is NOT 'play-video'
+    // Show the modal when step changes (except for video step)
     const currentStep = steps[step];
-    if (currentStep && step !== 'play-video') {
+    if (currentStep) {
       setModalContent(currentStep);
       setIsModalOpen(true);
     }
@@ -127,15 +105,13 @@ const CardiacSimulation = ({ onNavigate, onPass }) => {
     }
   };
 
-  // --- Conditional Rendering: Show VideoPlayer when step is 'play-video' ---
+  // --- Show Video Player first ---
   if (step === 'play-video') {
-    // Use your Vimeo URL with proper embed parameters
     const vimeoUrl = "https://player.vimeo.com/video/1141231294";
-    
     return <VideoPlayer videoSource={vimeoUrl} onVideoEnd={startSimulation} />;
   }
 
-  // Render the main scenario backdrop (only when NOT in play-video step)
+  // Render the main scenario backdrop (after video)
   return (
     <div className="cardiac-simulation-page">
       <div className="simulation-header">
