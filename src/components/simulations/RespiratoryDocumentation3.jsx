@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
+import FeedbackForm from './FeedbackForm';
 
 const RespiratoryDocumentation3 = ({ onNavigate }) => {
+  const [showFeedback, setShowFeedback] = useState(false);
+
   return (
     <div className="documentation-page">
+      {showFeedback && (
+        <FeedbackForm 
+          simulationType="Pediatric Respiratory" 
+          onClose={() => setShowFeedback(false)} 
+        />
+      )}
+      
       <header className="doc-header">
         <h1>Pediatric Respiratory: Advanced Management Review</h1>
         <button className="skip-btn" onClick={() => onNavigate('home')}>
           Return to Home &rarr;
         </button>
       </header>
-      
+
       <div className="doc-content">
         <section className="escalation-protocols">
           <h2>🚨 Treatment Escalation</h2>
@@ -40,9 +50,17 @@ const RespiratoryDocumentation3 = ({ onNavigate }) => {
 
       <footer className="doc-footer">
         <p>Congratulations! You have completed all three pediatric respiratory distress simulations.</p>
-        <button className="next-sim-btn" onClick={() => onNavigate('home')}>
-          Return to Training Menu &rarr;
-        </button>
+        <div className="feedback-section">
+          <button 
+            className="feedback-btn"
+            onClick={() => setShowFeedback(true)}
+          >
+            📝 Provide Feedback
+          </button>
+          <button className="next-sim-btn" onClick={() => onNavigate('home')}>
+            Return to Training Menu &rarr;
+          </button>
+        </div>
       </footer>
     </div>
   );
