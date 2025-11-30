@@ -1,0 +1,32 @@
+import React from 'react';
+
+const RespiratoryDocumentation1 = ({ onNavigate }) => {
+  return (
+    <div className="documentation-page">
+      <header className="doc-header">
+        <h1>Pediatric Respiratory: Diagnosis & Assessment</h1>
+        <button className="skip-btn" onClick={() => onNavigate('home')}>
+          Return to Home &rarr;
+        </button>
+      </header>
+      
+      <div className="doc-content">
+        <section className="key-concepts">
+          <h2>🔍 Key Assessment Findings</h2>
+          <div className="key-terms-box">
+            <h3>Asthma Exacerbation Red Flags</h3>
+            <ul className="clinical-list">
+              <li><strong>Respiratory Rate:</strong> &gt;30/min in children indicates severe distress</li>
+              <li><strong>SpO₂:</strong> &lt;92% requires immediate oxygen therapy</li>
+              <li><strong>Work of Breathing:</strong> Accessory muscle use, nasal flaring, retractions</li>
+              <li><strong>Speech:</strong> Inability to speak in full sentences = severe exacerbation</li>
+            </ul>
+          </div>
+        </section>
+        {/* Add more sections as needed */}
+      </div>
+    </div>
+  );
+};
+
+export default RespiratoryDocumentation1;
