@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ActionModal from '../ActionModal.jsx'; // The interactive decision modal
-import VideoPlayer from '../VideoPlayer.jsx'; // The video component (Now in a new file, using a standard name)
+import VideoPlayer from './VideoPlayer.jsx'; // The video component (Now in a new file, using a standard name)
 import '../Css files/CardiacSimulation.css'; 
 
 const CardiacSimulation = ({ onNavigate, onPass }) => {
