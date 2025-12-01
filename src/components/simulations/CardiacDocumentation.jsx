@@ -1,9 +1,20 @@
-import React from 'react';
-import '../Css files/CardiacDocumentation.css'; // Assuming this CSS file exists
+import React, { useState } from 'react';
+import FeedbackForm from './FeedbackForm';
+import '../Css files/CardiacDocumentation.css';
 
 const CardiacDocumentation = ({ onNavigate, onPass }) => {
+  const [showFeedback, setShowFeedback] = useState(false);
+
   return (
     <div className="documentation-page">
+      {showFeedback && (
+        <FeedbackForm 
+          simulationType="Cardiac Arrest Recognition" 
+          onClose={() => setShowFeedback(false)}
+          trigger="auto"
+        />
+      )}
+      
       <header className="doc-header">
         <h1>Post-Simulation Review: Cardiac Arrest Recognition (Sim 1)</h1>
         <button 
@@ -13,7 +24,7 @@ const CardiacDocumentation = ({ onNavigate, onPass }) => {
             Return to Home &rarr;
         </button>
       </header>
-      
+
       <div className="doc-content">
         <section className="recognition-review">
           <h2>🔍 Recognition and Activation</h2>
@@ -24,9 +35,8 @@ const CardiacDocumentation = ({ onNavigate, onPass }) => {
             <h3>Key Takeaways from Simulation 1</h3>
             <ul className="clinical-list">
                 <li><span style={{fontWeight: 'bold'}}>Priority 1:</span> Assess responsiveness immediately (Shake & Shout).</li>
-                <li><span style={{fontWeight: 'bold'}}>Priority 2:</span> If unresponsive, check for pulse and breathing simultaneously for no more than &le; 10 seconds.</li>
-                <li><span style={{fontWeight: 'bold'}}>Priority 3:</span> If no pulse/apneic, **immediately call a Code Blue** (Activate the Emergency Response System). Do not delay activation to start CPR alone.</li>
-                {/* FIX: Removed LaTeX syntax and Unicode dash that caused the Invalid Character error */}
+                <li><span style={{fontWeight: 'bold'}}>Priority 2:</span> If unresponsive, check for pulse and breathing simultaneously for no more than ≤ 10 seconds.</li>
+                <li><span style={{fontWeight: 'bold'}}>Priority 3:</span> If no pulse/apneic, <strong>immediately call a Code Blue</strong> (Activate the Emergency Response System). Do not delay activation to start CPR alone.</li>
                 <li><span style={{fontWeight: 'bold'}}>Priority 4:</span> Start high-quality chest compressions (CAB) at a rate of 100-120 per minute, 5-6 cm deep.</li>
             </ul>
           </div>
@@ -36,7 +46,6 @@ const CardiacDocumentation = ({ onNavigate, onPass }) => {
           <h2>🔗 The Adult Chain of Survival</h2>
           <p>
             The Chain of Survival dictates the sequence of interventions. Simulation 1 focused on links 1 and 2.
-            
           </p>
           <ol className="clinical-list">
             <li>Immediate Recognition of Cardiac Arrest and Activation of the Emergency Response System.</li>
@@ -50,12 +59,20 @@ const CardiacDocumentation = ({ onNavigate, onPass }) => {
 
       <footer className="doc-footer">
         <p>You have successfully mastered the initial recognition phase. Continue to Simulation 2 to learn ACLS rhythm management.</p>
-        <button 
+        <div className="feedback-section">
+          <button 
+            className="feedback-btn"
+            onClick={() => setShowFeedback(true)}
+          >
+            📝 Provide Feedback
+          </button>
+          <button 
             className="next-sim-btn" 
-            onClick={onPass} // This navigates to the next simulation
-        >
+            onClick={onPass}
+          >
             Continue to Simulation 2: Rhythm Management &rarr;
-        </button>
+          </button>
+        </div>
       </footer>
     </div>
   );
