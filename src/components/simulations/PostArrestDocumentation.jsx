@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FeedbackForm from './FeedbackForm';
-import '../Css files/CardiacDocumentation.css'; 
+import '../Css files/CardiacDocumentation.css';
 
 const PostArrestDocumentation = ({ onNavigate }) => {
   const [showFeedback, setShowFeedback] = useState(false);
@@ -9,8 +9,9 @@ const PostArrestDocumentation = ({ onNavigate }) => {
     <div className="documentation-page">
       {showFeedback && (
         <FeedbackForm 
-          simulationType="Cardiac Arrest" 
-          onClose={() => setShowFeedback(false)} 
+          simulationType="Post-Cardiac Arrest Care" 
+          onClose={() => setShowFeedback(false)}
+          trigger="auto"
         />
       )}
       
@@ -34,7 +35,7 @@ const PostArrestDocumentation = ({ onNavigate }) => {
           <div className="key-terms-box">
             <h3>A & B: Airway and Breathing Management</h3>
             <ul className="clinical-list">
-                <li><span style={{fontWeight: 'bold'}}>Oxygenation:</span> Maintain O₂ saturation &ge; 94%. Avoid hyperoxia (O₂ sat &gt; 98%).</li>
+                <li><span style={{fontWeight: 'bold'}}>Oxygenation:</span> Maintain O₂ saturation ≥ 94%. Avoid hyperoxia (O₂ sat > 98%).</li>
                 <li><span style={{fontWeight: 'bold'}}>Ventilation/CO₂:</span> Maintain ETCO₂ (End-Tidal CO₂) in the range of 35-45 mmHg to prevent cerebral vasoconstriction/vasodilation.</li>
             </ul>
           </div>
@@ -42,7 +43,7 @@ const PostArrestDocumentation = ({ onNavigate }) => {
           <div className="key-terms-box">
             <h3>C: Circulation Management (Perfusion)</h3>
             <ul className="clinical-list">
-                <li><span style={{fontWeight: 'bold'}}>Hypotension Target:</span> Maintain SBP &ge; 90 mmHg or MAP &ge; 65 mmHg.</li>
+                <li><span style={{fontWeight: 'bold'}}>Hypotension Target:</span> Maintain SBP ≥ 90 mmHg or MAP ≥ 65 mmHg.</li>
                 <li><span style={{fontWeight: 'bold'}}>Fluid/Vasoactive Drugs:</span> Initiate IV fluid bolus (1-2 L normal saline) followed by vasopressors (Norepinephrine or Dopamine) to meet BP goals.</li>
                 <li><span style={{fontWeight: 'bold'}}>PCI Indication:</span> Perform immediate coronary angiography/percutaneous coronary intervention (PCI) for suspected STEMI or unstable non-STEMI.</li>
             </ul>
@@ -52,7 +53,7 @@ const PostArrestDocumentation = ({ onNavigate }) => {
         <section className="ttm-review">
           <h2>🌡️ Targeted Temperature Management (TTM)</h2>
           <p>
-            TTM is initiated for comatose patients (GCS &lt; 8) after ROSC to improve neurological recovery.
+            TTM is initiated for comatose patients (GCS < 8) after ROSC to improve neurological recovery.
           </p>
           <ul className="clinical-list">
             <li><span style={{fontWeight: 'bold'}}>Target Temperature:</span> Maintain a target temperature of 32-36°C for at least 24 hours.</li>
@@ -75,7 +76,7 @@ const PostArrestDocumentation = ({ onNavigate }) => {
             className="next-sim-btn" 
             onClick={() => onNavigate('home')}
           >
-            Return to Home &rarr;
+            Return to Training Menu &rarr;
           </button>
         </div>
       </footer>
