@@ -1,9 +1,20 @@
-import React from 'react';
-import '../Css files/CardiacDocumentation.css'; // Reusing styles
+import React, { useState } from 'react';
+import FeedbackForm from './FeedbackForm';
+import '../Css files/CardiacDocumentation.css';
 
-const RhythmDocumentation = ({ onNavigate }) => {
+const RhythmDocumentation = ({ onNavigate, onPass }) => {
+  const [showFeedback, setShowFeedback] = useState(false);
+
   return (
     <div className="documentation-page">
+      {showFeedback && (
+        <FeedbackForm 
+          simulationType="ACLS Rhythm Management" 
+          onClose={() => setShowFeedback(false)}
+          trigger="auto"
+        />
+      )}
+      
       <header className="doc-header">
         <h1>Post-Simulation Review: ACLS and Rhythm Management</h1>
         <button 
@@ -13,14 +24,14 @@ const RhythmDocumentation = ({ onNavigate }) => {
             Return to Home &rarr;
         </button>
       </header>
-      
+
       <div className="doc-content">
         <section className="acls-review">
           <h2>🧠 ACLS Algorithm Review</h2>
           <p>
             The two main branches of the ACLS Cardiac Arrest Algorithm are based on the initial rhythm:
           </p>
-          
+
           <div className="key-terms-box">
             <h3>Shockable Rhythms (VF/pVT)</h3>
             <p>
@@ -33,7 +44,6 @@ const RhythmDocumentation = ({ onNavigate }) => {
                 <li><span style={{fontWeight: 'bold'}}>Shock 2:</span> Repeat shock (200J+).</li>
                 <li><span style={{fontWeight: 'bold'}}>Medication Cycle 2:</span> Amiodarone 300 mg IV/IO (or Lidocaine).</li>
             </ul>
-            
           </div>
 
           <div className="key-terms-box">
@@ -66,7 +76,6 @@ const RhythmDocumentation = ({ onNavigate }) => {
             <ul style={{flex: 1}}>
               <span style={{fontWeight: 'bold', fontSize: '1.1rem'}}>T's (Tension Pneumothorax, Tamponade, etc.)</span>
               <li><span style={{fontWeight: 'bold'}}>Tension Pneumothorax:</span> Needle decompression.</li>
-              {/* FIX: Removed the extra closing parenthesis that caused the build error */}
               <li><span style={{fontWeight: 'bold'}}>Tamponade (Cardiac):</span> Pericardiocentesis.</li>
               <li><span style={{fontWeight: 'bold'}}>Toxins:</span> Consider antidote, call Poison Control.</li>
               <li><span style={{fontWeight: 'bold'}}>Thrombosis (Pulmonary or Coronary):</span> Consider Fibrinolytics (for confirmed PE).</li>
@@ -77,13 +86,21 @@ const RhythmDocumentation = ({ onNavigate }) => {
       </div>
 
       <footer className="doc-footer">
-        <p>You have successfully mastered the initial ACLS management phase. Ready to return to the main training menu?</p>
-        <button 
+        <p>You have successfully mastered the initial ACLS management phase. Ready to continue to the next simulation?</p>
+        <div className="feedback-section">
+          <button 
+            className="feedback-btn"
+            onClick={() => setShowFeedback(true)}
+          >
+            📝 Provide Feedback
+          </button>
+          <button 
             className="next-sim-btn" 
-            onClick={() => onNavigate('cardiac-asystole-simulation')}
-        >
+            onClick={onPass}
+          >
             Continue to Simulation 3: Asystole & Post-Arrest Care &rarr;
-        </button>
+          </button>
+        </div>
       </footer>
     </div>
   );
