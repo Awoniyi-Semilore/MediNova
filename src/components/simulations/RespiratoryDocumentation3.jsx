@@ -8,8 +8,9 @@ const RespiratoryDocumentation3 = ({ onNavigate }) => {
     <div className="documentation-page">
       {showFeedback && (
         <FeedbackForm 
-          simulationType="Pediatric Respiratory" 
-          onClose={() => setShowFeedback(false)} 
+          simulationType="Pediatric Respiratory Advanced Care" 
+          onClose={() => setShowFeedback(false)}
+          trigger="auto"
         />
       )}
       
