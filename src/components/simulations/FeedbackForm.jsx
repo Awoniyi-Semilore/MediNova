@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const FeedbackForm = ({ simulationType, onClose }) => {
+const FeedbackForm = ({ simulationType, onClose, trigger = 'manual' }) => {
   const [formData, setFormData] = useState({
     name: '',
     field: '',
@@ -10,6 +10,7 @@ const FeedbackForm = ({ simulationType, onClose }) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showAutoPopup, setShowAutoPopup] = useState(false);
 
   const fields = [
     'Medical Student',
@@ -20,6 +21,17 @@ const FeedbackForm = ({ simulationType, onClose }) => {
     'Resident',
     'Other Healthcare Professional'
   ];
+
+  // Auto-show popup 5 seconds after component mounts if trigger is 'auto'
+  useEffect(() => {
+    if (trigger === 'auto') {
+      const timer = setTimeout(() => {
+        setShowAutoPopup(true);
+      }, 5000); // 5 seconds delay
+      
+      return () => clearTimeout(timer);
+    }
+  }, [trigger]);
 
   const handleChange = (e) => {
     setFormData({
@@ -33,7 +45,6 @@ const FeedbackForm = ({ simulationType, onClose }) => {
     setIsSubmitting(true);
 
     try {
-      // Store in localStorage (you can replace this with your backend)
       const feedbacks = JSON.parse(localStorage.getItem('simulationFeedbacks') || '[]');
       const newFeedback = {
         ...formData,
@@ -41,12 +52,9 @@ const FeedbackForm = ({ simulationType, onClose }) => {
         timestamp: new Date().toISOString(),
         id: Date.now()
       };
-
+      
       feedbacks.push(newFeedback);
       localStorage.setItem('simulationFeedbacks', JSON.stringify(feedbacks));
-
-      // Optional: Send to your email (you'll need a backend for this)
-      // await sendToEmail(newFeedback);
 
       setIsSubmitted(true);
       setTimeout(() => {
@@ -58,6 +66,35 @@ const FeedbackForm = ({ simulationType, onClose }) => {
       setIsSubmitting(false);
     }
   };
+
+  // Auto popup modal
+  if (trigger === 'auto' && showAutoPopup && !isSubmitted) {
+    return (
+      <div className="feedback-auto-popup">
+        <div className="popup-content">
+          <h3>Help Us Improve! 🎯</h3>
+          <p>Would you like to provide feedback on the {simulationType} simulation?</p>
+          <div className="popup-buttons">
+            <button 
+              className="popup-btn primary"
+              onClick={() => setShowAutoPopup(false)}
+            >
+              Give Feedback
+            </button>
+            <button 
+              className="popup-btn secondary"
+              onClick={() => {
+                setShowAutoPopup(false);
+                onClose();
+              }}
+            >
+              Maybe Later
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (isSubmitted) {
     return (
