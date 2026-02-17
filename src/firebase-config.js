@@ -6,7 +6,7 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 // This configuration is now centralized and ready to be imported.
 const firebaseConfig = {
-  apiKey: "AIzaSyD_kxeWXHdwi3MvhGSQ7AxE-S_BqiZHHfw",
+  apiKey: "AIzaSyC3vGy3CWG68X-Frc23LOnJIFt03Mv8jkQ",
   authDomain: "medinova-simulations.firebaseapp.com",
   projectId: "medinova-simulations",
   storageBucket: "medinova-simulations.firebasestorage.app",
