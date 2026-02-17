@@ -1,16 +1,16 @@
-# React + Vite
+# MediNova 🏥
+### High-Velocity Medical Simulation UI | Pan-African Team Lead Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MediNova is a high-pressure medical simulation prototype engineered in a **48-hour sprint**. As the **Product Architect and Team Lead**, I coordinated a distributed, pan-African engineering team to deliver a production-grade interface under extreme constraints.
 
-Currently, two official plugins are available:
+## 🚀 Key Highlights
+- **10x Shipping Velocity:** Built from ideation to functional prototype in under 2 days using AI-augmented engineering workflows.
+- **Leadership:** Managed a cross-functional team across multiple time zones, navigating communication gaps and English fluency challenges.
+- **State Management:** Engineered a zero-latency UI capable of handling high-frequency data updates for real-time simulation tracking.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠 Tech Stack
+- **Frontend:** React.js
+- **Styling:** CSS Modules (High-fidelity, responsive UI)
+- **Workflow:** AI-Augmented Development (Cursor/Claude), Agile Sprints
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+> *Note: This project was part of the Futurize Pan-African Incubator.*
